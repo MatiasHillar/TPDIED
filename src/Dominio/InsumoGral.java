@@ -1,4 +1,4 @@
-package dominio;
+package Dominio;
 
 public class InsumoGral extends Insumo {
 	private Float peso;

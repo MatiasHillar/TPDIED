@@ -1,4 +1,4 @@
-package dominio;
+package Dominio;
 
 public abstract class Insumo {
 	protected String descripcion;
