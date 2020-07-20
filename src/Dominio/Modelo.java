@@ -1,4 +1,4 @@
-package dominio;
+package Dominio;
 
 public class Modelo {
 	private String marca;

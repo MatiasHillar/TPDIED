@@ -1,4 +1,4 @@
-package dominio;
+package Dominio;
 
 import java.time.*;
 import java.util.*;
