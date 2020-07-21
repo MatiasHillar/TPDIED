@@ -2,6 +2,7 @@ package servicios;
 
 import java.util.List;
 
+import Dominio.Camion;
 import dominio.*;
 
 
@@ -13,7 +14,7 @@ public class CamionService {
 		// si hay alguna regla de negocio que indque que no se 
 		// puede agregar un camion si no se cumplen determinadas
 		// condiciones en otras entidades o reglas 
-		// se valida aquí
+		// se valida aquï¿½
 			return this.camionDao.saveOrUpdate(c);
 	}
 	
