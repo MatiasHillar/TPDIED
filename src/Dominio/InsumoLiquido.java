@@ -1,4 +1,4 @@
-package Dominio;
+package dominio;
 
 public class InsumoLiquido extends Insumo {
 	private Float densidad;

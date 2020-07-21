@@ -1,6 +1,6 @@
 package prueba;
 	
-import Dominio.Planta;	
+import dominio.Planta;	
 import servicios.MapaService;
 
 public class App {

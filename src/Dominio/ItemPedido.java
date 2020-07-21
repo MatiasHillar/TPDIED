@@ -1,4 +1,4 @@
-package Dominio;
+package dominio;
 
 public class ItemPedido {
 	private Insumo insumo;
