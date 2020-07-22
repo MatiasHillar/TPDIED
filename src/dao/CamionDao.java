@@ -2,12 +2,12 @@ package dao;
 
 import java.util.List;
 
-import Dominio.Camion;
+import dominio.Camion;
 
 public interface CamionDao {
 
-	public Camion saveorUpdate(Camion c);
+	public Camion saveOrUpdate(Camion c);
 	public Void borrar(Camion c);
-	public Camion buscarporId(Integer id);
+	public Camion buscarporPatente(Integer id);
 	public List<Camion> buscarTodos();
 }

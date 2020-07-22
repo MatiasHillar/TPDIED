@@ -1,6 +1,6 @@
 package dao;
 
-import Dominio.Modelo;
+import dominio.Modelo;
 
 public interface ModeloDao {
 

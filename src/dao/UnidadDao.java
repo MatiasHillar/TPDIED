@@ -1,6 +1,6 @@
 package dao;
 
-import Dominio.Unidad;
+import dominio.Unidad;
 
 public interface UnidadDao {
 

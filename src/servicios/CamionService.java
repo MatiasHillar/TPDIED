@@ -2,13 +2,14 @@ package servicios;
 
 import java.util.List;	
 
-import Dominio.Camion;
-import Dominio.*;
+import dao.CamionDao;
+import dao.CamionDaoPostgreSQL;
+import dominio.*;
 
 
 
 public class CamionService {
-	private CamionDao camionDao = new CamionDaoMysql();
+	private CamionDao camionDao = new CamionDaoPostgreSQL();
 
 	public Camion crearCamion(Camion c) {
 		// si hay alguna regla de negocio que indque que no se 

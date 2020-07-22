@@ -1,6 +1,6 @@
 package dao;
 
-import Dominio.ItemPedido;
+import dominio.ItemPedido;
 
 public interface ItemPedidoDao {
 
