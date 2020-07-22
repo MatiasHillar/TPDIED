@@ -54,5 +54,9 @@ public class Planta {
 	public void setListaCamiones(PriorityQueue<Camion> listaCamiones) {
 		this.listaCamiones = listaCamiones;
 	}
+	@Override
+	public String toString() {
+		return "Planta [nombre=" + nombre + ", id=" + id + "]";
+	}
 
 }

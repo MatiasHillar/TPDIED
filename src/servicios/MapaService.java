@@ -25,27 +25,16 @@ public class MapaService {
 	public Mapa construir() {
 		
 		Mapa m = new Mapa();
-		/*
 		m.setListaPlantas(buscarTodasPlantas());
 		m.setListaRutas(buscarTodasRutas());
-		*/
-		Planta p1= new Planta(); p1.setId(1);
-		Planta p2= new Planta(); p1.setId(2);
-		Planta p3= new Planta(); p1.setId(3);
-		Planta p4= new Planta(); p1.setId(4);
-		List<Planta> p = new ArrayList<Planta>();
-		p.add(p1); p.add(p2); p.add(p3); p.add(p4);
-		m.setListaPlantas(p);
-		Ruta r1 = new Ruta(); r1.setPlantaOrigen(p1); r1.setPlantaDestino(p2); r1.setDistanciaKm(10f); 
-		Ruta r2 = new Ruta(); r2.setPlantaOrigen(p2); r2.setPlantaDestino(p3); r2.setDistanciaKm(10f); 
-		Ruta r3 = new Ruta(); r3.setPlantaOrigen(p1); r3.setPlantaDestino(p3); r3.setDistanciaKm(20f); 
-
-		List<Ruta> r = new ArrayList<Ruta>();
-		r.add(r1); r.add(r2); r.add(r3);
-		m.setListaRutas(r);
 		
 		return m;
 	}
+	
+
+	
+	
+	
 	protected List<Planta> getAdyacentes(Planta p, Mapa m){ 
 		List<Planta> salida = new ArrayList<Planta>();
 		for(Ruta r : m.getListaRutas()){
@@ -69,9 +58,11 @@ public class MapaService {
 	public Set<List<Planta>> menosKm(Planta origen, Planta destino){
 		return this.menosCosto(origen, destino, r-> r.getDistanciaKm());
 	}
+	
 	public Set<List<Planta>> menosTiempo(Planta origen, Planta destino){
 		return this.menosCosto(origen, destino, r-> r.getDuracionMin());
 	}
+	
 	
 	private Set<List<Planta>> menosCosto(Planta origen, Planta destino, Function<Ruta,Float> obtenerCosto){
 		Mapa m = construir();
@@ -89,19 +80,27 @@ public class MapaService {
 		caminos.get(origen).add(paux);
 		pq.add(origen);
 		Planta aux;
-		HashSet<List<Planta>> caminosAux;
 		while(!pq.isEmpty()) {
 			aux=pq.poll();
 			this.getRutas(aux, m).stream()
 			.forEach(r-> {
+				HashSet<List<Planta>> caminosAux, c2;
 				if(minimos.get(r.getPlantaDestino()) > ( minimos.get(r.getPlantaOrigen()) + obtenerCosto.apply(r) ) ) {
 					minimos.put(r.getPlantaDestino(), minimos.get(r.getPlantaOrigen()) + obtenerCosto.apply(r));	
 					caminosAux= new HashSet<List<Planta>>();
-					caminosAux.addAll(caminos.get(r.getPlantaOrigen()).stream().collect(Collectors.toList()));
+					c2=caminos.get(r.getPlantaOrigen());
+					for(List<Planta> lp : c2) {
+						caminosAux.add(lp.stream().collect(Collectors.toList()));
+					}
+
 					for(List<Planta> cam : caminosAux) {
 						cam.add(r.getPlantaDestino());
 					}
+					
+					
 					caminos.put(r.getPlantaDestino(), caminosAux);
+					
+					if(!pq.contains(r.getPlantaDestino()))
 					pq.add(r.getPlantaDestino());
 				}
 				else if(minimos.get(r.getPlantaDestino()) == ( minimos.get(r.getPlantaOrigen()) + obtenerCosto.apply(r) )) {
@@ -111,7 +110,6 @@ public class MapaService {
 						cam.add(r.getPlantaDestino());
 					}
 					caminos.get(r.getPlantaDestino()).addAll(caminosAux);
-					pq.add(r.getPlantaDestino());
 				}
 			});
 		}
