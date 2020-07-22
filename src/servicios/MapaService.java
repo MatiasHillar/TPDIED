@@ -164,6 +164,10 @@ public class MapaService {
 		return new MatrizFloyd(d,indexAPlanta);
 	}
 	
+	public TreeMap<Double, Planta> pageRank() {
+		
+		return null;
+	}
 	
 	
 	
