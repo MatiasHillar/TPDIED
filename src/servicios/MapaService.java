@@ -165,8 +165,44 @@ public class MapaService {
 	}
 	
 	public TreeMap<Double, Planta> pageRank() {
+		Mapa m = construir();
+		List<Planta> lp = m.getListaPlantas();
+		Integer ctidad = lp.size();
+		HashMap<Integer,Integer> idAIndex = new HashMap<Integer, Integer>();
+		HashMap<Integer,Planta> indexAPlanta = new HashMap<Integer,Planta>();
+		Double[] pr = new Double[ctidad];
+		Double var = 0.0002d,
+				d=0.5d,
+				maxvar=1d,
+				aux,
+				anterior;
 		
-		return null;
+		for(int i = 0 ; i<ctidad ; i++) {
+			pr[i]=1d;
+			idAIndex.put(lp.get(i).getId(), i);
+			indexAPlanta.put(i, lp.get(i));
+		}
+		
+		while(maxvar>var) {
+			for(int i = 0 ; i<ctidad ; i++) {
+				anterior= pr[i];
+				pr[i]=(1-d);
+				aux=0d;
+				for(Planta p : lp) {
+					if(this.getAdyacentes(p, m).contains(indexAPlanta.get(i))) {
+						aux+= (pr[idAIndex.get(p.getId())] / ((double) (this.getAdyacentes(p, m).size() )) );
+					}
+				}
+				pr[i]+=(d*aux);
+				maxvar = Math.max(maxvar, Math.abs(anterior-pr[i]));
+			}
+		}
+		TreeMap<Double, Planta> resultado = new TreeMap<Double, Planta>((d1,d2)->d2.compareTo(d1));
+		for(int i = 0 ; i<ctidad ; i++) {
+			resultado.put(pr[i], indexAPlanta.get(i));
+		}
+		return resultado;
+		
 	}
 	
 	
