@@ -5,6 +5,7 @@ import java.util.function.*;
 import java.util.stream.Collectors;
 
 import dominio.*;
+import dominio.util.MatrizFloyd;
 
 
 
@@ -117,6 +118,51 @@ public class MapaService {
 		
 	}
 	
+	
+	public MatrizFloyd caminosMenosKm(){
+		return this.todosMenoresCaminos(r-> r.getDistanciaKm());
+	}
+	public MatrizFloyd caminosMenosTiempo(){
+		return this.todosMenoresCaminos(r-> r.getDuracionMin());
+	}
+	
+	private MatrizFloyd todosMenoresCaminos(Function<Ruta,Float> obtenerCosto){
+		Mapa m = construir();
+		List<Planta> lp = m.getListaPlantas();
+		Integer ctidad = lp.size();
+		HashMap<Integer,Integer> idAIndex = new HashMap<Integer, Integer>();
+		HashMap<Integer,Planta> indexAPlanta = new HashMap<Integer,Planta>();
+		Float[][] d = new Float[ctidad][ctidad];
+		for(int i = 0 ; i<ctidad ; i++) {
+			for(int j=0 ; j<ctidad ; j++) {
+				d[i][j]=Float.MAX_VALUE;
+			}
+		}
+		for(int i = 0 ; i<ctidad ; i++) {
+			d[i][i]=0f;
+			idAIndex.put(lp.get(i).getId(), i);
+			indexAPlanta.put(i, lp.get(i));
+		}
+		m.getListaRutas().stream()
+		.forEach(r-> {
+			Integer ipo = idAIndex.get(r.getPlantaOrigen().getId()),
+					ipd = idAIndex.get(r.getPlantaDestino().getId());
+			if(d[ipo][ipd] > obtenerCosto.apply(r) ) {
+				d[ipo][ipd] = obtenerCosto.apply(r);
+			}
+		});
+		
+		for(int k = 0 ; k<ctidad ; k++) {
+			for(int i = 0 ; i<ctidad ; i++) {
+				for(int j = 0 ; j<ctidad ; j++) {
+					if(d[i][j]>d[i][k]+d[k][j]) 
+						d[i][j]=d[i][k]+d[k][j];
+				}
+			}
+		}
+		
+		return new MatrizFloyd(d,indexAPlanta);
+	}
 	
 	
 	
