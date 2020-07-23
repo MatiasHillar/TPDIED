@@ -7,6 +7,19 @@ private Float distanciaKm;
 private Float duracionMin;
 private Float pesoMaximoKg;
 
+@Override
+public String toString() {
+	return "Ruta [plantaOrigen=" + plantaOrigen + ", plantaDestino=" + plantaDestino + ", distanciaKm=" + distanciaKm
+			+ ", duracionMin=" + duracionMin + ", pesoMaximoKg=" + pesoMaximoKg + "]";
+}
+public Ruta(Planta plantaOrigen, Planta plantaDestino, Float distanciaKm, Float duracionMin, Float pesoMaximoKg) {
+	super();
+	this.plantaOrigen = plantaOrigen;
+	this.plantaDestino = plantaDestino;
+	this.distanciaKm = distanciaKm;
+	this.duracionMin = duracionMin;
+	this.pesoMaximoKg = pesoMaximoKg;
+}
 public Planta getPlantaOrigen() {
 	return plantaOrigen;
 }

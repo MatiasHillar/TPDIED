@@ -23,6 +23,7 @@ public class MapaService {
 	}
 	*/
 	
+	
 	public Mapa construir() {
 		
 		Mapa m = new Mapa();
@@ -32,9 +33,50 @@ public class MapaService {
 		return m;
 	}
 	
-
 	
+	/*
+	public Mapa construir() {
+		
+		Mapa m = new Mapa();
+		List<Planta> lp= new ArrayList<Planta>();
+		Planta p1 = new Planta("p1", 1, new ArrayList<Stock>());
+		Planta p2 = new Planta("p2", 2, new ArrayList<Stock>());
+		Planta p3 = new Planta("p3", 3, new ArrayList<Stock>());
+		Planta p4 = new Planta("p4", 4, new ArrayList<Stock>());
+		Planta p5 = new Planta("p5", 5, new ArrayList<Stock>());
+		lp.add(p1);
+		lp.add(p2);
+		lp.add(p3);
+		lp.add(p4);
+		lp.add(p5);
+		
+		List<Ruta> lr= new ArrayList<Ruta>();
+		Ruta r1 = new Ruta(p1,p2, 0f, 0f, 10000f);
+		Ruta r2 = new Ruta(p1,p2, 0f, 0f, 100f);
+		Ruta r3 = new Ruta(p2,p3, 0f, 0f, 200f);
+		Ruta r4 = new Ruta(p2,p4, 0f, 0f, 2000f);
+		Ruta r5 = new Ruta(p2,p5, 0f, 0f, 100f);
+		Ruta r6 = new Ruta(p3,p5, 0f, 0f, 1000f);
+		Ruta r7 = new Ruta(p4,p3, 0f, 0f, 100f);
+		Ruta r8 = new Ruta(p1,p5, 0f, 0f, 300f);
+		Ruta r9 = new Ruta(p4,p5, 0f, 0f, 1500f);
+		lr.add(r1);
+		lr.add(r2);
+		lr.add(r3);
+		lr.add(r4);
+		lr.add(r5);
+		lr.add(r6);
+		lr.add(r7);
+		lr.add(r8);
+		lr.add(r9);
+		
+		m.setListaPlantas(lp);
+		m.setListaRutas(lr);
+		
+		return m;
+	}
 	
+	*/
 	
 	protected List<Planta> getAdyacentes(Planta p, Mapa m){ 
 		List<Planta> salida = new ArrayList<Planta>();
@@ -205,6 +247,50 @@ public class MapaService {
 		
 	}
 	
+	public Float maxFlow(Planta origen, Planta destino) {
+		Mapa m = construir();
+		HashSet<Ruta> marcados = new HashSet<Ruta>();
+		Float peso = Float.MAX_VALUE;
+		HashMap<Ruta,Float> pesoRestante = new HashMap<Ruta,Float>();
+		for(Ruta r: m.getListaRutas()) {
+			pesoRestante.put(r, r.getPesoMaximoKg());
+		}
+		return maxFlowAux(origen,destino,marcados,peso,pesoRestante, m);
+	}
+	
+	private Float maxFlowAux(Planta origen, Planta destino, HashSet<Ruta> marcados, Float peso, HashMap<Ruta,Float> pesoRestante, Mapa m) {
+		List<Ruta> salientes = this.getRutas(origen, m);
+		Float resultado= 0f,
+				pesoAux=peso.floatValue();
+		for(Ruta r: salientes) {			
+			if(r.getPlantaDestino().equals(destino)) {
+				
+				pesoAux= Math.min(peso, pesoRestante.get(r));
+				marcados.add(r);
+				for(Ruta r2 : marcados) {
+					pesoRestante.put(r2,pesoRestante.get(r2)-pesoAux);
+				}
+				resultado+=pesoAux;
+				peso-= pesoAux;
+			}
+			else {
+				if(!marcados.contains(r) &&  pesoRestante.get(r)>0) {
+					pesoAux= Math.min(peso,pesoRestante.get(r));
+					marcados.add(r);
+					HashSet<Ruta> copiaMarcados =new HashSet<Ruta>();
+					for(Ruta r2: marcados) {
+						copiaMarcados.add(r2);
+					}
+					copiaMarcados.add(r);
+					Float aux= maxFlowAux(r.getPlantaDestino(), destino, copiaMarcados, pesoAux, pesoRestante, m);
+					resultado+= aux;
+					peso-= aux;
+				}
+			}
+			
+		}
+		return resultado;
+	}
 	
 	
 

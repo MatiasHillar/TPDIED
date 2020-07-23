@@ -6,7 +6,14 @@ public class Planta {
 	private String nombre;
 	private Integer id;
 	private List<Stock> listaStock;
-	private PriorityQueue<Camion> listaCamiones;
+	
+	public Planta(String nombre, Integer id, List<Stock> listaStock) {
+		super();
+		this.nombre = nombre;
+		this.id = id;
+		this.listaStock = listaStock;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -56,7 +63,7 @@ public class Planta {
 	}
 	@Override
 	public String toString() {
-		return "Planta [nombre=" + nombre + ", id=" + id + "]";
+		return nombre + ", id=" + id;
 	}
 
 }
