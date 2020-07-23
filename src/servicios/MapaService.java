@@ -27,9 +27,9 @@ public class MapaService {
 	public Mapa construir() {
 		
 		Mapa m = new Mapa();
-		m.setListaPlantas(buscarTodasPlantas());
-		m.setListaRutas(buscarTodasRutas());
-		
+//		m.setListaPlantas(buscarTodasPlantas());
+//		m.setListaRutas(buscarTodasRutas());
+//		
 		return m;
 	}
 	
