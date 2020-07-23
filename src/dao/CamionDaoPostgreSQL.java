@@ -1,7 +1,11 @@
 package dao;
 
 
-import java.util.List;	
+import java.util.ArrayList;
+import java.util.List;
+
+import dao.utils.DB;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,27 +42,107 @@ public class CamionDaoPostgreSQL implements CamionDao{
 	
 	@Override
 	public Camion saveOrUpdate(Camion c) {
-		Connection conn = null;
+		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
-		
+		//consultar por PATENTE O ID
+		try{
+			if(c.getPatente()!=null) {
+				pstmt = conn.prepareStatement(UPDATE_CAMION);
+				pstmt.setString(1, c.getPatente());
+				pstmt.setFloat(2, c.getKmRecorridos());
+				pstmt.setFloat(3, c.getCostoKm());
+				pstmt.setFloat(4, c.getCostoHora());
+				pstmt.setString(5, c.getFechaCompra().toString());
+				
+			}
+			else {
+				pstmt = conn.prepareStatement(INSERT_CAMION);
+				pstmt.setFloat(1, c.getKmRecorridos());
+				pstmt.setFloat(2, c.getCostoKm());
+				pstmt.setFloat(3, c.getCostoHora());
+				pstmt.setString(4, c.getFechaCompra().toString());
+			}
+			pstmt.executeUpdate();
+		}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 
 	@Override
-	public Void borrar(Camion c) {
-		// TODO Auto-generated method stub
-		return null;
+	public void borrar(Camion c) {
+		Connection conn = DB.getConexion();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(DELETE_CAMION);
+			pstmt.setString(1, c.getPatente());
+			pstmt.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public List<Camion> buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Camion> lista = new ArrayList<Camion>();
+		Connection conn = DB.getConexion();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(SELECT_ALL_CAMION);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Camion c = new Camion();
+				c.setPatente(rs.getString("PATENTE"));
+				c.setKmRecorridos(rs.getFloat("KM_RECORRIDOS"));
+				c.setCostoKm(rs.getFloat("COSTOXKM"));
+				c.setCostoHora(rs.getFloat("COSTOXHS"));
+			/*	VER COMO FORMATEAR FECHA A LOCALDATE Y CONSISTENCIA TABLAS/MODELO
+			  	c.setFechaCompra(rs.getString("FECHA_COMPRA"));
+				c.setModelo(rs.getInt("ID_MODELO"));
+				c.setPatente(rs.getInt("ID_PLANTA"));
+				*/
+				lista.add(c);
+			}
+		}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		finally {
+			try {
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return lista;
 	}
 
 	@Override
 	public Camion buscarporPatente(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

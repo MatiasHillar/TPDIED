@@ -1,23 +1,31 @@
 package dao.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DB {
 	private static final String url ="jdbc:postgresql://ruby.db.elephantsql.com:5432/smohrdja";
 	private static final String user="smohrdja";
 	private static final String pass="H58Kz6hWghoq49JLBnOkvw2QbPqQPqGe";
-	public static void main(String args[]) {
-	      Connection c = null;
-	      try {
-	         Class.forName("org.postgresql.Driver");
-	         c = DriverManager
-	           .getConnection(url,user,pass);
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	         System.err.println(e.getClass().getName()+": "+e.getMessage());
-	         System.exit(0);
-	      }
-	      System.out.println("Opened database successfully");
-	   }
+	private static boolean conexion = false;
+	
+	private static Connection crearConexion(){
+		Connection conn=null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn= DriverManager.getConnection(url,user,pass);
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		conexion = true;
+		return conn;
 	}
+	
 
+	public static Connection getConexion() {
+		if(conexion) return crearConexion();
+		return null;
+	}
+}
