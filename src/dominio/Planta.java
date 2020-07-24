@@ -13,6 +13,9 @@ public class Planta {
 		this.id = id;
 		this.listaStock = listaStock;
 	}
+	public Planta() {
+		
+	}
 	
 	@Override
 	public int hashCode() {
@@ -55,12 +58,7 @@ public class Planta {
 	public void setListaStock(List<Stock> listaStock) {
 		this.listaStock = listaStock;
 	}
-	public PriorityQueue<Camion> getListaCamiones() {
-		return listaCamiones;
-	}
-	public void setListaCamiones(PriorityQueue<Camion> listaCamiones) {
-		this.listaCamiones = listaCamiones;
-	}
+	
 	@Override
 	public String toString() {
 		return nombre + ", id=" + id;
