@@ -20,6 +20,9 @@ public Ruta(Planta plantaOrigen, Planta plantaDestino, Float distanciaKm, Float 
 	this.duracionMin = duracionMin;
 	this.pesoMaximoKg = pesoMaximoKg;
 }
+public Ruta() {
+	super();
+}
 public Planta getPlantaOrigen() {
 	return plantaOrigen;
 }
