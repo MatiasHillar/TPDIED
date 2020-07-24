@@ -58,7 +58,7 @@ public class Planta {
 	public void setListaStock(List<Stock> listaStock) {
 		this.listaStock = listaStock;
 	}
-	
+
 	@Override
 	public String toString() {
 		return nombre + ", id=" + id;

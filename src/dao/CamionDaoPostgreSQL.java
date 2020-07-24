@@ -1,7 +1,7 @@
 package dao;
 
 
-import java.util.ArrayList;
+import java.util.ArrayList;	
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Formatter;
@@ -18,15 +18,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import dominio.Camion;
+import dominio.Modelo;
 
 public class CamionDaoPostgreSQL implements CamionDao{
 
 	private static final String SELECT_ALL_CAMION = 
-			/*"SELECT C.PATENTE, M.MARCA, M.MODELO, C.KM_RECORRIDOS, C.COSTOXKM,"
-			+ "C.COSTOXHS, C.FECHA_COMPRA, C.ID_MODELO, C.ID_PLANTA"
-			+ "FROM CAMION C, MODELO M"
-			+ "WHERE C.ID_MODELO = M.ID";*/
-			"SELECT * FROM CAMION";
+			"SELECT * FROM CAMION C, MODELO M"
+			+ "WHERE C.ID_MODELO = M.ID";
 	
 	private static final String SELECT_CAMION =
 			"SELECT * FROM CAMION"
@@ -34,7 +32,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 	
 	private static final String UPDATE_CAMION =
 			"UPDATE CAMION SET PATENTE = ?, KM_RECORRIDOS = ?,COSTOXKM = ?, COSTOXHS = ?,"
-			+ " FECHA_COMPRA = ?, ID_MODELO = ?, ID_PLANTA = ? "
+			+ " FECHA_COMPRA = ?, ID_MODELO = ?"
 			+ "WHERE PATENTE = ?";
 	
 	private static final String DELETE_CAMION =
@@ -49,7 +47,6 @@ public class CamionDaoPostgreSQL implements CamionDao{
 	public Camion saveOrUpdate(Camion c) {
 		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
-		//consultar por PATENTE O ID
 		try{
 			if(c.getPatente()!=null) {
 				pstmt = conn.prepareStatement(UPDATE_CAMION);
@@ -66,6 +63,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				pstmt.setFloat(2, c.getCostoKm());
 				pstmt.setFloat(3, c.getCostoHora());
 				pstmt.setString(4, c.getFechaCompra().toString());
+				pstmt.setString(5, c.getModelo().getModelo());
 			}
 			pstmt.executeUpdate();
 		}
@@ -124,10 +122,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				c.setCostoKm(rs.getFloat("COSTOXKM"));
 				c.setCostoHora(rs.getFloat("COSTOXHS"));
 			  	c.setFechaCompra(formatearFecha(rs.getString("FECHA_COMPRA")));
-			  	/*	VER COMO FORMATEAR FECHA A LOCALDATE Y CONSISTENCIA TABLAS/MODELO
-			  	c.setModelo(rs.getInt("ID_MODELO"));
-				c.setPatente(rs.getInt("ID_PLANTA"));
-				*/
+			  	c.setModelo(new Modelo(rs.getString("MARCA"),rs.getString("MODELO")));
 				lista.add(c);
 			}
 		}
@@ -153,11 +148,11 @@ public class CamionDaoPostgreSQL implements CamionDao{
 
 	@Override
 	public List<Camion> buscarPorPatributos(Map<String, ?> atributos){
-		String sentencia = prepararSentencia(atributos);
 		List<Camion> lista = new ArrayList<Camion>();
 		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sentencia = prepararSentencia(atributos);
 		try {
 			pstmt = conn.prepareStatement(sentencia);
 			rs = pstmt.executeQuery();
@@ -168,9 +163,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				c.setCostoKm(rs.getFloat("COSTOXKM"));
 				c.setCostoHora(rs.getFloat("COSTOXHS"));
 			  	c.setFechaCompra(formatearFecha(rs.getString("FECHA_COMPRA")));
-				/*c.setModelo(rs.getInt("ID_MODELO"));
-				c.setPatente(rs.getInt("ID_PLANTA"));
-				*/
+			  	c.setModelo(new Modelo(rs.getString("MARCA"),rs.getString("MODELO")));
 				lista.add(c);
 			}
 		}catch(SQLException e) {
@@ -186,23 +179,17 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		}
 	}
 	return lista;
-		
-		
 	}
 	
 	private String prepararSentencia(Map<String, ?> atrib) {
-		String p1 = "SELECT ";
-		String p2 = " FROM CAMION WHERE ";
-		String atribs = "";
+		String p1 = "SELECT * FROM CAMION C, MODELO M "
+				+ "WHERE C.ID_MODELO = M.NOMBRE";
 		String values = "";
 		for (Map.Entry<String,?> entry : atrib.entrySet()) {
-			if(atribs.isEmpty()) atribs.concat(entry.getKey());
-			else atribs.concat(","+entry.getKey());
-			if(values.isEmpty()) values.concat(entry.getKey()+"="+entry.getValue());
-			else values.concat(","+entry.getKey()+"="+entry.getValue());
+			values.concat(" AND "+"C."+entry.getKey()+"="+entry.getValue());
 			
 		}
-		return p1 + atribs + p2 + values; 
+		return p1.concat(values); 
 	}
 	
 	private LocalDate formatearFecha(String fecha) {

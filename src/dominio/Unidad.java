@@ -3,6 +3,12 @@ package dominio;
 public class Unidad {
 	private String nombre;
 	private String simbolo;
+	
+	public Unidad(String nombre, String simbolo) {
+		this.nombre = nombre;
+		this.simbolo = simbolo;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
