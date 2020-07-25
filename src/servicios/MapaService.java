@@ -29,6 +29,7 @@ public class MapaService {
 		 */
 	}
 	
+	
 	public Mapa construir() {
 		
 		Mapa m = new Mapa();
@@ -37,7 +38,6 @@ public class MapaService {
 //		
 		return m;
 	}
-	
 	
 	/*
 	public Mapa construir() {
@@ -56,15 +56,15 @@ public class MapaService {
 		lp.add(p5);
 		
 		List<Ruta> lr= new ArrayList<Ruta>();
-		Ruta r1 = new Ruta(p1,p2, 0f, 0f, 10000f);
-		Ruta r2 = new Ruta(p1,p2, 0f, 0f, 100f);
-		Ruta r3 = new Ruta(p2,p3, 0f, 0f, 200f);
-		Ruta r4 = new Ruta(p2,p4, 0f, 0f, 2000f);
-		Ruta r5 = new Ruta(p2,p5, 0f, 0f, 100f);
-		Ruta r6 = new Ruta(p3,p5, 0f, 0f, 1000f);
-		Ruta r7 = new Ruta(p4,p3, 0f, 0f, 100f);
-		Ruta r8 = new Ruta(p1,p5, 0f, 0f, 300f);
-		Ruta r9 = new Ruta(p4,p5, 0f, 0f, 1500f);
+		Ruta r1 = new Ruta(p1,p2, 10f, 10f, 10000f);
+		Ruta r2 = new Ruta(p1,p2, 10f, 60f, 100f);
+		Ruta r3 = new Ruta(p2,p3, 30f, 50f, 200f);
+		Ruta r4 = new Ruta(p2,p4, 50f, 20f, 2000f);
+		Ruta r5 = new Ruta(p2,p5, 60f, 10f, 100f);
+		Ruta r6 = new Ruta(p3,p5, 80f, 90f, 1000f);
+		Ruta r7 = new Ruta(p4,p3, 20f, 80f, 100f);
+		Ruta r8 = new Ruta(p1,p5, 30f, 20f, 300f);
+		Ruta r9 = new Ruta(p4,p5, 10f, 50f, 1500f);
 		lr.add(r1);
 		lr.add(r2);
 		lr.add(r3);
@@ -80,7 +80,6 @@ public class MapaService {
 		
 		return m;
 	}
-	
 	*/
 	
 	protected List<Planta> getAdyacentes(Planta p, Mapa m){ 
@@ -132,9 +131,7 @@ public class MapaService {
 			 caminos.put(pl, new HashSet<List<Ruta>>());
 		});
 		minimos.put(origen, 0f);
-		List<Planta> paux=  new ArrayList<Planta>();
-		paux.add(origen);
-		caminos.get(origen);
+		caminos.get(origen).add(new ArrayList<Ruta>());
 		pq.add(origen);
 		Planta aux;
 		while(!pq.isEmpty()) {
@@ -153,7 +150,6 @@ public class MapaService {
 					for(List<Ruta> cam : caminosAux) {
 						cam.add(r);
 					}
-					
 					
 					caminos.put(r.getPlantaDestino(), caminosAux);
 					
