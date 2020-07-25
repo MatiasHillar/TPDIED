@@ -2,10 +2,8 @@ package servicios;
 
 import java.util.List;
 
-import dao.PlantaDao;
 import dao.RutaDao;
-import dominio.Planta;
-import dominio.Ruta;
+import dominio.*;
 
 public class RutaService {
 	private RutaDao rutaDao = new RutaDaoPostgreSQL();

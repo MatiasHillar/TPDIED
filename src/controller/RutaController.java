@@ -29,15 +29,18 @@ public class RutaController {
 	
 
 	public void actualizarRuta() throws DatosObligatoriosException, FormatoNumeroException, ControllerException{
+		String s= "Kilometros";
 		try {
 			if(this.panel.getTxtDistanciaKm()!=null) {
 				r.setDistanciaKm(Float.valueOf(this.panel.getTxtDistanciaKm().getText()));
 			}
 			else throw new DatosObligatoriosException("Distancia en Km", "La distancia en Km de la ruta es obligatoria");
+			s="Duracion en horas";
 			if(this.panel.getTxtDuracionHs()!=null) {
 				r.setDuracionMin(60f *Float.valueOf(this.panel.getTxtDuracionHs().getText()));
 			}
 			else throw new DatosObligatoriosException("Duracion en Horas", "La distancia en horas de la ruta es obligatoria");
+			s="Peso maximo";
 			if(this.panel.getTxtPesoMaximo()!=null) {
 				r.setPesoMaximoKg(Float.valueOf(this.panel.getTxtPesoMaximo().getText()));
 			}
@@ -46,11 +49,13 @@ public class RutaController {
 		}
 		catch(NumberFormatException nfe) {
 			nfe.printStackTrace();
-			throw new FormatoNumeroException("Kilometros", "Debe ingresar un valor numerico");
+			throw new FormatoNumeroException(s, "Debe ingresar un valor numerico");
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw new ControllerException("Error:"+e.getLocalizedMessage());
 		}
+		
+		
 		if(this.panel.getJcbPlantaOrigen().getSelectedItem()!=null) {
 			r.setPlantaOrigen((Planta)(this.panel.getJcbPlantaOrigen().getSelectedItem()));
 		}

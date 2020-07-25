@@ -31,7 +31,7 @@ public class PlantaController {
 		else throw new DatosObligatoriosException("Nombre", "El nombre de la planta es obligatorio");	
 	}
 	
-	public Planta guardar()throws DatosObligatoriosException, FormatoNumeroException, ControllerException {
+	public Planta guardar()throws DatosObligatoriosException{
 		this.actualizarPlanta();
 		plantaService.crearPlanta(p);
 		this.lista.clear();

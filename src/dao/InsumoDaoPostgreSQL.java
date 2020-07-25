@@ -22,7 +22,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "WHERE ID = ?";
 	
 	private static final String INSERT_INSUMO_GENERAL =
-			"INSERT INTO CAMION(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO)"
+			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO)"
 			+ " VALUES(?, ?, ?, 'general', ?)";
 
 	private static final String UPDATE_INSUMO_LIQUIDO =
@@ -30,7 +30,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "WHERE ID = ?";
 
 	private static final String INSERT_INSUMO_LIQUIDO =
-			"INSERT INTO CAMION(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO)"
+			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO)"
 			+ " VALUES(?, ?, ?, 'liquido', ?)";	
 	
 	private static final String DELETE_INSUMO =

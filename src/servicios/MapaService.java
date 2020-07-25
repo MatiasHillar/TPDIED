@@ -11,8 +11,8 @@ import dominio.util.MatrizFloyd;
 
 public class MapaService {
 	/*
-	private PlantaDao plantaDao = new PlantaDaoMysql();
-	private RutaDao rutaDao = new RutaDaoMysql();
+	private PlantaDao plantaDao;
+	private RutaDao rutaDao;
 	
 	
 	public List<Ruta> buscarTodasRutas() {
@@ -22,7 +22,12 @@ public class MapaService {
 		return plantaDao.buscarTodos();
 	}
 	*/
-	
+	public MapaService() {
+		/*
+		 * plantaDao = new PlantaDaoMysql();
+		 * rutaDao = new RutaDaoMysql();
+		 */
+	}
 	
 	public Mapa construir() {
 		

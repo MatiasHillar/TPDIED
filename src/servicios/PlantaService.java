@@ -7,7 +7,11 @@ import dao.PlantaDao;
 
 
 public class PlantaService {
-	private PlantaDao plantaDao = new PlantaDaoPostgreSQL();
+	private PlantaDao plantaDao;
+	
+	public PlantaService() {
+		plantaDao = new PlantaDaoPostgreSQL();
+	}
 
 	public Planta crearPlanta(Planta p) {
 		// si hay alguna regla de negocio que indque que no se 

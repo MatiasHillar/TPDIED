@@ -1,6 +1,7 @@
 package dominio;
 
 public abstract class Insumo {
+	protected String nombre;
 	protected String descripcion;
 	protected Unidad unidadMedida;
 	protected Float costo;
@@ -40,5 +41,13 @@ public abstract class Insumo {
 	}
 	public Float pesoPorUnidad() {
 		return null;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 }

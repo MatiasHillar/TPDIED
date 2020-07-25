@@ -9,8 +9,12 @@ import dominio.*;
 
 
 public class CamionService {
-	private CamionDao camionDao = new CamionDaoPostgreSQL();
+	private CamionDao camionDao;
 
+	public CamionService() {
+		camionDao = new CamionDaoPostgreSQL();
+	}
+	
 	public Camion crearCamion(Camion c) {
 		// si hay alguna regla de negocio que indque que no se 
 		// puede agregar un camion si no se cumplen determinadas
