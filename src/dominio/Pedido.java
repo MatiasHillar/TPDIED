@@ -13,6 +13,7 @@ public class Pedido {
 	private Camion camion;
 	private Ruta ruta;
 	private Float costoEnvio;
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

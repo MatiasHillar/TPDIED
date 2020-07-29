@@ -48,7 +48,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
 		try{
-			if(c.getPatente()!=null) {
+			if(checkNull(c.getPatente(), conn)) {
 				pstmt = conn.prepareStatement(UPDATE_CAMION);
 				pstmt.setString(1, c.getPatente());
 				pstmt.setFloat(2, c.getKmRecorridos());
@@ -141,9 +141,29 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		return lista;
 	}
 
-	@Override
-	public Camion buscarporPatente(Integer id) {
-		return null;
+	private boolean checkNull(String patente, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Boolean ret = false;
+		try {
+			pstmt = conn.prepareStatement(SELECT_CAMION);
+			pstmt.setString(1, patente);
+			rs = pstmt.executeQuery();
+			if(rs.getString("PATENTE") != null) ret = true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	finally {
+		try {
+		if(pstmt!=null) pstmt.close();
+		if(conn!=null) conn.close();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		return ret;
 	}
 
 	@Override

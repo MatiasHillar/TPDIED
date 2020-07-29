@@ -3,6 +3,8 @@ package dominio;
 public class ItemPedido {
 	private Insumo insumo;
 	private Integer ctidad;
+	private Pedido pedido;
+	
 	public Float getPrecio() {
 		return insumo.getCosto()*this.ctidad;
 	}
@@ -17,6 +19,12 @@ public class ItemPedido {
 	}
 	public void setCtidad(Integer ctidad) {
 		this.ctidad = ctidad;
+	}
+	public Pedido getPedido() {
+		return pedido;
+	}
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 	
 

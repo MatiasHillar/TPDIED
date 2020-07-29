@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.ArrayList;
+import java.util.ArrayList;	
 import java.util.List;
 
 import dao.utils.DB;
@@ -52,6 +52,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setString(2, i.getDescripcion());
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.getPeso());
+				pstmt.setInt(5, i.getId());
 			 
 		}
 			else {

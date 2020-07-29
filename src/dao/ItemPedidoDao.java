@@ -3,7 +3,7 @@ package dao;
 import dominio.ItemPedido;
 
 public interface ItemPedidoDao {
-
+	
 	public ItemPedido saveOrUpdate(ItemPedido item);
 	public ItemPedido buscarPorInsumo(Integer idInsumo);
 	public ItemPedido buscarPorPedido(Integer idPedido);
