@@ -27,7 +27,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				      + " WHERE C.ID_MODELO = M.MODELO";
 	
 	private static final String SELECT_CAMION =
-			"SELECT * FROM CAMION"
+			"SELECT * FROM CAMION "
 			+ "WHERE PATENTE = ?";
 	
 	private static final String UPDATE_CAMION =

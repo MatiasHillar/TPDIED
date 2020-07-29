@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 
@@ -17,7 +19,7 @@ import gui.util.*;
 public class PanelCamiones extends JPanel{
 	
 	private JLabel lblTitulo = new JLabel("Administracion de camiones:");
-
+	private JLabel lblCrear = new JLabel("Alta de camiones:");
 	private JLabel lblPatente = new JLabel("Patente:");
 	private JTextField txtPatente;
 	private JLabel lblModelo = new JLabel("Modelo:");
@@ -25,7 +27,7 @@ public class PanelCamiones extends JPanel{
 	private JLabel lblMarca = new JLabel("Marca:");
 	private JTextField txtMarca;
 	private JLabel lblFecha = new JLabel("Fecha:");
-	private DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField txtFechaCompra = new JFormattedTextField(df);	
 	private JLabel lblKm = new JLabel("KMs:");
 	private JTextField txtKm;
@@ -48,58 +50,79 @@ public class PanelCamiones extends JPanel{
 		
 		
 		GridBagConstraints constraints = new GridBagConstraints();
+		
 
+		constraints.insets = new Insets(30, 0, 10, 0);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 11;
+		constraints.gridheight=2;
+		constraints.anchor= GridBagConstraints.SOUTH;
 		lblTitulo.setFont(new Font("Calibri", Font.BOLD, 24));
 		lblTitulo.setForeground(Color.BLUE);
 		this.add(lblTitulo,constraints);
+		
+		constraints.insets = new Insets(10, 30, 0, 0);
+
+		constraints.gridx = 0;
+		constraints.gridy = 4;
+		constraints.gridwidth = 11;
+		constraints.gridheight=1;
+		constraints.anchor= GridBagConstraints.WEST;
+		lblCrear.setFont(new Font("Calibri", Font.BOLD, 20));
+		lblCrear.setForeground(Color.BLUE);
+		this.add(lblCrear,constraints);
+		
+		
+		constraints.insets = new Insets(0, 20, 0, 0);
+		constraints.anchor= GridBagConstraints.CENTER;
+		
+		
 		constraints.gridwidth = 1;
 
 		constraints.gridx = 0;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.add(lblPatente,constraints);
-
+		constraints.insets = new Insets(0, 0, 0, 0);
 		constraints.gridx = 1;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.txtPatente = new JTextField(20);
 		this.add(txtPatente,constraints);
 
 		constraints.gridx = 2;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.add(lblModelo,constraints);
 
 		constraints.gridx = 3;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.txtModelo = new JTextField(20);		
 		this.add(txtModelo,constraints);
 		
 		constraints.gridx = 4;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.add(lblMarca,constraints);
 		constraints.gridx = 5;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.txtMarca = new JTextField(20);
 		this.add(txtMarca,constraints);
 		
 
 		constraints.gridx = 6;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.add(lblFecha,constraints);
-		this.txtFechaCompra = new JFormattedTextField(80);
+		this.txtFechaCompra = new JFormattedTextField(40);
 		constraints.gridx = 7;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.add(txtFechaCompra,constraints);
 		constraints.gridx = 8;
-		constraints.gridy = 1;		
+		constraints.gridy = 5;		
 		this.add(lblKm,constraints);
 		constraints.gridx = 9;
-		constraints.gridy = 1;		
-		this.txtKm = new JTextField(20);		
+		constraints.gridy = 5;		
+		this.txtKm = new JTextField(40);		
 		this.add(txtKm,constraints);		
 		constraints.gridx = 8;
-		constraints.gridy = 2;	
+		constraints.gridy = 6;	
 		
 		this.btnGuardar = new JButton("Guardar");
 		
@@ -117,15 +140,14 @@ public class PanelCamiones extends JPanel{
 		
 		this.add(btnGuardar,constraints);
 		constraints.gridx = 9;
-		constraints.gridy = 2;		
-		constraints.weightx=2;
+		constraints.gridy = 6;		
 		constraints.anchor = GridBagConstraints.LINE_START;
-		constraints.ipadx = 25;
-		constraints.insets = new Insets(0, 50, 0, 5);
 		this.btnCancelar = new JButton("Cancelar");
 		this.add(btnCancelar,constraints);
 		constraints.weightx=0;
-		constraints.insets = new Insets(0, 0, 0, 0);
+		
+		
+		constraints.insets = new Insets(10, 50, 10, 50);
 		
 		
 		
@@ -136,14 +158,14 @@ public class PanelCamiones extends JPanel{
 		JScrollPane scrollPane = new JScrollPane(tablaCamiones);
 		tablaCamiones.setFillsViewportHeight(true);
 		constraints.gridx = 0;
-		constraints.gridy = 3;		
+		constraints.gridy = 7;		
 		constraints.gridwidth = 11;
 		constraints.weighty=1;
 		constraints.weightx=2;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.fill= GridBagConstraints.HORIZONTAL;
 		this.add(scrollPane,constraints);
-		
+		this.limpiarFormulario();
 		
 	}
 	
@@ -152,7 +174,7 @@ public class PanelCamiones extends JPanel{
 		this.txtModelo.setText("");
 		this.txtMarca.setText("");
 		this.txtKm.setText("");
-		this.txtFechaCompra.setText("");
+		this.txtFechaCompra.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 	}
 
 	public JTextField getTxtPatente() {

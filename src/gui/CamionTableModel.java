@@ -1,11 +1,13 @@
 package gui;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import dominio.Camion;
+import dominio.Modelo;
 
 
 
@@ -17,7 +19,14 @@ public class CamionTableModel extends AbstractTableModel {
 		this.data = camiones;
 		else this.data= new ArrayList<Camion>();
 	}
-    private String[] columnNames =  {"Patente","Marca","Modelo","Kmts"};
+	/*
+private Float costoKm;
+private Float costoHora;
+private LocalDate fechaCompra;
+	 */
+	
+	
+    private String[] columnNames =  {"Patente","Marca","Modelo","KM Recorridos", "Fecha de compra"};
     private List<Camion> data ;
 
     public int getColumnCount() {
@@ -43,6 +52,8 @@ public class CamionTableModel extends AbstractTableModel {
 	        	return cam.getModelo(); 
 	        case 3:
 	        	return cam.getKmRecorridos(); 
+	        case 4:
+	        	return cam.getFechaCompra();
         }
         return null;
     }
