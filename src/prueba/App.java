@@ -11,11 +11,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
-import gui.PanelInsumosGenerales;
-import gui.PanelInsumosLiquidos;
-import gui.PanelPlantas;
-import gui.PanelRutas;
-import gui.PanelStock;
+
+import gui.*;
 import dominio.*;
 import servicios.MapaService;
 
@@ -27,11 +24,13 @@ public class App extends JFrame{
 	JMenu menuRutas;
 	JMenu menuInsumos;
 	JMenu menuStock;
+	JMenu menuCamiones;
 	JMenuItem menuItemPlantas;
 	JMenuItem menuItemRutas;
 	JMenuItem menuItemInsumosGenerales;
 	JMenuItem menuItemInsumosLiquidos;
 	JMenuItem menuItemStock;
+	JMenuItem menuItemCamion;
 	
 	
 	private App() {
@@ -43,6 +42,17 @@ public class App extends JFrame{
 		this.menuRutas = new JMenu("Rutas");
 		this.menuInsumos = new JMenu("Insumos");
 		this.menuStock = new JMenu("Stock");
+		this.menuCamiones = new JMenu("Camiones");
+		
+		
+		this.menuItemCamion = new JMenuItem("Camion");
+		this.menuItemCamion.addActionListener( e -> {
+			System.out.println("LISTENER 1");
+			this.setContentPane(new PanelCamiones());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
 		
 		
 		this.menuItemPlantas = new JMenuItem("Gestionar Plantas");
@@ -95,12 +105,14 @@ public class App extends JFrame{
 		this.menuInsumos.add(menuItemInsumosGenerales);
 		this.menuInsumos.add(menuItemInsumosLiquidos);
 		this.menuStock.add(menuItemStock);
+		this.menuCamiones.add(menuItemCamion);
 		
 		
 		menuBar.add(menuPlantas);
 		menuBar.add(menuRutas);
 		menuBar.add(menuInsumos);
 		menuBar.add(menuStock);
+		menuBar.add(menuCamiones);
 		
 		this.setJMenuBar(menuBar);
 	
