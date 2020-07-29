@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -12,9 +13,11 @@ public class CamionTableModel extends AbstractTableModel {
 	//https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data
 	
 	public CamionTableModel(List<Camion> camiones) {
+		if(camiones!=null)
 		this.data = camiones;
+		else this.data= new ArrayList<Camion>();
 	}
-    private String[] columnNames =  {"ID","Patente","Marca","Modelo","Kmts"};
+    private String[] columnNames =  {"Patente","Marca","Modelo","Kmts"};
     private List<Camion> data ;
 
     public int getColumnCount() {
@@ -33,22 +36,22 @@ public class CamionTableModel extends AbstractTableModel {
         Camion cam = data.get(row);
         switch(col) {
 	        case 0:
-	        	return cam.getId();
-	        case 1:
 	        	return cam.getPatente(); 
-	        case 2:
+	        case 1:
 	        	return cam.getModelo().getMarca();
-	        case 3:
+	        case 2:
 	        	return cam.getModelo(); 
-	        case 4:
+	        case 3:
 	        	return cam.getKmRecorridos(); 
         }
         return null;
     }
 
+    
     public Class getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
+    
 
     /*
      * Don't need to implement this method unless your table's

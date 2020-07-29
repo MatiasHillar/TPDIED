@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class Camion {
 private String patente;
-private Integer id;
 private Modelo modelo;
 private Float costoKm;
 private Float costoHora;
@@ -15,12 +14,6 @@ public String getPatente() {
 }
 public void setPatente(String patente) {
 	this.patente = patente;
-}
-public Integer getId() {
-	return id;
-}
-public void setId(Integer id) {
-	this.id = id;
 }
 public Modelo getModelo() {
 	return modelo;
@@ -56,7 +49,7 @@ public void setFechaCompra(LocalDate fechaCompra) {
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((patente == null) ? 0 : patente.hashCode());
 	return result;
 }
 @Override
@@ -68,10 +61,10 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	Camion other = (Camion) obj;
-	if (id == null) {
-		if (other.id != null)
+	if (patente == null) {
+		if (other.patente != null)
 			return false;
-	} else if (!id.equals(other.id))
+	} else if (!patente.equals(other.patente))
 		return false;
 	return true;
 }
