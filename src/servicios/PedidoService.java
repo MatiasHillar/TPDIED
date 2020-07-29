@@ -25,10 +25,30 @@ public class PedidoService {
 		p.setFechaSolicitud(LocalDate.now());
 		return pedidoDao.saveOrUpdate(p);
 	}
+	public Pedido crearPedido(Pedido p, LocalDate fechaSolicitud) {
+		p.setEstado(Estado.CREADO);
+		p.setFechaSolicitud(fechaSolicitud);
+		return pedidoDao.saveOrUpdate(p);
+	}
+	
+	public Pedido entregarPedido(Pedido p) {
+		p.setEstado(Estado.ENTREGADO);
+		p.setFechaEntrega(LocalDate.now());
+		return pedidoDao.saveOrUpdate(p);
+	}
+	public Pedido entregarPedido(Pedido p, LocalDate fechaEntrega) {
+		p.setEstado(Estado.ENTREGADO);
+		p.setFechaEntrega(fechaEntrega);
+		return pedidoDao.saveOrUpdate(p);
+	}
 	
 	public List<Pedido> buscarTodosCreados() {
 		return pedidoDao.buscarTodosCreados();
 	}
+	public List<Pedido> buscarTodosProcesados() {
+		return pedidoDao.buscarTodosProcesados();
+	}
+	
 	
 	public List<Planta> buscarPlantasParaPedido(Pedido p) {
 		List<Planta> resultado= plantaService.buscarPlantasParaPedido(p.getListaItems());
@@ -49,27 +69,5 @@ public class PedidoService {
 	}
 	
 	
-	
-	
-	/*
-	 * private PlantaDao plantaDao;
-	
-	public PlantaService() {
-		plantaDao = new PlantaDaoPostgreSQL();
-	}
-
-	public Planta crearPlanta(Planta p) {
-		// si hay alguna regla de negocio que indque que no se 
-		// puede agregar un camion si no se cumplen determinadas
-		// condiciones en otras entidades o reglas 
-		// se valida aqu�
-			return this.plantaDao.saveOrUpdate(p);
-	}
-	
-	public List<Planta> buscarTodos() {
-		return plantaDao.buscarTodas();
-	}
-	
-	 */
 
 }
