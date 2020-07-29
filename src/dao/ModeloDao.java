@@ -5,6 +5,6 @@ import dominio.Modelo;
 public interface ModeloDao {
 
 	public Modelo saveOrUpdate(Modelo m);
-	public Modelo buscar(Integer id);
-	public Void borrar(Integer id);
+	public Modelo buscar(String modelo);
+	public void borrar(String modelo);
 }

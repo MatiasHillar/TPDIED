@@ -8,6 +8,7 @@ public class Modelo {
 		this.marca = marca;
 		this.modelo = modelo;
 	}
+	public Modelo() {};
 	public String getMarca() {
 		return marca;
 	}

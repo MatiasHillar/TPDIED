@@ -7,12 +7,12 @@ public class DB {
 	private static final String url ="jdbc:postgresql://ruby.db.elephantsql.com:5432/smohrdja";
 	private static final String user="smohrdja";
 	private static final String pass="H58Kz6hWghoq49JLBnOkvw2QbPqQPqGe";
-	private static boolean conexion = false;
+	private static boolean conexion = true;
 	
 	private static Connection crearConexion(){
 		Connection conn=null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			conn= DriverManager.getConnection(url,user,pass);
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
