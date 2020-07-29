@@ -2,7 +2,7 @@ package servicios;
 
 import java.util.List;
 
-import dominio.Planta;
+import dominio.*;
 import dao.PlantaDao;
 
 
@@ -23,6 +23,10 @@ public class PlantaService {
 	
 	public List<Planta> buscarTodos() {
 		return plantaDao.buscarTodas();
+	}
+	
+	public List<Planta> buscarPlantasParaPedido(List<ItemPedido> items ) {
+		return plantaDao.buscarPlantasParaPedido(items);
 	}
 	
 	

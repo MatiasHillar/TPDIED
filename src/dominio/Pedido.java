@@ -11,7 +11,7 @@ public class Pedido {
 	private Estado estado;
 	private List<ItemPedido> listaItems;
 	private Camion camion;
-	private Ruta ruta;
+	private List<Ruta> ruta;
 	private Float costoEnvio;
 	
 	@Override
@@ -79,10 +79,10 @@ public class Pedido {
 	public void setCamion(Camion camion) {
 		this.camion = camion;
 	}
-	public Ruta getRuta() {
+	public List<Ruta> getRuta() {
 		return ruta;
 	}
-	public void setRuta(Ruta ruta) {
+	public void setRuta(List<Ruta> ruta) {
 		this.ruta = ruta;
 	}
 	public Float getCostoEnvio() {
