@@ -113,7 +113,7 @@ public class ModeloDaoPostgreSQL implements ModeloDao{
 			pstmt = conn.prepareStatement(SELECT_MODELO);
 			pstmt.setString(1, modelo);
 			rs = pstmt.executeQuery();
-			if(rs.getString("PATENTE") != null) ret = true;
+			ret = rs.first();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();

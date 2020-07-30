@@ -40,8 +40,8 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			+ "WHERE PATENTE = ?";
 	
 	private static final String INSERT_CAMION =
-			"INSERT INTO CAMION(PATENTE, COSTOXKM, COSTOXHS, FECHA_COMPRA"
-			+ ", ID_MODELO, ID_PLANTA) VALUES(?, ?, ?, ?, ?, ?)";
+			"INSERT INTO CAMION(PATENTE, COSTOXKM, COSTOXHS"
+			+ ", ID_MODELO) VALUES(?, ?, ?, ?)";
 	
 	@Override
 	public Camion saveOrUpdate(Camion c) {
@@ -62,8 +62,8 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				pstmt.setString(1, c.getPatente());
 				pstmt.setFloat(2, c.getCostoKm());
 				pstmt.setFloat(3, c.getCostoHora());
-				pstmt.setString(4, c.getFechaCompra().toString());
-				pstmt.setString(5, c.getModelo().getModelo());
+				//pstmt.setString(4, c.getFechaCompra().toString());
+				pstmt.setString(4, c.getModelo().getModelo());
 			}
 			pstmt.executeUpdate();
 		}
@@ -146,23 +146,14 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		ResultSet rs = null;
 		Boolean ret = false;
 		try {
-			pstmt = conn.prepareStatement(SELECT_CAMION);
+			pstmt = conn.prepareStatement(SELECT_CAMION, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setString(1, patente);
 			rs = pstmt.executeQuery();
-			if(rs.getString("PATENTE") != null) ret = true;
+			ret = rs.first();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-	finally {
-		try {
-		if(pstmt!=null) pstmt.close();
-		if(conn!=null) conn.close();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
 		return ret;
 	}
 
@@ -213,8 +204,9 @@ public class CamionDaoPostgreSQL implements CamionDao{
 	}
 	
 	private LocalDate formatearFecha(String fecha) {
-		DateTimeFormatter f = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-		LocalDate date = LocalDate.parse(fecha, f);
-		return date;
+		//DateTimeFormatter f = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+		//LocalDate date = LocalDate.parse(fecha, f);
+		return LocalDate.now();
+		//esto obviamente hay q cambiarlo pero asi funciona para probar
 	}
 }
