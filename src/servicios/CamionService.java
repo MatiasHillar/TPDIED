@@ -1,6 +1,7 @@
 package servicios;
 
-import java.util.List;	
+import java.util.List;
+import java.util.Map;
 
 import dao.CamionDao;
 import dao.CamionDaoPostgreSQL;
@@ -25,6 +26,10 @@ public class CamionService {
 	
 	public List<Camion> buscarTodos() {
 		return camionDao.buscarTodos();
+	}
+	
+	public List<Camion> buscarPorAtributos(Map m) {
+		return camionDao.buscarPorPatributos(m);
 	}
 	
 	

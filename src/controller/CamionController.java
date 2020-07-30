@@ -120,22 +120,40 @@ public class CamionController {
 	}
 	
 	
-	public List<Camion> buscarPorAtributos  throws FormatoNumeroException,ControllerException(){
+	public List<Camion> buscarPorAtributos()  throws FormatoNumeroException, ControllerException{
 		LinkedHashMap<String,Object> atr= new LinkedHashMap<String,Object>();
 		String s="Kilometros";
+		Integer campos = 0;
 		try {
 			if(this.panel.getTxtPatente()!=null && !this.panel.getTxtPatente().getText().equals("")) {
-				atr.put("C.PATENTE", this.panel.getTxtPatente().getText());
+				atr.put("PATENTE", this.panel.getTxtPatente().getText());
+				campos++;
 			} 
-			if(this.panel.getTxtModelo()!=null && !this.panel.getTxtModelo().getText().equals(""))
-				atr.put("M.MODELO", this.panel.getTxtModelo().getText());
-			if(this.panel.getTxtMarca()!=null && !this.panel.getTxtMarca().getText().equals("")) 
-				atr.put("M.MARCA", this.panel.getTxtMarca().getText());
+			if(this.panel.getTxtModelo()!=null && !this.panel.getTxtModelo().getText().equals("")) {
+				atr.put("MODELO", this.panel.getTxtModelo().getText());
+				campos++;
+			}
+				
+			if(this.panel.getTxtMarca()!=null && !this.panel.getTxtMarca().getText().equals("")) {
+				atr.put("MARCA", this.panel.getTxtMarca().getText());
+				campos++;
+			}
 			
-			c.setKmRecorridos(obtenerValor(this.panelAlta.getTxtKm()));
-			c.setCostoHora(this.obtenerValor(this.panelAlta.getCostoHora()));
-			c.setCostoKm(this.obtenerValor(this.panelAlta.getCostoKm()));
-			if(this.panelAlta.getTxtFechaCompra()!=null) c.setFechaCompra(LocalDate.parse(this.panelAlta.getTxtFechaCompra().getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			
+			atr.put("KMMIN" ,obtenerValor(this.panel.getTxtKm()));
+			if((Float)atr.get("KMMIN")!=0f) campos++;
+			atr.put("KMMAX" ,obtenerValor(this.panel.getTxtKmMax()));
+			if((Float)atr.get("KMMAX")!=340282346638f) campos++;
+			s="Costo";
+			atr.put("COSTOHSMIN",this.obtenerValor(this.panel.getCostoHora()));
+			if((Float)atr.get("COSTOHSMIN")!=0f) campos++;
+			atr.put("COSTOHSMAX",this.obtenerValor(this.panel.getCostoHoraMax()));
+			if((Float)atr.get("COSTOHSMAX")!=340282346638f) campos++;
+			atr.put("COSTOKMMIN",this.obtenerValor(this.panel.getCostoKm()));
+			if((Float)atr.get("COSTOKMMIN")!=0f) campos++;
+			atr.put("COSTOKMMAX",this.obtenerValor(this.panel.getCostoKmMax()));
+			if((Float)atr.get("COSTOKMMAX")!=340282346638f) campos++;
+			
 		} catch(NumberFormatException nfe) {
 			nfe.printStackTrace();
 			throw new FormatoNumeroException(s, "Debe ingresar un valor numerico");
@@ -145,10 +163,9 @@ public class CamionController {
 		}
 		
 		
-		
 		this.lista.clear();
-		this.lista.addAll(camionService.buscarTodos()); 
-		System.out.println("Resultado res   "+lista);
+		if(campos!=0)this.lista.addAll(this.camionService.buscarPorAtributos(atr));
+		else this.lista.addAll(this.camionService.buscarTodos());
 		return this.lista;
 	}
 	

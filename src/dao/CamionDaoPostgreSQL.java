@@ -194,55 +194,57 @@ public class CamionDaoPostgreSQL implements CamionDao{
 	
 	private String prepararSentencia(Map<String, ?> atrib) {
 		String p1 = "SELECT * FROM CAMION C, MODELO M "
-				+ "WHERE C.ID_MODELO = M.NOMBRE";
+				+ "WHERE C.ID_MODELO = M.MODELO";
 		String values = "";
 		for (Map.Entry<String,?> entry : atrib.entrySet()) {
 			
 			switch(entry.getKey()) {
-				case "kmmin":
-					values.concat(" AND C.KMRECORRIDOS BETWEEN "+entry.getValue()+" AND "
-							+atrib.get("kmmax"));
+				case "KMMIN":
+					values = values.concat(" AND C.KM_RECORRIDOS BETWEEN "+entry.getValue()+" AND "
+							+atrib.get("KMMAX"));
 					break;
 					
-				case "kmmax":
-					values.concat(" AND C.KMRECORRIDOS BETWEEN "+atrib.get("kmmin")
+				case "KMMAX":
+					values = values.concat(" AND C.KM_RECORRIDOS BETWEEN "+atrib.get("KMMIN")
 					+" AND "+entry.getValue());
 					break;
 					
-				case "costohsmin":
-					values.concat(" AND C.COSTOXHS BETWEEN "+entry.getValue()+" AND "
-							+atrib.get("costohsmax"));
+				case "COSTOHSMIN":
+					values = values.concat(" AND C.COSTOXHS BETWEEN "+entry.getValue()+" AND "
+							+atrib.get("COSTOHSMAX"));
 					break;
 					
-				case "costohsmax":
-					values.concat(" AND C.COSTOXHS BETWEEN "+atrib.get("costohsmin")
+				case "COSTOHSMAX":
+					values = values.concat(" AND C.COSTOXHS BETWEEN "+atrib.get("COSTOHSMIN")
 					+" AND "+entry.getValue());
 					break;
 				
-				case "costokmmin":
-					values.concat(" AND C.COSTOXKM BETWEEN "+entry.getValue()+" AND "
-							+atrib.get("costokmmax"));
+				case "COSTOKMMIN":
+					values = values.concat(" AND C.COSTOXKM BETWEEN "+entry.getValue()+" AND "
+							+atrib.get("COSTOKMMAX"));
 					break;
 					
-				case "costokmmax":
-					values.concat(" AND C.COSTOXKM BETWEEN "+atrib.get("costokmmin")
+				case "COSTOKMMAX":
+					values = values.concat(" AND C.COSTOXKM BETWEEN "+atrib.get("COSTOKMMIN")
 					+" AND "+entry.getValue());
 					break;
 			
-				case "marca":
-					values.concat(" AND "+"M."+entry.getKey()+"="+entry.getValue());
+				case "MARCA":
+					values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
 					break;
 					
-				case "modelo":
-					values.concat(" AND "+"M."+entry.getKey()+"="+entry.getValue());
+				case "MODELO":
+					values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
 					break;
 					
 				default:
-					values.concat(" AND "+"C."+entry.getKey()+"="+entry.getValue());
+					if(entry!=null)
+					values = values.concat(" AND "+"C."+entry.getKey()+"='"+entry.getValue() + "'");
 					break;
 					
 			}
 		}
+//		System.out.println(p1 + values);
 		return p1.concat(values); 
 	}
 	

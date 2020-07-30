@@ -11,12 +11,15 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.*;
 
 import controller.*;
 import gui.util.*;
+import dominio.*;
 
 
 public class PanelCamiones extends JPanel{
@@ -31,19 +34,28 @@ public class PanelCamiones extends JPanel{
 	private JTextField txtMarca;
 	
 
-	private JLabel lblCostoHora = new JLabel("Costo por hora:");
+	private JLabel lblCostoHora = new JLabel("Costo por hora minimo:");
 	private JFormattedTextField costoHora = new JFormattedTextField(NumberFormat.getNumberInstance());
-	private JLabel lblCostoKm = new JLabel("Costo por Km:");
+	private JLabel lblCostoKm = new JLabel("Costo por Km minimo:");
 	private JFormattedTextField costoKm = new JFormattedTextField(NumberFormat.getNumberInstance());
+	
+	private JLabel lblCostoHoraMax = new JLabel("Costo por hora maximo:");
+	private JFormattedTextField costoHoraMax = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JLabel lblCostoKmMax = new JLabel("Costo por Km maximo:");
+	private JFormattedTextField costoKmMax = new JFormattedTextField(NumberFormat.getNumberInstance());
 
 	
 	private JLabel lblFecha = new JLabel("Fecha:");
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField txtFechaCompra = new JFormattedTextField(df);	
 	
-	private JLabel lblKm = new JLabel("KMs:");
+	private JLabel lblKm = new JLabel("Kms recorridos minimo:");
 	
 	private JFormattedTextField txtKm = new JFormattedTextField(NumberFormat.getNumberInstance());
+
+	private JLabel lblKmMax = new JLabel("Kms recorridos maximo:");
+	
+	private JFormattedTextField txtKmMax = new JFormattedTextField(NumberFormat.getNumberInstance());
 	
 	//private JTextField txtKm;
 	
@@ -128,15 +140,26 @@ public class PanelCamiones extends JPanel{
 		this.add(txtMarca,constraints);
 		
 
+		/*
 		constraints.gridx = 6;
 		constraints.gridy = 5;		
 		this.add(lblFecha,constraints);
-		//this.txtFechaCompra = new JFormattedTextField(20);
 		this.txtFechaCompra.setColumns(10);
-		//this.txtFechaCompra.setMinimumSize(new Dimension(100,25));
 		constraints.gridx = 7;
 		constraints.gridy = 5;		
 		this.add(txtFechaCompra,constraints);
+		*/
+		
+		constraints.gridx = 6;
+		constraints.gridy = 5;	
+		this.add(lblKmMax,constraints);
+		constraints.gridx = 7;
+		constraints.gridy = 5;
+		this.txtKmMax.setColumns(10);
+		this.add(txtKmMax,constraints);
+		
+		
+		
 		constraints.gridx = 8;
 		constraints.gridy = 5;		
 		this.add(lblKm,constraints);
@@ -145,10 +168,6 @@ public class PanelCamiones extends JPanel{
 		
 
 		this.txtKm.setColumns(10);
-//		this.txtKm = new JTextField(20);
-//		this.txtKm.setMinimumSize(new Dimension(100,25));	
-		
-		
 		
 		this.add(txtKm,constraints);
 		
@@ -167,11 +186,28 @@ public class PanelCamiones extends JPanel{
 		
 		constraints.gridx = 2;
 		constraints.gridy = 6;	
-		this.add(lblCostoKm,constraints);
-		this.costoKm.setColumns(10);
+		this.add(lblCostoHoraMax,constraints);
 		constraints.gridx = 3;
 		constraints.gridy = 6;	
+		this.costoHoraMax.setColumns(10);
+		this.add(costoHoraMax,constraints);
+		
+		
+
+		constraints.gridx = 4;
+		constraints.gridy = 6;	
+		this.add(lblCostoKm,constraints);
+		constraints.gridx = 5;
+		constraints.gridy = 6;	
+		this.costoKm.setColumns(10);
 		this.add(costoKm,constraints);
+		constraints.gridx = 6;
+		constraints.gridy = 6;	
+		this.add(lblCostoKmMax,constraints);
+		constraints.gridx = 7;
+		constraints.gridy = 6;			
+		this.costoKmMax.setColumns(10);
+		this.add(costoKmMax,constraints);
 		
 		constraints.gridx = 8;
 		constraints.gridy = 7;	
@@ -181,8 +217,9 @@ public class PanelCamiones extends JPanel{
 		this.btnGuardar.addActionListener( e ->
 			{
 				try {
-					controller.guardar();
-				} catch (DatosObligatoriosException | FormatoNumeroException | ControllerException e1) {
+					modeloTablaCamion.setData(controller.buscarPorAtributos());
+					//controller.buscarPorAtributos();
+				} catch (FormatoNumeroException | ControllerException e1) {
 					this.mostrarError("Error al guardar", e1.getMessage());
 				}
 				this.limpiarFormulario();
@@ -208,7 +245,7 @@ public class PanelCamiones extends JPanel{
 		
 		
 		
-		modeloTablaCamion = new CamionTableModel(controller.listarTodos());
+		modeloTablaCamion = new CamionTableModel(new ArrayList<Camion>());
 		tablaCamiones = new JTable();
 		tablaCamiones.setModel(modeloTablaCamion);
 		JScrollPane scrollPane = new JScrollPane(tablaCamiones);
@@ -229,11 +266,38 @@ public class PanelCamiones extends JPanel{
 		this.txtPatente.setText("");
 		this.txtModelo.setText("");
 		this.txtMarca.setText("");
-//		this.txtKm.setText("");
 		this.txtKm.setValue(0f);
 		this.costoHora.setValue(0f);
 		this.costoKm.setValue(0f);
-		this.txtFechaCompra.setValue(new Date());
+		this.txtKmMax.setValue(340282346638f);
+		this.costoHoraMax.setValue(340282346638f);
+		this.costoKmMax.setValue(340282346638f);
+		
+//		this.txtFechaCompra.setValue(new Date());
+	}
+
+	public JFormattedTextField getCostoHoraMax() {
+		return costoHoraMax;
+	}
+
+	public void setCostoHoraMax(JFormattedTextField costoHoraMax) {
+		this.costoHoraMax = costoHoraMax;
+	}
+
+	public JFormattedTextField getCostoKmMax() {
+		return costoKmMax;
+	}
+
+	public void setCostoKmMax(JFormattedTextField costoKmMax) {
+		this.costoKmMax = costoKmMax;
+	}
+
+	public JFormattedTextField getTxtKmMax() {
+		return txtKmMax;
+	}
+
+	public void setTxtKmMax(JFormattedTextField txtKmMax) {
+		this.txtKmMax = txtKmMax;
 	}
 
 	public JTextField getTxtPatente() {
