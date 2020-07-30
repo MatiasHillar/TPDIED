@@ -1,6 +1,7 @@
 package gui;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ private LocalDate fechaCompra;
 	        case 3:
 	        	return cam.getKmRecorridos(); 
 	        case 4:
-	        	return cam.getFechaCompra();
+	        	return cam.getFechaCompra().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         }
         return null;
     }

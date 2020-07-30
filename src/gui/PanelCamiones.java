@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -87,7 +88,10 @@ public class PanelCamiones extends JPanel{
 		constraints.gridx = 1;
 		constraints.gridy = 5;		
 		this.txtPatente = new JTextField(20);
+		this.txtPatente.setPreferredSize(new Dimension(350,25));
+		this.txtPatente.setMinimumSize(new Dimension(150,25));
 		this.add(txtPatente,constraints);
+		
 
 		constraints.gridx = 2;
 		constraints.gridy = 5;		
@@ -95,22 +99,25 @@ public class PanelCamiones extends JPanel{
 
 		constraints.gridx = 3;
 		constraints.gridy = 5;		
-		this.txtModelo = new JTextField(20);		
+		this.txtModelo = new JTextField(20);
+		this.txtModelo.setMinimumSize(new Dimension(150,25));
 		this.add(txtModelo,constraints);
 		
 		constraints.gridx = 4;
 		constraints.gridy = 5;		
 		this.add(lblMarca,constraints);
 		constraints.gridx = 5;
-		constraints.gridy = 5;		
+		constraints.gridy = 5;
 		this.txtMarca = new JTextField(20);
+		this.txtMarca.setMinimumSize(new Dimension(150,25));
 		this.add(txtMarca,constraints);
 		
 
 		constraints.gridx = 6;
 		constraints.gridy = 5;		
 		this.add(lblFecha,constraints);
-		this.txtFechaCompra = new JFormattedTextField(40);
+		this.txtFechaCompra = new JFormattedTextField(20);
+		this.txtFechaCompra.setMinimumSize(new Dimension(100,25));
 		constraints.gridx = 7;
 		constraints.gridy = 5;		
 		this.add(txtFechaCompra,constraints);
@@ -119,7 +126,8 @@ public class PanelCamiones extends JPanel{
 		this.add(lblKm,constraints);
 		constraints.gridx = 9;
 		constraints.gridy = 5;		
-		this.txtKm = new JTextField(40);		
+		this.txtKm = new JTextField(20);
+		this.txtKm.setMinimumSize(new Dimension(100,25));		
 		this.add(txtKm,constraints);		
 		constraints.gridx = 8;
 		constraints.gridy = 6;	
@@ -140,8 +148,7 @@ public class PanelCamiones extends JPanel{
 		
 		this.add(btnGuardar,constraints);
 		constraints.gridx = 9;
-		constraints.gridy = 6;		
-		constraints.anchor = GridBagConstraints.LINE_START;
+		constraints.gridy = 6;
 		this.btnCancelar = new JButton("Cancelar");
 		this.add(btnCancelar,constraints);
 		constraints.weightx=0;

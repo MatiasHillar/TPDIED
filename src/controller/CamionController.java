@@ -1,5 +1,7 @@
 package controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +37,9 @@ public class CamionController {
 			
 			if(this.panel.getTxtModelo()!=null) m.setModelo(this.panel.getTxtModelo().getText()); 
 			if(this.panel.getTxtMarca()!=null) m.setMarca(this.panel.getTxtMarca().getText()); 
+			c.setModelo(m);
 			if(this.panel.getTxtKm()!=null) c.setKmRecorridos(Float.valueOf(this.panel.getTxtKm().getText())); 
-			//if(this.panel.getTxtFechaCompra()!=null) c.setPatente(this.panel.getFechaCompra.getText()); 
+			if(this.panel.getTxtFechaCompra()!=null) c.setFechaCompra(LocalDate.parse(this.panel.getTxtFechaCompra().getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		} catch(NumberFormatException nfe) {
 			nfe.printStackTrace();
 			throw new FormatoNumeroException("Kilometros", "Debe ingresar un valor numerico");
