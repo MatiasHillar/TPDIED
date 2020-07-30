@@ -31,6 +31,7 @@ public class App extends JFrame{
 	JMenuItem menuItemInsumosLiquidos;
 	JMenuItem menuItemStock;
 	JMenuItem menuItemCamion;
+	JMenuItem menuItemAltaCamion;
 	
 	
 	private App() {
@@ -45,10 +46,17 @@ public class App extends JFrame{
 		this.menuCamiones = new JMenu("Camiones");
 		
 		
-		this.menuItemCamion = new JMenuItem("Camion");
+		this.menuItemCamion = new JMenuItem("Gestionar Camiones");
 		this.menuItemCamion.addActionListener( e -> {
-			System.out.println("LISTENER 1");
 			this.setContentPane(new PanelCamiones());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
+		
+		this.menuItemAltaCamion = new JMenuItem("Registrar Camion");
+		this.menuItemAltaCamion.addActionListener( e -> {
+			this.setContentPane(new PanelAltaCamiones());
 			//this.pack();
 			this.revalidate();
 			this.repaint();
@@ -106,6 +114,7 @@ public class App extends JFrame{
 		this.menuInsumos.add(menuItemInsumosLiquidos);
 		this.menuStock.add(menuItemStock);
 		this.menuCamiones.add(menuItemCamion);
+		this.menuCamiones.add(menuItemAltaCamion);
 		
 		
 		menuBar.add(menuPlantas);
