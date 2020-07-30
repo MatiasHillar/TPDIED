@@ -27,7 +27,7 @@ private LocalDate fechaCompra;
 	 */
 	
 	
-    private String[] columnNames =  {"Patente","Marca","Modelo","KM Recorridos", "Fecha de compra"};
+    private String[] columnNames =  {"Patente","Marca","Modelo","KM Recorridos", "Fecha de compra", "Costo por hora", "Costo por Km"};
     private List<Camion> data ;
 
     public int getColumnCount() {
@@ -46,15 +46,26 @@ private LocalDate fechaCompra;
         Camion cam = data.get(row);
         switch(col) {
 	        case 0:
-	        	return cam.getPatente(); 
+	        	if(cam.getPatente()!=null)return cam.getPatente();
+	        	else return "Null";
 	        case 1:
-	        	return cam.getModelo().getMarca();
+	        	if(cam.getModelo().getMarca()!=null)return cam.getModelo().getMarca();
+	        	else return "Null";
 	        case 2:
-	        	return cam.getModelo(); 
+	        	if(cam.getModelo().getModelo()!=null)return cam.getModelo().getModelo();
+	        	else return "Null";
 	        case 3:
-	        	return cam.getKmRecorridos(); 
+	        	if(cam.getKmRecorridos()!=null)return cam.getKmRecorridos();
+	        	else return "Null";
 	        case 4:
-	        	return cam.getFechaCompra().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        	if(cam.getFechaCompra()!=null) return cam.getFechaCompra().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        	else return "Null";
+	        case 5:
+	        	if(cam.getCostoHora()!=null)return cam.getCostoHora();
+	        	else return "Null";
+	        case 6:
+	        	if(cam.getCostoKm()!=null)return cam.getCostoKm();
+	        	else return "Null";
         }
         return null;
     }
