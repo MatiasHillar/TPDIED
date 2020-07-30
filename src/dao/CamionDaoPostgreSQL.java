@@ -197,8 +197,51 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				+ "WHERE C.ID_MODELO = M.NOMBRE";
 		String values = "";
 		for (Map.Entry<String,?> entry : atrib.entrySet()) {
-			values.concat(" AND "+"C."+entry.getKey()+"="+entry.getValue());
 			
+			switch(entry.getKey()) {
+				case "kmmin":
+					values.concat(" AND C.KMRECORRIDOS BETWEEN "+entry.getValue()+" AND "
+							+atrib.get("kmmax"));
+					break;
+					
+				case "kmmax":
+					values.concat(" AND C.KMRECORRIDOS BETWEEN "+atrib.get("kmmin")
+					+" AND "+entry.getValue());
+					break;
+					
+				case "costohsmin":
+					values.concat(" AND C.COSTOXHS BETWEEN "+entry.getValue()+" AND "
+							+atrib.get("costohsmax"));
+					break;
+					
+				case "costohsmax":
+					values.concat(" AND C.COSTOXHS BETWEEN "+atrib.get("costohsmin")
+					+" AND "+entry.getValue());
+					break;
+				
+				case "costokmmin":
+					values.concat(" AND C.COSTOXKM BETWEEN "+entry.getValue()+" AND "
+							+atrib.get("costokmmax"));
+					break;
+					
+				case "costokmmax":
+					values.concat(" AND C.COSTOXKM BETWEEN "+atrib.get("costokmmin")
+					+" AND "+entry.getValue());
+					break;
+			
+				case "marca":
+					values.concat(" AND "+"M."+entry.getKey()+"="+entry.getValue());
+					break;
+					
+				case "modelo":
+					values.concat(" AND "+"M."+entry.getKey()+"="+entry.getValue());
+					break;
+					
+				default:
+					values.concat(" AND "+"C."+entry.getKey()+"="+entry.getValue());
+					break;
+					
+			}
 		}
 		return p1.concat(values); 
 	}
