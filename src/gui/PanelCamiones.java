@@ -7,9 +7,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.swing.*;
 
@@ -27,11 +29,24 @@ public class PanelCamiones extends JPanel{
 	private JTextField txtModelo;
 	private JLabel lblMarca = new JLabel("Marca:");
 	private JTextField txtMarca;
+	
+
+	private JLabel lblCostoHora = new JLabel("Costo por hora:");
+	private JFormattedTextField costoHora = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JLabel lblCostoKm = new JLabel("Costo por Km:");
+	private JFormattedTextField costoKm = new JFormattedTextField(NumberFormat.getNumberInstance());
+
+	
 	private JLabel lblFecha = new JLabel("Fecha:");
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField txtFechaCompra = new JFormattedTextField(df);	
+	
 	private JLabel lblKm = new JLabel("KMs:");
-	private JTextField txtKm;
+	
+	private JFormattedTextField txtKm = new JFormattedTextField(NumberFormat.getNumberInstance());
+	
+	//private JTextField txtKm;
+	
 	private JButton btnGuardar;
 	private JButton btnCancelar;
 	private JTable tablaCamiones;
@@ -116,8 +131,9 @@ public class PanelCamiones extends JPanel{
 		constraints.gridx = 6;
 		constraints.gridy = 5;		
 		this.add(lblFecha,constraints);
-		this.txtFechaCompra = new JFormattedTextField(20);
-		this.txtFechaCompra.setMinimumSize(new Dimension(100,25));
+		//this.txtFechaCompra = new JFormattedTextField(20);
+		this.txtFechaCompra.setColumns(10);
+		//this.txtFechaCompra.setMinimumSize(new Dimension(100,25));
 		constraints.gridx = 7;
 		constraints.gridy = 5;		
 		this.add(txtFechaCompra,constraints);
@@ -126,11 +142,39 @@ public class PanelCamiones extends JPanel{
 		this.add(lblKm,constraints);
 		constraints.gridx = 9;
 		constraints.gridy = 5;		
-		this.txtKm = new JTextField(20);
-		this.txtKm.setMinimumSize(new Dimension(100,25));		
-		this.add(txtKm,constraints);		
-		constraints.gridx = 8;
+		
+
+		this.txtKm.setColumns(10);
+//		this.txtKm = new JTextField(20);
+//		this.txtKm.setMinimumSize(new Dimension(100,25));	
+		
+		
+		
+		this.add(txtKm,constraints);
+		
+		constraints.insets = new Insets(0, 20, 0, 0);
+		
+		constraints.gridx = 0;
 		constraints.gridy = 6;	
+		this.add(lblCostoHora,constraints);
+		constraints.insets = new Insets(0, 0, 0, 0);
+		
+		constraints.gridx = 1;
+		constraints.gridy = 6;
+		this.costoHora.setColumns(10);
+		this.add(costoHora,constraints);
+		
+		
+		constraints.gridx = 2;
+		constraints.gridy = 6;	
+		this.add(lblCostoKm,constraints);
+		this.costoKm.setColumns(10);
+		constraints.gridx = 3;
+		constraints.gridy = 6;	
+		this.add(costoKm,constraints);
+		
+		constraints.gridx = 8;
+		constraints.gridy = 7;	
 		
 		this.btnGuardar = new JButton("Guardar");
 		
@@ -148,7 +192,7 @@ public class PanelCamiones extends JPanel{
 		
 		this.add(btnGuardar,constraints);
 		constraints.gridx = 9;
-		constraints.gridy = 6;
+		constraints.gridy = 7;
 		this.btnCancelar = new JButton("Cancelar");
 		this.add(btnCancelar,constraints);
 		constraints.weightx=0;
@@ -165,7 +209,7 @@ public class PanelCamiones extends JPanel{
 		JScrollPane scrollPane = new JScrollPane(tablaCamiones);
 		tablaCamiones.setFillsViewportHeight(true);
 		constraints.gridx = 0;
-		constraints.gridy = 7;		
+		constraints.gridy = 8;		
 		constraints.gridwidth = 11;
 		constraints.weighty=1;
 		constraints.weightx=2;
@@ -180,8 +224,11 @@ public class PanelCamiones extends JPanel{
 		this.txtPatente.setText("");
 		this.txtModelo.setText("");
 		this.txtMarca.setText("");
-		this.txtKm.setText("");
-		this.txtFechaCompra.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+//		this.txtKm.setText("");
+		this.txtKm.setValue(0f);
+		this.costoHora.setValue(0f);
+		this.costoKm.setValue(0f);
+		this.txtFechaCompra.setValue(new Date());
 	}
 
 	public JTextField getTxtPatente() {
@@ -223,7 +270,7 @@ public class PanelCamiones extends JPanel{
 	public void setTxtFechaCompra(JFormattedTextField txtFechaCompra) {
 		this.txtFechaCompra = txtFechaCompra;
 	}
-
+	/*
 	public JTextField getTxtKm() {
 		return txtKm;
 	}
@@ -231,7 +278,10 @@ public class PanelCamiones extends JPanel{
 	public void setTxtKm(JTextField txtKm) {
 		this.txtKm = txtKm;
 	}
-
+*/
+	public JFormattedTextField getTxtKm() {
+		return txtKm;
+	}
 	public JButton getBtnGuardar() {
 		return btnGuardar;
 	}
@@ -256,6 +306,22 @@ public class PanelCamiones extends JPanel{
 		this.controller = controller;
 	}
 
+
+	public JFormattedTextField getCostoHora() {
+		return costoHora;
+	}
+
+	public void setCostoHora(JFormattedTextField costoHora) {
+		this.costoHora = costoHora;
+	}
+
+	public JFormattedTextField getCostoKm() {
+		return costoKm;
+	}
+
+	public void setCostoKm(JFormattedTextField costoKm) {
+		this.costoKm = costoKm;
+	}
 
 	public void mostrarError(String titulo,String detalle) {
 		JFrame padre= (JFrame) SwingUtilities.getWindowAncestor(this);
