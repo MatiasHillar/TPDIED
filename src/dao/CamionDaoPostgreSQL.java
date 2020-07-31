@@ -14,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import dominio.Camion;
@@ -54,7 +56,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				pstmt.setFloat(2, c.getKmRecorridos());
 				pstmt.setFloat(3, c.getCostoKm());
 				pstmt.setFloat(4, c.getCostoHora());
-				pstmt.setString(5, c.getFechaCompra().toString());
+				pstmt.setDate(5, Date.valueOf(c.getFechaCompra()));
 				pstmt.setString(6, c.getModelo().getModelo());
 				pstmt.setString(7, c.getPatente());
 				
@@ -64,8 +66,8 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				pstmt.setString(1, c.getPatente());
 				pstmt.setFloat(2, c.getCostoKm());
 				pstmt.setFloat(3, c.getCostoHora());
-				//pstmt.setString(4, c.getFechaCompra().toString());
-				pstmt.setString(4, c.getModelo().getModelo());
+				pstmt.setDate(4, Date.valueOf(c.getFechaCompra()));
+				pstmt.setString(5, c.getModelo().getModelo());
 			}
 			pstmt.executeUpdate();
 		}
@@ -123,7 +125,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				c.setKmRecorridos(rs.getFloat("KM_RECORRIDOS"));
 				c.setCostoKm(rs.getFloat("COSTOXKM"));
 				c.setCostoHora(rs.getFloat("COSTOXHS"));
-			  	c.setFechaCompra(formatearFecha(rs.getString("FECHA_COMPRA")));
+			  	c.setFechaCompra((rs.getDate("FECHA_COMPRA")).toLocalDate());
 			  	c.setModelo(new Modelo(rs.getString("MARCA"),rs.getString("MODELO")));
 				lista.add(c);
 			}
@@ -175,7 +177,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				c.setKmRecorridos(rs.getFloat("KM_RECORRIDOS"));
 				c.setCostoKm(rs.getFloat("COSTOXKM"));
 				c.setCostoHora(rs.getFloat("COSTOXHS"));
-			  	c.setFechaCompra(formatearFecha(rs.getString("FECHA_COMPRA")));
+			  	c.setFechaCompra(rs.getDate("FECHA_COMPRA").toLocalDate());
 			  	c.setModelo(new Modelo(rs.getString("MARCA"),rs.getString("MODELO")));
 				lista.add(c);
 			}
@@ -274,10 +276,10 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		return p1.concat(values); 
 	}
 	
-	private LocalDate formatearFecha(String fecha) {
-		//DateTimeFormatter f = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-		//LocalDate date = LocalDate.parse(fecha, f);
-		return LocalDate.now();
-		//esto obviamente hay q cambiarlo pero asi funciona para probar
-	}
+//	private Date formatearFecha(Camion c) {
+//		ZoneId defaultZoneId = ZoneId.systemDefault();
+//	      LocalDate localDate = c.getFechaCompra();
+//	      Date date = Date.valueOf(localDate);
+//	  return date;
+//	}
 }

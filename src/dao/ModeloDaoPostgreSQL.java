@@ -33,6 +33,7 @@ public class ModeloDaoPostgreSQL implements ModeloDao{
 			if(checkNull(m.getModelo(), conn)) {
 				pstmt = conn.prepareStatement(UPDATE_MODELO);
 				pstmt.setString(1, m.getMarca());
+				pstmt.setString(2, m.getModelo());
 			}
 			else {
 				pstmt = conn.prepareStatement(INSERT_MODELO);

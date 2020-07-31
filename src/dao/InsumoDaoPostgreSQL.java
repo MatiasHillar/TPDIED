@@ -38,8 +38,12 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "WHERE ID = ?";
 	
 	private static final String SELECT_ALL_INSUMO =
-			"SELECT * FROM INSUMO I, UNIDAD U"
-			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE";
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, U.NOMBRE, N.SIMBOLO,"
+			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL"
+			+ "FROM INSUMO I, UNIDAD U, STOCK S"
+			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE"
+			+ "AND S.ID_INSUMO = I.ID"
+			+ "GROUP BY(I.ID)";
 	
 	@Override
 	public Insumo saveOrUpdate(InsumoGral i) {
@@ -154,6 +158,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 					i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
 					i.setCosto(rs.getFloat("COSTO"));
 					i.setPeso(rs.getFloat("PESO"));
+					i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
 					lista.add(i);
 				}
 				else {
@@ -163,6 +168,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 					i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
 					i.setCosto(rs.getFloat("COSTO"));
 					i.setPeso(rs.getFloat("PESO"));
+					i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
 					lista.add(i);
 				}
 			}

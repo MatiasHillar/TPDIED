@@ -102,7 +102,7 @@ public class App extends JFrame{
 		
 		this.menuItemInsumo = new JMenuItem("Gestionar Insumos");
 		this.menuItemInsumo.addActionListener( e -> {
-			this.setContentPane(new PanelGestionarInsumos());
+		//	this.setContentPane(new PanelGestionarInsumos());
 			//this.pack();
 			this.revalidate();
 			this.repaint();
@@ -209,7 +209,7 @@ public class App extends JFrame{
 				       // handle exception
 		    }
 			App app = new App();
-			app.setTitle("Sistema de gestion logística - TP DIED 2020 ");
+			app.setTitle("Sistema de gestion logï¿½stica - TP DIED 2020 ");
 			app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			app.armarApp();
 			app.setExtendedState(app.getExtendedState() | JFrame.MAXIMIZED_BOTH);
