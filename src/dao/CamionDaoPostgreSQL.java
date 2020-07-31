@@ -55,6 +55,8 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				pstmt.setFloat(3, c.getCostoKm());
 				pstmt.setFloat(4, c.getCostoHora());
 				pstmt.setString(5, c.getFechaCompra().toString());
+				pstmt.setString(6, c.getModelo().getModelo());
+				pstmt.setString(7, c.getPatente());
 				
 			}
 			else {
@@ -189,6 +191,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			e.printStackTrace();
 		}
 	}
+		System.out.println(lista);
 	return lista;
 	}
 	

@@ -110,7 +110,7 @@ public class ModeloDaoPostgreSQL implements ModeloDao{
 		ResultSet rs = null;
 		Boolean ret = false;
 		try {
-			pstmt = conn.prepareStatement(SELECT_MODELO);
+			pstmt = conn.prepareStatement(SELECT_MODELO, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setString(1, modelo);
 			rs = pstmt.executeQuery();
 			ret = rs.first();
@@ -118,15 +118,7 @@ public class ModeloDaoPostgreSQL implements ModeloDao{
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-	finally {
-		try {
-		if(pstmt!=null) pstmt.close();
-		if(conn!=null) conn.close();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	
 		return ret;
 	}
 }
