@@ -28,7 +28,7 @@ import gui.util.FormatoNumeroException;
 
 public class PanelAltaCamiones extends JPanel{
 	
-	private JLabel lblCrear = new JLabel("Registrar camion:");
+	private JLabel lblCrear = new JLabel("Registrar/Modificar camion:");
 	private JLabel lblPatente = new JLabel("Patente:");
 	private JTextField txtPatente;
 	private JLabel lblModelo = new JLabel("Modelo:");

@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -119,6 +120,21 @@ public class CamionController {
 		return this.lista;
 	}
 	
+	public void prepararM(PanelAltaCamiones p, Camion cam) {
+		p.getTxtPatente().setText(cam.getPatente());
+		p.getTxtPatente().setEditable(false);
+		p.getTxtMarca().setText(cam.getModelo().getMarca());
+		p.getTxtModelo().setText(cam.getModelo().getModelo());
+		
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+	    LocalDate localDate = cam.getFechaCompra();
+	    Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+		p.getTxtFechaCompra().setValue(date);
+		p.getTxtKm().setValue(cam.getKmRecorridos());
+		p.getCostoHora().setValue(cam.getCostoHora());
+		p.getCostoKm().setValue(cam.getCostoKm());
+		
+	}
 	
 	public List<Camion> buscarPorAtributos()  throws FormatoNumeroException, ControllerException{
 		LinkedHashMap<String,Object> atr= new LinkedHashMap<String,Object>();
@@ -201,6 +217,7 @@ public class CamionController {
 		else this.lista.addAll(this.camionService.buscarTodos());
 		return this.lista;
 	}
+	
 	
 	
 
