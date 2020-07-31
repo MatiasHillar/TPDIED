@@ -1,9 +1,15 @@
 package controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.swing.JFormattedTextField;
+
 import dominio.*;
+import gui.PanelAltaCamiones;
 import gui.PanelInsumosGenerales;
 import gui.PanelInsumosLiquidos;
 import gui.util.*;
@@ -35,6 +41,16 @@ public class InsumoController {
 		this.ig = null;
 	}
 	
+	public InsumoController() {
+		this.insumoService = new InsumoService();
+		this.lista = new ArrayList<Insumo>();
+		this.panelGral=null;
+		this.ig = null;
+		this.il=null;
+		this.panelLiquido=null;
+	}
+	
+	
 	public void actualizarInsumo() throws DatosObligatoriosException, FormatoNumeroException, ControllerException{
 		if(ig!=null)
 			this.actualizarInsumoGral();
@@ -43,9 +59,18 @@ public class InsumoController {
 		
 	}
 	
+	private Float obtenerValor(JFormattedTextField f) {
+		if(f==null) return 0f;
+		return ((Number) f.getValue()).floatValue();
+	}
+	
 	private void actualizarInsumoGral() throws DatosObligatoriosException, FormatoNumeroException, ControllerException{
 		String s= "Costo";
 		try {
+			ig.setCosto(obtenerValor(this.panelGral.getTxtCosto()));
+			ig.setPeso(obtenerValor(this.panelGral.getTxtPeso()));
+
+			/*
 			if(panelGral.getTxtCosto()!=null) {
 				this.ig.setCosto(Float.valueOf(this.panelGral.getTxtCosto().getText()));
 			}
@@ -55,6 +80,7 @@ public class InsumoController {
 				this.ig.setPeso(Float.valueOf(this.panelGral.getTxtPeso().getText()));
 			}
 			else throw new DatosObligatoriosException("Peso por unidad", "El peso por unidad es obligatorio");
+			*/
 		}
 		catch(NumberFormatException nfe) {
 			nfe.printStackTrace();
@@ -63,7 +89,7 @@ public class InsumoController {
 			e.printStackTrace();
 			throw new ControllerException("Error:"+e.getLocalizedMessage());
 		}
-		if(this.panelGral.getTxtNombre()!=null) {
+		if(this.panelGral.getTxtNombre()!=null && !this.panelGral.getTxtNombre().equals("")) {
 			this.ig.setNombre(this.panelGral.getTxtNombre().getText());
 		}
 		else throw new DatosObligatoriosException("Nombre", "El nombre es obligatorio");
@@ -81,6 +107,12 @@ public class InsumoController {
 	private void actualizarInsumoLiquido() throws DatosObligatoriosException, FormatoNumeroException, ControllerException{
 		String s= "Costo";
 		try {
+			
+
+			il.setCosto(obtenerValor(this.panelLiquido.getTxtCosto()));
+			il.setDensidad(obtenerValor(this.panelLiquido.getTxtDensidad()));
+			/*
+			
 			if(panelLiquido.getTxtCosto()!=null) {
 				this.il.setCosto(Float.valueOf(this.panelLiquido.getTxtCosto().getText()));
 			}
@@ -90,6 +122,7 @@ public class InsumoController {
 				this.il.setDensidad(Float.valueOf(this.panelLiquido.getTxtDensidad().getText()));
 			}
 			else throw new DatosObligatoriosException("Densidad", "La densidad es obligatoria");
+			*/
 		}
 		catch(NumberFormatException nfe) {
 			nfe.printStackTrace();
@@ -110,6 +143,26 @@ public class InsumoController {
 		if(this.panelLiquido.getTxtADescripcion()!=null) {
 			this.il.setDescripcion(this.panelLiquido.getTxtADescripcion().getText());
 		}
+	}
+	
+	public void prepararM(PanelInsumosGenerales p, InsumoGral i) {
+		p.getTxtNombre().setText(i.getNombre());
+		p.getTxtADescripcion().setText(i.getDescripcion());
+		p.getTxtCosto().setValue(i.getCosto());		
+		p.getTxtPeso().setValue(i.pesoPorUnidad());
+		
+	}
+	
+	public void prepararM(PanelInsumosLiquidos p, InsumoLiquido i) {
+		p.getTxtNombre().setText(i.getNombre());
+		p.getTxtADescripcion().setText(i.getDescripcion());
+		p.getTxtCosto().setValue(i.getCosto());		
+		p.getTxtDensidad().setValue(i.getDensidad());
+		
+	}
+	
+	public void eliminar(Insumo i) {
+		this.insumoService.borrarInsumo(i);
 	}
 	
 	public Insumo guardar()throws DatosObligatoriosException, FormatoNumeroException, ControllerException {

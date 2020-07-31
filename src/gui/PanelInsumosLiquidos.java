@@ -6,9 +6,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,7 +22,7 @@ import javax.swing.SwingUtilities;
 public class PanelInsumosLiquidos extends JPanel{
 	private String[] unidades = {"M2", "Kg", "Mts"};
 
-	private JLabel lblTitulo = new JLabel("Añadir insumo general:");
+	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
 	private JLabel lblDescripcion = new JLabel("Descripción:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
 	private JLabel lblCosto = new JLabel("Costo:");
@@ -30,10 +32,15 @@ public class PanelInsumosLiquidos extends JPanel{
 	private JLabel lblStockTotalNumero = new JLabel("Aca va el numero"); //metodo toString del stock o como se calcule
 	private JTextArea txtADescripcion;
 	private JComboBox<String> jcbUnidades = new JComboBox<String>(unidades);
-	private JTextField txtCosto;
-	private JTextField txtDensidad;
+//	private JTextField txtCosto;
+//	private JTextField txtDensidad;
+
+	private JFormattedTextField txtCosto = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField txtDensidad = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JTextField txtNombre;
 	private JButton btnGuardar;
+
+	private JButton btnCancelar;
 	//private InsumosLiquidosController controller;
 
 	
@@ -88,7 +95,8 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
 		constraints.anchor = GridBagConstraints.NORTH;
-		this.txtCosto = new JTextField(20);
+		this.txtCosto.setColumns(20);
+//		this.txtCosto = new JTextField(20);
 		this.add(txtCosto,constraints);
 		
 		constraints.anchor = GridBagConstraints.NORTH;
@@ -104,7 +112,8 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
 		constraints.anchor = GridBagConstraints.NORTH;
-		this.txtDensidad = new JTextField(20);
+//		this.txtDensidad = new JTextField(20);
+		this.txtDensidad.setColumns(20);
 		this.add(txtDensidad,constraints);
 		
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -137,6 +146,8 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.insets = new Insets(0, 20, 0, 0);
 		this.add(jcbUnidades, constraints);
 		
+		
+		/*
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridx = 4;
 		constraints.gridy = 2;
@@ -150,6 +161,8 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.gridwidth = 1;
 		lblStockTotalNumero.setFont(new Font("Calibri", Font.BOLD, 20));
 		this.add(lblStockTotalNumero,constraints);
+		*/
+	
 	
 		constraints.gridx = 5;
 		constraints.gridy = 3;
@@ -169,6 +182,24 @@ public class PanelInsumosLiquidos extends JPanel{
 //		}
 //	);
 		this.add(btnGuardar, constraints);
+		
+		constraints.gridx = 4;
+		constraints.gridy = 3;
+//		constraints.weightx = 2.0;
+//		constraints.weighty = 2.0;
+		constraints.gridwidth = 6;
+		constraints.anchor = GridBagConstraints.SOUTH;
+		
+		this.btnCancelar = new JButton("Cancelar");
+		this.btnCancelar.addActionListener( e ->
+		{
+			this.limpiarFormulario();
+		}
+	);
+		this.add(btnCancelar, constraints);
+
+		
+		this.limpiarFormulario();
 	}
 	
 	
@@ -259,7 +290,7 @@ public class PanelInsumosLiquidos extends JPanel{
 	public void setJcbUnidades(JComboBox<String> jcbUnidades) {
 		this.jcbUnidades = jcbUnidades;
 	}
-
+/*
 	public JTextField getTxtCosto() {
 		return txtCosto;
 	}
@@ -275,7 +306,7 @@ public class PanelInsumosLiquidos extends JPanel{
 	public void setTxtDensidad(JTextField txtDensidad) {
 		this.txtDensidad = txtDensidad;
 	}
-
+*/
 	public JTextField getTxtNombre() {
 		return txtNombre;
 	}
@@ -294,11 +325,29 @@ public class PanelInsumosLiquidos extends JPanel{
 	
 	
 
+	public JFormattedTextField getTxtCosto() {
+		return txtCosto;
+	}
+
+	public void setTxtCosto(JFormattedTextField txtCosto) {
+		this.txtCosto = txtCosto;
+	}
+
+	public JFormattedTextField getTxtDensidad() {
+		return txtDensidad;
+	}
+
+	public void setTxtDensidad(JFormattedTextField txtDensidad) {
+		this.txtDensidad = txtDensidad;
+	}
+
 	private void limpiarFormulario() {
 		this.txtADescripcion.setText("");
 		this.txtNombre.setText("");
-		this.txtCosto.setText("");
-		this.txtDensidad.setText("");
+		this.txtCosto.setValue(0f);
+		this.txtDensidad.setValue(0f);
+//		this.txtCosto.setText("");
+//		this.txtDensidad.setText("");
 	}
 	
 	public void mostrarError(String titulo,String detalle) {

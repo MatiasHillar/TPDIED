@@ -293,8 +293,8 @@ public class PanelCamiones extends JPanel{
 					if(tablaCamiones.getSelectedRowCount()>1)
 						throw new Exception("Debe seleccionar solamente un camion");
 					controller.prepararM(pa, modeloTablaCamion.getData().get(tablaCamiones.getSelectedRow()));
-					modeloTablaCamion.setData(controller.buscarPorAtributos());
-					modeloTablaCamion.fireTableDataChanged();
+//					modeloTablaCamion.setData(controller.buscarPorAtributos());
+//					modeloTablaCamion.fireTableDataChanged();
 //				} catch (FormatoNumeroException | ControllerException e1) {
 				} catch (Exception e1) {
 					this.mostrarError("Error al modificar", e1.getMessage());

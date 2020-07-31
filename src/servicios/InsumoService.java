@@ -27,7 +27,9 @@ public class InsumoService {
 		return this.insumoDao.buscarTodos();
 	}
 	
-	
+	public void borrarInsumo(Insumo i) {
+		insumoDao.borrar(i);
+	}
 	
 	
 

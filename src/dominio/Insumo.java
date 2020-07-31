@@ -7,6 +7,9 @@ public abstract class Insumo {
 	protected Float costo;
 	protected Integer id;
 	protected Float peso;
+	protected Float cantidadTotal;
+	
+	
 	
 	public Float getPeso() {
 		return pesoPorUnidad();
@@ -49,5 +52,13 @@ public abstract class Insumo {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Float getCantidadTotal() {
+		return cantidadTotal;
+	}
+
+	public void setCantidadTotal(Float cantidadTotal) {
+		this.cantidadTotal = cantidadTotal;
 	}
 }

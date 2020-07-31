@@ -41,6 +41,8 @@ public class PanelInsumosGenerales extends JPanel{
 	*/
 	private JTextField txtNombre;
 	private JButton btnGuardar;
+
+	private JButton btnCancelar;
 	//private InsumosGeneralesController controller;
 
 	
@@ -95,7 +97,8 @@ public class PanelInsumosGenerales extends JPanel{
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
 		constraints.anchor = GridBagConstraints.NORTH;
-		this.txtCosto = new JTextField(20);
+		this.txtCosto.setColumns(20);
+//		this.txtCosto = new JTextField(20);
 		this.add(txtCosto,constraints);
 		
 		constraints.anchor = GridBagConstraints.NORTH;
@@ -111,7 +114,8 @@ public class PanelInsumosGenerales extends JPanel{
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
 		constraints.anchor = GridBagConstraints.NORTH;
-		this.txtPeso = new JTextField(20);
+		this.txtPeso.setColumns(20);
+//		this.txtPeso = new JTextField(20);
 		this.add(txtPeso,constraints);
 		
 		constraints.anchor = GridBagConstraints.CENTER;
@@ -144,6 +148,7 @@ public class PanelInsumosGenerales extends JPanel{
 		constraints.insets = new Insets(0, 20, 0, 0);
 		this.add(jcbUnidades, constraints);
 		
+		/*
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridx = 4;
 		constraints.gridy = 2;
@@ -157,7 +162,8 @@ public class PanelInsumosGenerales extends JPanel{
 		constraints.gridwidth = 1;
 		lblStockTotalNumero.setFont(new Font("Calibri", Font.BOLD, 20));
 		this.add(lblStockTotalNumero,constraints);
-	
+		*/
+		
 		constraints.gridx = 5;
 		constraints.gridy = 3;
 //		constraints.weightx = 2.0;
@@ -176,6 +182,23 @@ public class PanelInsumosGenerales extends JPanel{
 //		}
 //	);
 		this.add(btnGuardar, constraints);
+		this.limpiarFormulario();
+		
+		constraints.gridx = 4;
+		constraints.gridy = 3;
+//		constraints.weightx = 2.0;
+//		constraints.weighty = 2.0;
+		constraints.gridwidth = 6;
+		constraints.anchor = GridBagConstraints.SOUTH;
+		
+		this.btnCancelar = new JButton("Cancelar");
+		this.btnCancelar.addActionListener( e ->
+		{
+			this.limpiarFormulario();
+		}
+	);
+		this.add(btnCancelar, constraints);
+		
 	}
 	
 	private void limpiarFormulario() {
@@ -311,6 +334,22 @@ public class PanelInsumosGenerales extends JPanel{
 	
 	
 	
+	public JFormattedTextField getTxtCosto() {
+		return txtCosto;
+	}
+
+	public void setTxtCosto(JFormattedTextField txtCosto) {
+		this.txtCosto = txtCosto;
+	}
+
+	public JFormattedTextField getTxtPeso() {
+		return txtPeso;
+	}
+
+	public void setTxtPeso(JFormattedTextField txtPeso) {
+		this.txtPeso = txtPeso;
+	}
+
 	public void mostrarError(String titulo,String detalle) {
 		JFrame padre= (JFrame) SwingUtilities.getWindowAncestor(this);
 		JOptionPane.showMessageDialog(padre,

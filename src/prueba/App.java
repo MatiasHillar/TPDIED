@@ -32,6 +32,7 @@ public class App extends JFrame{
 	JMenuItem menuItemStock;
 	JMenuItem menuItemCamion;
 	JMenuItem menuItemAltaCamion;
+	private JMenuItem menuItemInsumo;
 	
 	
 	private App() {
@@ -81,7 +82,7 @@ public class App extends JFrame{
 			this.repaint();
 		});
 		
-		this.menuItemInsumosGenerales = new JMenuItem("Gestionar Insumos Generales");
+		this.menuItemInsumosGenerales = new JMenuItem("Registrar Insumo General");
 		this.menuItemInsumosGenerales.addActionListener( e -> {
 			System.out.println("LISTENER 3");
 			this.setContentPane(new PanelInsumosGenerales());
@@ -90,7 +91,7 @@ public class App extends JFrame{
 			this.repaint();
 		});
 		
-		this.menuItemInsumosLiquidos = new JMenuItem("Gestionar Insumos Liquidos");
+		this.menuItemInsumosLiquidos = new JMenuItem("Registrar Insumo Liquido");
 		this.menuItemInsumosLiquidos.addActionListener( e -> {
 			System.out.println("LISTENER 4");
 			this.setContentPane(new PanelInsumosLiquidos());
@@ -98,6 +99,15 @@ public class App extends JFrame{
 			this.revalidate();
 			this.repaint();
 		});
+		
+		this.menuItemInsumo = new JMenuItem("Gestionar Insumos");
+		this.menuItemInsumo.addActionListener( e -> {
+			this.setContentPane(new PanelGestionarInsumos());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
+		
 		
 		this.menuItemStock = new JMenuItem("Actualizar Stock");
 		this.menuItemStock.addActionListener( e -> {
@@ -112,6 +122,7 @@ public class App extends JFrame{
 		this.menuRutas.add(menuItemRutas);
 		this.menuInsumos.add(menuItemInsumosGenerales);
 		this.menuInsumos.add(menuItemInsumosLiquidos);
+		this.menuInsumos.add(menuItemInsumo);
 		this.menuStock.add(menuItemStock);
 		this.menuCamiones.add(menuItemCamion);
 		this.menuCamiones.add(menuItemAltaCamion);
