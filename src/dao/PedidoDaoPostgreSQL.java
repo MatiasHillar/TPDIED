@@ -1,10 +1,9 @@
-package dominio;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
 
-import dao.PedidoDao;
 import dao.utils.DB;
 
 public class PedidoDaoPostgreSQL implements PedidoDao{

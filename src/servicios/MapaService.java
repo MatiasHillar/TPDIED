@@ -111,17 +111,24 @@ public class MapaService {
 				.sum();
 	}
 	
+	public Set<List<Ruta>> menosKm(Planta origen, Planta destino, Mapa m){
+		return this.menosCosto(origen, destino, r-> r.getDistanciaKm(), m);
+	}
+	
+	public Set<List<Ruta>> menosTiempo(Planta origen, Planta destino, Mapa m){
+		return this.menosCosto(origen, destino, r-> r.getDuracionMin(), m);
+	}
+	
 	public Set<List<Ruta>> menosKm(Planta origen, Planta destino){
-		return this.menosCosto(origen, destino, r-> r.getDistanciaKm());
+		return this.menosCosto(origen, destino, r-> r.getDistanciaKm(), construir());
 	}
 	
 	public Set<List<Ruta>> menosTiempo(Planta origen, Planta destino){
-		return this.menosCosto(origen, destino, r-> r.getDuracionMin());
+		return this.menosCosto(origen, destino, r-> r.getDuracionMin(), construir());
 	}
 	
 	
-	private Set<List<Ruta>> menosCosto(Planta origen, Planta destino, Function<Ruta,Float> obtenerCosto){
-		Mapa m = construir();
+	private Set<List<Ruta>> menosCosto(Planta origen, Planta destino, Function<Ruta,Float> obtenerCosto, Mapa m){
 		HashMap<Planta, HashSet<List<Ruta>>> caminos = new HashMap<Planta, HashSet<List<Ruta>>>();
 		HashMap<Planta,Float> minimos = new HashMap<Planta,Float>();		
 		PriorityQueue<Planta> pq = new PriorityQueue<Planta>(m.getListaPlantas().size(), (p1,p2)->minimos.get(p1).compareTo(minimos.get(p2)));

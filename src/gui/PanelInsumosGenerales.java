@@ -6,9 +6,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,7 +22,7 @@ import javax.swing.SwingUtilities;
 public class PanelInsumosGenerales extends JPanel{
 	private String[] unidades = {"M2", "Kg", "Mts"};
 
-	private JLabel lblTitulo = new JLabel("Añadir insumo general:");
+	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
 	private JLabel lblDescripcion = new JLabel("Descripción:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
 	private JLabel lblCosto = new JLabel("Costo:");
@@ -30,8 +32,13 @@ public class PanelInsumosGenerales extends JPanel{
 	private JLabel lblStockTotalNumero = new JLabel("Aca va el numero"); //metodo toString del stock o como se calcule
 	private JTextArea txtADescripcion;
 	private JComboBox<String> jcbUnidades = new JComboBox<String>(unidades);
+	private JFormattedTextField txtCosto = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField txtPeso = new JFormattedTextField(NumberFormat.getNumberInstance());
+	
+	/*
 	private JTextField txtCosto;
 	private JTextField txtPeso;
+	*/
 	private JTextField txtNombre;
 	private JButton btnGuardar;
 	//private InsumosGeneralesController controller;
@@ -174,8 +181,10 @@ public class PanelInsumosGenerales extends JPanel{
 	private void limpiarFormulario() {
 		this.txtADescripcion.setText("");
 		this.txtNombre.setText("");
-		this.txtCosto.setText("");
-		this.txtPeso.setText("");
+		this.txtCosto.setValue(0f);
+		this.txtPeso.setValue(0f);
+//		this.txtCosto.setText("");
+//		this.txtPeso.setText("");
 	}
 
 	
@@ -267,7 +276,7 @@ public class PanelInsumosGenerales extends JPanel{
 	public void setJcbUnidades(JComboBox<String> jcbUnidades) {
 		this.jcbUnidades = jcbUnidades;
 	}
-
+/*
 	public JTextField getTxtCosto() {
 		return txtCosto;
 	}
@@ -283,7 +292,7 @@ public class PanelInsumosGenerales extends JPanel{
 	public void setTxtPeso(JTextField txtPeso) {
 		this.txtPeso = txtPeso;
 	}
-
+*/
 	public JTextField getTxtNombre() {
 		return txtNombre;
 	}
