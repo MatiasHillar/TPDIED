@@ -12,17 +12,17 @@ import dominio.Modelo;
 public class ModeloDaoPostgreSQL implements ModeloDao{
 	private static final String UPDATE_MODELO = 
 			"UPDATE MODELO SET MARCA = ?"
-			+ "WHERE MODELO = ?";
+			+ " WHERE MODELO = ?";
 	
 	private static final String INSERT_MODELO =
 			"INSERT INTO MODELO VALUES (?, ?)";
 	
 	private static final String SELECT_MODELO = 
-			"SELECT * FROM MODELO"
+			"SELECT * FROM MODELO "
 			+ "WHERE MODELO = ?";
 	
 	private static final String BORRAR_MODELO =
-			"DELETE FROM MODELO"
+			"DELETE FROM MODELO "
 			+ "WHERE MODELO = ?";
 
 	@Override

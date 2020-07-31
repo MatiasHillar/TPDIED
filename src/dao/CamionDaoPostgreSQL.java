@@ -200,41 +200,64 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			
 			switch(entry.getKey()) {
 				case "KMMIN":
+					/*
 					values = values.concat(" AND C.KM_RECORRIDOS BETWEEN "+entry.getValue()+" AND "
 							+atrib.get("KMMAX"));
+					*/
+					values = values.concat(" AND C.KM_RECORRIDOS >= "+entry.getValue());
 					break;
 					
 				case "KMMAX":
+					/*
 					values = values.concat(" AND C.KM_RECORRIDOS BETWEEN "+atrib.get("KMMIN")
 					+" AND "+entry.getValue());
+					*/
+					values = values.concat(" AND C.KM_RECORRIDOS <= "+entry.getValue());
 					break;
 					
 				case "COSTOHSMIN":
+					/*
 					values = values.concat(" AND C.COSTOXHS BETWEEN "+entry.getValue()+" AND "
 							+atrib.get("COSTOHSMAX"));
+							*/
+					values = values.concat(" AND C.COSTOXHS >= "+entry.getValue());
 					break;
 					
 				case "COSTOHSMAX":
+					/*
 					values = values.concat(" AND C.COSTOXHS BETWEEN "+atrib.get("COSTOHSMIN")
 					+" AND "+entry.getValue());
+					*/
+					values = values.concat(" AND C.COSTOXHS <= "+entry.getValue());
 					break;
 				
 				case "COSTOKMMIN":
-					values = values.concat(" AND C.COSTOXKM BETWEEN "+entry.getValue()+" AND "
+					/*values = values.concat(" AND C.COSTOXKM BETWEEN "+entry.getValue()+" AND "
 							+atrib.get("COSTOKMMAX"));
+					*/
+					values = values.concat(" AND C.COSTOXKM >= "+entry.getValue());
 					break;
 					
 				case "COSTOKMMAX":
+					/*
 					values = values.concat(" AND C.COSTOXKM BETWEEN "+atrib.get("COSTOKMMIN")
 					+" AND "+entry.getValue());
+					*/
+					values = values.concat(" AND C.COSTOXKM <= "+entry.getValue());
 					break;
 			
 				case "MARCA":
-					values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
+					//values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
+					values = values.concat(" AND "+"M."+entry.getKey()+" LIKE '%"+entry.getValue() + "%'");
 					break;
 					
 				case "MODELO":
-					values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
+					//values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
+					values = values.concat(" AND "+"M."+entry.getKey()+" LIKE '%"+entry.getValue() + "%'");
+					break;
+				case "PATENTE":
+					//values = values.concat(" AND "+"M."+entry.getKey()+"='"+entry.getValue() + "'");
+					values = values.concat(" AND "+"C."+entry.getKey()+" LIKE '%"+entry.getValue() + "%'");
 					break;
 					
 				default:
@@ -244,7 +267,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 					
 			}
 		}
-//		System.out.println(p1 + values);
+		System.out.println(p1 + values);
 		return p1.concat(values); 
 	}
 	

@@ -140,8 +140,40 @@ public class CamionController {
 			}
 			
 			
+			
+			if(obtenerValor(this.panel.getTxtKm())!=0f) {
+				campos++;
+				atr.put("KMMIN" ,obtenerValor(this.panel.getTxtKm()));
+			}
+			if(obtenerValor(this.panel.getTxtKmMax())!=340282346638f) {
+				campos++;
+				atr.put("KMMAX" ,obtenerValor(this.panel.getTxtKmMax()));
+			}
+			s="Costo";
+			if(obtenerValor(this.panel.getCostoHora())!=0f) {
+				campos++;
+				atr.put("COSTOHSMIN",this.obtenerValor(this.panel.getCostoHora()));
+			}
+			if(obtenerValor(this.panel.getCostoHoraMax())!=340282346638f) {
+				campos++;
+				atr.put("COSTOHSMAX",this.obtenerValor(this.panel.getCostoHoraMax()));
+			}
+			if(obtenerValor(this.panel.getCostoKm())!=0f) {
+				campos++;
+				atr.put("COSTOKMMIN",this.obtenerValor(this.panel.getCostoKm()));
+			}
+			if(obtenerValor(this.panel.getCostoKmMax())!=340282346638f) {
+				campos++;
+				atr.put("COSTOKMMAX",this.obtenerValor(this.panel.getCostoKmMax()));
+			}
+			
+			
+			
+			/*
 			atr.put("KMMIN" ,obtenerValor(this.panel.getTxtKm()));
-			if((Float)atr.get("KMMIN")!=0f) campos++;
+			if(obtenerValor(this.panel.getTxtKm())!=0f) {
+				campos++;
+			}
 			atr.put("KMMAX" ,obtenerValor(this.panel.getTxtKmMax()));
 			if((Float)atr.get("KMMAX")!=340282346638f) campos++;
 			s="Costo";
@@ -153,6 +185,7 @@ public class CamionController {
 			if((Float)atr.get("COSTOKMMIN")!=0f) campos++;
 			atr.put("COSTOKMMAX",this.obtenerValor(this.panel.getCostoKmMax()));
 			if((Float)atr.get("COSTOKMMAX")!=340282346638f) campos++;
+			*/
 			
 		} catch(NumberFormatException nfe) {
 			nfe.printStackTrace();
