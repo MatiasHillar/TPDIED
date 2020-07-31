@@ -33,6 +33,10 @@ public class CamionService {
 		return camionDao.buscarPorPatributos(m);
 	}
 	
+	public void borrarCamion(Camion c) {
+		camionDao.borrar(c);
+	}
+	
 	
 
 }

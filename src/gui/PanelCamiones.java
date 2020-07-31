@@ -69,27 +69,6 @@ public class PanelCamiones extends JPanel{
 	
 	
 	
-	/*
-	private JLabel lblPatenteM = new JLabel("Patente:");
-	private JTextField txtPatenteM;
-	private JLabel lblModeloM = new JLabel("Modelo:");
-	private JTextField txtModeloM;
-	private JLabel lblMarcaM = new JLabel("Marca:");
-	private JTextField txtMarcaM;
-	private JLabel lblCostoHoraM = new JLabel("Costo por hora:");
-	private JFormattedTextField costoHoraM = new JFormattedTextField(NumberFormat.getNumberInstance());
-	private JLabel lblCostoKmM = new JLabel("Costo por Km:");
-	private JFormattedTextField costoKmM = new JFormattedTextField(NumberFormat.getNumberInstance());
-	private JLabel lblFechaM = new JLabel("Fecha:");
-	private JFormattedTextField txtFechaCompraM = new JFormattedTextField(df);	
-	private JLabel lblKmM = new JLabel("KMs:");
-	private JFormattedTextField txtKmM = new JFormattedTextField(NumberFormat.getNumberInstance());
-	private JButton btnGuardarM;
-	private JButton btnCancelarM;
-	
-	*/
-	
-	
 	
 	
 	public PanelCamiones(){
@@ -313,10 +292,9 @@ public class PanelCamiones extends JPanel{
 						throw new Exception("Debe seleccionar un camion");
 					if(tablaCamiones.getSelectedRowCount()>1)
 						throw new Exception("Debe seleccionar solamente un camion");
-					
 					controller.prepararM(pa, modeloTablaCamion.getData().get(tablaCamiones.getSelectedRow()));
-//					this.limpiarFormulario2();
-//					modeloTablaCamion.fireTableDataChanged();
+					modeloTablaCamion.setData(controller.buscarPorAtributos());
+					modeloTablaCamion.fireTableDataChanged();
 //				} catch (FormatoNumeroException | ControllerException e1) {
 				} catch (Exception e1) {
 					this.mostrarError("Error al modificar", e1.getMessage());
@@ -326,6 +304,40 @@ public class PanelCamiones extends JPanel{
 		);
 
 		this.add(btnModificar,constraints);
+		
+		constraints.insets = new Insets(10, 50, 0, 0);
+		constraints.gridx = 9;
+		constraints.gridy = 9;		
+		constraints.gridwidth = 1;
+		constraints.weighty=0;
+		constraints.weightx=0;
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.fill= GridBagConstraints.NONE;
+		this.btnEliminar = new JButton("Eliminar");
+		
+		this.btnEliminar.addActionListener( e ->
+			{
+				try {
+					if(tablaCamiones.getSelectedRowCount()==0)
+						throw new Exception("Debe seleccionar un camion");
+					int n=1;
+					if(tablaCamiones.getSelectedRowCount()==1)
+						n = JOptionPane.showConfirmDialog(this, "¿Esta seguro de que desea eliminar " + 1 + " camion?", "Eliminar", JOptionPane.YES_NO_OPTION);
+					else
+					n = JOptionPane.showConfirmDialog(this, "¿Esta seguro de que desea eliminar los " + tablaCamiones.getSelectedRowCount() + " camiones?", "Eliminar", JOptionPane.YES_NO_OPTION);
+					if(n==0)
+						controller.eliminar(modeloTablaCamion.getData().get(tablaCamiones.getSelectedRow()));
+					modeloTablaCamion.setData(controller.buscarPorAtributos());
+					modeloTablaCamion.fireTableDataChanged();
+//				} catch (FormatoNumeroException | ControllerException e1) {
+				} catch (Exception e1) {
+					this.mostrarError("Error al eliminar", e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		);
+
+		this.add(btnEliminar,constraints);
 		
 		
 		this.limpiarFormulario();
@@ -346,18 +358,7 @@ public class PanelCamiones extends JPanel{
 //		this.txtFechaCompra.setValue(new Date());
 	}
 	
-	/*
-	private void limpiarFormulario2() {
-		this.txtPatenteM.setText("");
-		this.txtModeloM.setText("");
-		this.txtMarcaM.setText("");
-		this.txtKmM.setValue(0f);
-		this.costoHoraM.setValue(0f);
-		this.costoKmM.setValue(0f);
-		
-//		this.txtFechaCompra.setValue(new Date());
-	}
-	*/
+	
 	
 
 	public JFormattedTextField getCostoHoraMax() {
@@ -423,15 +424,6 @@ public class PanelCamiones extends JPanel{
 	public void setTxtFechaCompra(JFormattedTextField txtFechaCompra) {
 		this.txtFechaCompra = txtFechaCompra;
 	}
-	/*
-	public JTextField getTxtKm() {
-		return txtKm;
-	}
-
-	public void setTxtKm(JTextField txtKm) {
-		this.txtKm = txtKm;
-	}
-*/
 	public JFormattedTextField getTxtKm() {
 		return txtKm;
 	}
@@ -477,49 +469,6 @@ public class PanelCamiones extends JPanel{
 	}
 	
 	
-	
-	/*
-
-	public JTextField getTxtPatenteM() {
-		return txtPatenteM;
-	}
-
-	public void setTxtPatenteM(JTextField txtPatenteM) {
-		this.txtPatenteM = txtPatenteM;
-	}
-
-	public JTextField getTxtModeloM() {
-		return txtModeloM;
-	}
-
-	public void setTxtModeloM(JTextField txtModeloM) {
-		this.txtModeloM = txtModeloM;
-	}
-
-	public JTextField getTxtMarcaM() {
-		return txtMarcaM;
-	}
-
-	public void setTxtMarcaM(JTextField txtMarcaM) {
-		this.txtMarcaM = txtMarcaM;
-	}
-
-	public JFormattedTextField getTxtFechaCompraM() {
-		return txtFechaCompraM;
-	}
-
-	public void setTxtFechaCompraM(JFormattedTextField txtFechaCompraM) {
-		this.txtFechaCompraM = txtFechaCompraM;
-	}
-
-	public JFormattedTextField getTxtKmM() {
-		return txtKmM;
-	}
-
-	public void setTxtKmM(JFormattedTextField txtKmM) {
-		this.txtKmM = txtKmM;
-	}
-*/
 	public void setTxtKm(JFormattedTextField txtKm) {
 		this.txtKm = txtKm;
 	}

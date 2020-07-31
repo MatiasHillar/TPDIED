@@ -136,6 +136,10 @@ public class CamionController {
 		
 	}
 	
+	public void eliminar(Camion c) {
+		this.camionService.borrarCamion(c);
+	}
+	
 	public List<Camion> buscarPorAtributos()  throws FormatoNumeroException, ControllerException{
 		LinkedHashMap<String,Object> atr= new LinkedHashMap<String,Object>();
 		String s="Kilometros";
