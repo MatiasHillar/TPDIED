@@ -51,4 +51,9 @@ public class Unidad {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return nombre + "(" + simbolo + ")";
+	}
+
 }

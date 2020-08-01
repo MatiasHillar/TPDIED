@@ -102,7 +102,7 @@ public class App extends JFrame{
 		
 		this.menuItemInsumo = new JMenuItem("Gestionar Insumos");
 		this.menuItemInsumo.addActionListener( e -> {
-		//	this.setContentPane(new PanelGestionarInsumos());
+			this.setContentPane(new PanelGestionarInsumos());
 			//this.pack();
 			this.revalidate();
 			this.repaint();

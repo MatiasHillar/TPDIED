@@ -19,8 +19,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import controller.InsumoController;
+import dominio.*;
+import gui.util.*;
+
 public class PanelInsumosGenerales extends JPanel{
-	private String[] unidades = {"M2", "Kg", "Mts"};
+	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
 
 	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
 	private JLabel lblDescripcion = new JLabel("Descripción:");
@@ -31,7 +35,7 @@ public class PanelInsumosGenerales extends JPanel{
 	private JLabel lblStockTotal = new JLabel("Stock Total:");
 	private JLabel lblStockTotalNumero = new JLabel("Aca va el numero"); //metodo toString del stock o como se calcule
 	private JTextArea txtADescripcion;
-	private JComboBox<String> jcbUnidades = new JComboBox<String>(unidades);
+	private JComboBox<Unidad> jcbUnidades = new JComboBox<Unidad>(unidades);
 	private JFormattedTextField txtCosto = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JFormattedTextField txtPeso = new JFormattedTextField(NumberFormat.getNumberInstance());
 	
@@ -43,12 +47,12 @@ public class PanelInsumosGenerales extends JPanel{
 	private JButton btnGuardar;
 
 	private JButton btnCancelar;
-	//private InsumosGeneralesController controller;
+	private InsumoController controller;
 
 	
 	public PanelInsumosGenerales(){
 		super();
-		//this.controller= new InsumosController(this);
+		this.controller= new InsumoController(this);
 		this.armarPanel();
 	}
 	
@@ -171,16 +175,16 @@ public class PanelInsumosGenerales extends JPanel{
 		constraints.gridwidth = 6;
 		constraints.anchor = GridBagConstraints.SOUTHEAST;
 		this.btnGuardar = new JButton("Guardar");
-//		this.btnGuardar.addActionListener( e ->
-//		{
-//			try {
-//				controller.guardar();
-//			} catch (DatosObligatoriosException | FormatoNumeroException | ControllerException e1) {
-//				this.mostrarError("Error al guardar", e1.getMessage());
-//			}
-//			this.limpiarFormulario();
-//		}
-//	);
+		this.btnGuardar.addActionListener( e ->
+		{
+			try {
+				controller.guardar();
+			} catch (DatosObligatoriosException | FormatoNumeroException | ControllerException e1) {
+				this.mostrarError("Error al guardar", e1.getMessage());
+			}
+			this.limpiarFormulario();
+		}
+	);
 		this.add(btnGuardar, constraints);
 		this.limpiarFormulario();
 		
@@ -212,11 +216,11 @@ public class PanelInsumosGenerales extends JPanel{
 
 	
 	
-	public String[] getUnidades() {
+	public Unidad[] getUnidades() {
 		return unidades;
 	}
 
-	public void setUnidades(String[] unidades) {
+	public void setUnidades(Unidad[] unidades) {
 		this.unidades = unidades;
 	}
 
@@ -292,11 +296,11 @@ public class PanelInsumosGenerales extends JPanel{
 		this.txtADescripcion = txtADescripcion;
 	}
 
-	public JComboBox<String> getJcbUnidades() {
+	public JComboBox<Unidad> getJcbUnidades() {
 		return jcbUnidades;
 	}
 
-	public void setJcbUnidades(JComboBox<String> jcbUnidades) {
+	public void setJcbUnidades(JComboBox<Unidad> jcbUnidades) {
 		this.jcbUnidades = jcbUnidades;
 	}
 /*
