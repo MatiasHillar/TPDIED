@@ -38,12 +38,12 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "WHERE ID = ?";
 	
 	private static final String SELECT_ALL_INSUMO =
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, U.NOMBRE, N.SIMBOLO,"
-			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL"
-			+ "FROM INSUMO I, UNIDAD U, STOCK S"
-			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE"
-			+ "AND S.ID_INSUMO = I.ID"
-			+ "GROUP BY(I.ID)";
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, U.NOMBRE, U.SIMBOLO,"
+			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
+			+ "FROM INSUMO I, UNIDAD U, STOCK S "
+			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE "
+			+ "AND S.ID_INSUMO = I.ID "
+			+ "GROUP BY(I.ID, U.NOMBRE)";
 	
 	@Override
 	public Insumo saveOrUpdate(InsumoGral i) {

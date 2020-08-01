@@ -9,8 +9,8 @@ private Float pesoMaximoKg;
 
 @Override
 public String toString() {
-	return "Ruta [plantaOrigen=" + plantaOrigen + ", plantaDestino=" + plantaDestino + ", distanciaKm=" + distanciaKm
-			+ ", duracionMin=" + duracionMin + ", pesoMaximoKg=" + pesoMaximoKg + "]";
+	return plantaOrigen + " -> " + plantaDestino + " (" + distanciaKm + " Km; "
+			+ duracionMin + " min; Maximo= " + pesoMaximoKg + " Kg)";
 }
 public Ruta(Planta plantaOrigen, Planta plantaDestino, Float distanciaKm, Float duracionMin, Float pesoMaximoKg) {
 	super();

@@ -29,7 +29,7 @@ import gui.util.*;
 public class PanelGestionarInsumos extends JPanel{
 	
 	
-	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
+	private JLabel lblTitulo = new JLabel("Gestionar insumos:");
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	
@@ -70,7 +70,7 @@ public class PanelGestionarInsumos extends JPanel{
 
 		
 		
-		modeloTablaInsumo = new InsumoTableModel(new ArrayList<Insumo>());
+		modeloTablaInsumo = new InsumoTableModel(controller.listarTodos());
 		tablaInsumos = new JTable();
 		tablaInsumos.setModel(modeloTablaInsumo);
 		JScrollPane scrollPane = new JScrollPane(tablaInsumos);
