@@ -9,6 +9,6 @@ public interface PlantaDao {
 	public Planta saveOrUpdate(Planta p);
 	public Planta buscar(Integer id);
 	public List<Planta> buscarTodas();
-	public Void borrar(Integer id);
+	public void borrar(Integer id);
 	
 }
