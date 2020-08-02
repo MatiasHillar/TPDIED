@@ -20,11 +20,6 @@ public class CamionTableModel extends AbstractTableModel {
 		this.data = camiones;
 		else this.data= new ArrayList<Camion>();
 	}
-	/*
-private Float costoKm;
-private Float costoHora;
-private LocalDate fechaCompra;
-	 */
 	
 	
     private String[] columnNames =  {"Patente","Marca","Modelo","KM Recorridos", "Fecha de compra", "Costo por hora", "Costo por Km"};

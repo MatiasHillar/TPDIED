@@ -81,8 +81,6 @@ public class PanelCamiones extends JPanel{
 		this.setBackground(Color.GRAY);
 		GridBagLayout gbl = new GridBagLayout();
 		this.setLayout(gbl);
-		
-		
 		GridBagConstraints constraints = new GridBagConstraints();
 		
 

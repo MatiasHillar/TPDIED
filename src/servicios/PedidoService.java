@@ -43,6 +43,7 @@ public class PedidoService {
 		return pedidoDao.saveOrUpdate(p);
 	}
 	
+	
 	public List<Pedido> buscarTodosCreados() {
 		return pedidoDao.buscarTodosCreados();
 	}

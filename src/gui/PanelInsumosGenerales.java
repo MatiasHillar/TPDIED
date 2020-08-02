@@ -24,8 +24,8 @@ import dominio.*;
 import gui.util.*;
 
 public class PanelInsumosGenerales extends JPanel{
-	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
-
+//	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
+	private Unidad[] unidades;
 	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
 	private JLabel lblDescripcion = new JLabel("Descripción:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
@@ -35,7 +35,8 @@ public class PanelInsumosGenerales extends JPanel{
 	private JLabel lblStockTotal = new JLabel("Stock Total:");
 	private JLabel lblStockTotalNumero = new JLabel("Aca va el numero"); //metodo toString del stock o como se calcule
 	private JTextArea txtADescripcion;
-	private JComboBox<Unidad> jcbUnidades = new JComboBox<Unidad>(unidades);
+//	private JComboBox<Unidad> jcbUnidades = new JComboBox<Unidad>(unidades);
+	private JComboBox<Unidad> jcbUnidades;
 	private JFormattedTextField txtCosto = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JFormattedTextField txtPeso = new JFormattedTextField(NumberFormat.getNumberInstance());
 	
@@ -62,7 +63,9 @@ public class PanelInsumosGenerales extends JPanel{
 		this.setLayout(gbl);
 	
 		GridBagConstraints constraints = new GridBagConstraints();
-	
+		unidades = this.controller.listarTodasUnidades().toArray(new Unidad[0]);
+		jcbUnidades = new JComboBox<Unidad>(unidades);
+		
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 6;

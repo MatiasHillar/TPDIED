@@ -60,7 +60,7 @@ public class InsumoController {
 	}
 	
 	private Float obtenerValor(JFormattedTextField f) {
-		if(f==null) return 0f;
+		if(f.getValue()==null) return 0f;
 		return ((Number) f.getValue()).floatValue();
 	}
 	
@@ -181,6 +181,10 @@ public class InsumoController {
 		this.lista.addAll(insumoService.buscarTodos()); 
 		System.out.println("Resultado res   "+lista);
 		return this.lista;
+	}
+	
+	public List<Unidad> listarTodasUnidades(){
+		return this.insumoService.buscarTodasUnidades();
 	}
 
 

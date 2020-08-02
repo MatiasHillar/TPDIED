@@ -25,6 +25,7 @@ public class App extends JFrame{
 	JMenu menuInsumos;
 	JMenu menuStock;
 	JMenu menuCamiones;
+	JMenu menuPedidos;
 	JMenuItem menuItemPlantas;
 	JMenuItem menuItemRutas;
 	JMenuItem menuItemInsumosGenerales;
@@ -33,6 +34,7 @@ public class App extends JFrame{
 	JMenuItem menuItemCamion;
 	JMenuItem menuItemAltaCamion;
 	private JMenuItem menuItemInsumo;
+	private JMenuItem menuItemPedido;
 	
 	
 	private App() {
@@ -45,6 +47,15 @@ public class App extends JFrame{
 		this.menuInsumos = new JMenu("Insumos");
 		this.menuStock = new JMenu("Stock");
 		this.menuCamiones = new JMenu("Camiones");
+		this.menuPedidos = new JMenu("Pedidos");
+		
+		this.menuItemPedido = new JMenuItem("Registrar pedido");
+		this.menuItemPedido.addActionListener( e -> {
+			this.setContentPane(new PanelAltaPedido());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
 		
 		
 		this.menuItemCamion = new JMenuItem("Gestionar Camiones");
@@ -126,13 +137,14 @@ public class App extends JFrame{
 		this.menuStock.add(menuItemStock);
 		this.menuCamiones.add(menuItemCamion);
 		this.menuCamiones.add(menuItemAltaCamion);
-		
+		this.menuPedidos.add(menuItemPedido);
 		
 		menuBar.add(menuPlantas);
 		menuBar.add(menuRutas);
 		menuBar.add(menuInsumos);
 		menuBar.add(menuStock);
 		menuBar.add(menuCamiones);
+		menuBar.add(menuPedidos);
 		
 		this.setJMenuBar(menuBar);
 	
@@ -209,7 +221,7 @@ public class App extends JFrame{
 				       // handle exception
 		    }
 			App app = new App();
-			app.setTitle("Sistema de gestion log�stica - TP DIED 2020 ");
+			app.setTitle("Sistema de gestion logistica - TP DIED 2020 ");
 			app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			app.armarApp();
 			app.setExtendedState(app.getExtendedState() | JFrame.MAXIMIZED_BOTH);

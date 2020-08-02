@@ -37,7 +37,7 @@ public class CamionController {
 	}
 	
 	private Float obtenerValor(JFormattedTextField f) {
-		if(f==null) return 0f;
+		if(f.getValue()==null) return 0f;
 		return ((Number) f.getValue()).floatValue();
 	}
 	
@@ -110,7 +110,7 @@ public class CamionController {
 		camionService.crearCamion(c);
 		this.lista.clear();
 		this.lista.addAll(camionService.buscarTodos()); 
-		return null;
+		return c;
 	}
 	
 	public List<Camion> listarTodos(){

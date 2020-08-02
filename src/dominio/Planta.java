@@ -61,7 +61,7 @@ public class Planta {
 
 	@Override
 	public String toString() {
-		return nombre + ", id=" + id;
+		return nombre;
 	}
 
 }

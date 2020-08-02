@@ -23,6 +23,11 @@ public class PlantaController {
 		this.panel=p;
 		this.p= new Planta();
 	}
+	public PlantaController() {
+		this.plantaService= new PlantaService();
+		this.lista = new ArrayList<Planta>();
+		this.p= new Planta();
+	}
 	
 	public void actualizarPlanta() throws DatosObligatoriosException {
 		if(this.panel.getTxtNombre()!=null) {

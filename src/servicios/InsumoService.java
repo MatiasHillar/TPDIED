@@ -4,13 +4,14 @@ import java.util.List;
 
 import dao.InsumoDao;
 import dao.InsumoDaoPostgreSQL;
+import dao.UnidadDao;
 import dominio.*;
 import servicios.*;
 
 
 public class InsumoService {
 	private InsumoDao insumoDao;
-	
+	private UnidadDao unidadDao;
 	public InsumoService() {
 		insumoDao= new InsumoDaoPostgreSQL();
 	}
@@ -31,6 +32,9 @@ public class InsumoService {
 		insumoDao.borrar(i);
 	}
 	
+	public List<Unidad> buscarTodasUnidades(){
+		return unidadDao.buscarTodas();
+	}
 	
 
 }
