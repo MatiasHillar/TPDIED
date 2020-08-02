@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.ArrayList;	
+import java.util.ArrayList;		
 import java.util.List;
 
 import dao.utils.DB;
@@ -44,6 +44,12 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE "
 			+ "AND S.ID_INSUMO = I.ID "
 			+ "GROUP BY(I.ID, U.NOMBRE)";
+	
+	private static final String SELECT_INSUMO = 
+			"SELECT I.ID AS ID_INSUMO, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
+			+"FROM INSUMO I, STOCK S"
+			+" WHERE S.ID_PRODUCTO = I.ID"
+			+ "GROUP BY (I.ID)";
 	
 	@Override
 	public Insumo saveOrUpdate(InsumoGral i) {
@@ -118,6 +124,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 		return i;
 	}
 
+	
 	@Override
 	public void borrar(Insumo i) {
 		Connection conn = DB.getConexion();
@@ -192,6 +199,39 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 	public Unidad buscarUnidad(String nombre) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Insumo buscar(Integer id_insumo, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Insumo i = null;
+		try {
+			pstmt = conn.prepareStatement(SELECT_INSUMO, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
+			pstmt.executeQuery();
+			if(rs.getString("TIPO").equals("GENERAL")) {
+				i = new InsumoGral();
+				i.setId(rs.getInt("ID"));
+				i.setCosto(rs.getFloat("COSTO"));
+				i.setDescripcion(rs.getString("DESCRIPCION"));
+				i.setNombre(rs.getString("NOMBRE"));
+				i.setPeso(rs.getFloat("PESO"));
+				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
+			}
+			else {
+				i = new InsumoLiquido();
+				i.setId(rs.getInt("ID"));
+				i.setCosto(rs.getFloat("COSTO"));
+				i.setDescripcion(rs.getString("DESCRIPCION"));
+				i.setNombre(rs.getString("NOMBRE"));
+				i.setPeso(rs.getFloat("PESO"));
+				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return i;
 	}
 
 }

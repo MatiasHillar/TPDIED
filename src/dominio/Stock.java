@@ -3,8 +3,8 @@ package dominio;
 public class Stock {
 	private Integer id;
 	private Insumo insumo;
-	private Integer ctidad;
-	private Integer puntoRepo;
+	private Float ctidad;
+	private Float puntoRepo;
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -40,17 +40,18 @@ public class Stock {
 	public void setInsumo(Insumo insumo) {
 		this.insumo = insumo;
 	}
-	public Integer getCtidad() {
+	public Float getCtidad() {
 		return ctidad;
 	}
-	public void setCtidad(Integer ctidad) {
+	public void setCtidad(Float ctidad) {
 		this.ctidad = ctidad;
 	}
-	public Integer getPuntoRepo() {
+	public Float getPuntoRepo() {
 		return puntoRepo;
 	}
-	public void setPuntoRepo(Integer puntoRepo) {
+	public void setPuntoRepo(Float puntoRepo) {
 		this.puntoRepo = puntoRepo;
 	}
+
 	
 }

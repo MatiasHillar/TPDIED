@@ -10,7 +10,9 @@ public abstract class Insumo {
 	protected Float cantidadTotal;
 	
 	
-	
+	public Insumo() {
+		super();
+	}
 	public Float getPeso() {
 		return pesoPorUnidad();
 	};
