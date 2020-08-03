@@ -91,5 +91,9 @@ public class Pedido {
 	public void setCostoEnvio(Float costoEnvio) {
 		this.costoEnvio = costoEnvio;
 	}
+	@Override
+	public String toString() {
+		return "Pedido " + nroPedido + ". Destino: " + plantaDestino + " (" + this.listaItems==null? "0" : this.listaItems.size() + " insumos)";
+	}
 	
 }
