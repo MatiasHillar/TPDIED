@@ -83,7 +83,7 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 				p.setId(rs.getInt("ID"));
 				p.setNombre(rs.getString("NOMBRE"));
 				//podria pasar la conexion como argumento
-				p.setListaStock(stockDao.buscarPorPlanta(rs.getInt("ID"),conn));
+				p.setListaStock(stockDao.buscarPorPlanta(rs.getInt("ID"), conn));
 				lista.add(p);
 			}
 		}

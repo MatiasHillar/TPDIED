@@ -6,10 +6,20 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-		<classpathentry kind="lib" path="lib/postgresql-42.2.14.jar">
+	<classpathentry kind="lib" path="lib/postgresql-42.2.14.jar">
 		<attributes>
-			<attribute name ="module" value="true"/>
+			<attribute name="module" value="true"/>
 		</attributes>
-	</classpathentry>		
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.3.0.v20180420-1519.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/org.junit_4.13.0.v20200204-1500.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
