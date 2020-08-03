@@ -29,6 +29,7 @@ import javax.swing.SwingUtilities;
 import controller.ProcesarPedidoController;
 import dominio.*;
 import gui.util.DatosObligatoriosException;
+import prueba.App;
 
 public class PanelProcesarPedido extends JPanel {
 	
@@ -53,7 +54,7 @@ public class PanelProcesarPedido extends JPanel {
 	private JLabel lblFecha = new JLabel("Fecha maxima de entrega:");
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField txtFecha = new JFormattedTextField(df);	
-	private JTextField txtPlanta;
+	private JTextField txtPlanta = new JTextField();
 	private JLabel lblFechaSolicitud = new JLabel("Fecha de solicitud:");
 	private JFormattedTextField txtFechaS = new JFormattedTextField(df);	
 	
@@ -66,14 +67,15 @@ public class PanelProcesarPedido extends JPanel {
 	
 	private JTable tablaItems;
 	private ItemPedidoTableModel modeloTablaItem; 
-	 
+	private App app; 
 	
 	
 	
-	public PanelProcesarPedido() {
+	public PanelProcesarPedido(App a) {
 		super();
 		this.controller= new ProcesarPedidoController(this);
 		this.armarPanel();
+		this.app=a;
 	}
 	
 	private void armarPanel() {
@@ -102,8 +104,10 @@ public class PanelProcesarPedido extends JPanel {
 		this.add(lblPedidos,constraints);
 		
 		constraints.gridy = 3;
-		this.controller.actualizarPedidos();
-//		jcbPedidos = new JComboBox<Pedido>(controller.listarPedidosCreados().toArray(new Pedido[0]));
+//			this.controller.actualizarPedidos();
+		jcbPedidos = new JComboBox<Pedido>();
+
+//		jcbPlantas = new JComboBox<Planta>();
 		this.add(jcbPedidos,constraints);
 		
 		constraints.gridy = 4;
@@ -120,19 +124,25 @@ public class PanelProcesarPedido extends JPanel {
 		
 		constraints.gridx = 1;
 		btnBuscarPlantas.addActionListener(e -> {
-			try {
-				this.controller.buscarPlantaParaPedido();
-			}
-			catch(DatosObligatoriosException e1) {
-				this.mostrarError("Error al mostrar detalles", e1.getMessage());
-			}
+//			try {
+				this.app.setContentPane(new PanelAltaCamiones());
+				this.app.revalidate();
+				this.app.repaint();
+				System.out.println("Acordarse de descomentar esto");
+				//Si no hay plantas avisar por pantalla
+				
+//				this.controller.buscarPlantaParaPedido();
+//			}
+//			catch(DatosObligatoriosException e1) {
+//				this.mostrarError("Error al buscar plantas", e1.getMessage());
+//			}
 		});
 		
 		this.add(btnBuscarPlantas, constraints);
 		
 		
 
-		constraints.gridx = 1;
+		constraints.gridx = 2;
 		constraints.gridy = 2;
 		this.add(lblInsumos, constraints);
 		
@@ -142,10 +152,10 @@ public class PanelProcesarPedido extends JPanel {
 		tablaItems.setModel(modeloTablaItem);
 		JScrollPane scrollPane = new JScrollPane(tablaItems);
 		tablaItems.setFillsViewportHeight(true);
-		constraints.gridx = 1;
+		constraints.gridx = 2;
 		constraints.gridy = 3;
 		constraints.gridwidth=3;
-		constraints.gridheight=4;
+		constraints.gridheight=5;
 		this.add(scrollPane,constraints);
 		constraints.gridwidth=1;
 		constraints.gridheight=1;
@@ -153,31 +163,33 @@ public class PanelProcesarPedido extends JPanel {
 		
 		
 		
-		constraints.gridx = 4;
+		constraints.gridx = 5;
 		constraints.gridy = 2;
 		this.add(lblFecha,constraints);
 		
-		constraints.gridx = 4;
+		constraints.gridx = 5;
 		constraints.gridy = 3;
 		this.txtFecha.setColumns(10);
 		this.add(txtFecha,constraints);
-		
-		constraints.gridx = 4;
-		constraints.gridy = 3;
+
+		constraints.anchor= constraints.NORTH;
+		constraints.gridx = 5;
+		constraints.gridy = 4;
 		this.add(lblFechaSolicitud,constraints);
 		
-		constraints.gridx = 4;
-		constraints.gridy = 4;
+		constraints.gridx = 5;
+		constraints.gridy = 5;
 		this.txtFechaS.setColumns(10);
 		this.add(txtFechaS,constraints);
 		
 		
-		constraints.gridx = 4;
-		constraints.gridy = 5;
-		this.add(this.lblPlDestino,constraints);
-		constraints.gridx = 4;
+		constraints.gridx = 5;
 		constraints.gridy = 6;
+		this.add(this.lblPlDestino,constraints);
+		constraints.gridx = 5;
+		constraints.gridy = 7;
 		this.add(txtPlanta, constraints);
+		constraints.anchor= constraints.CENTER;
 		
 		
 		/*

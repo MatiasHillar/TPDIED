@@ -40,12 +40,13 @@ public class ProcesarPedidoController {
 	}
 	
 	public void buscarPlantaParaPedido() throws DatosObligatoriosException{
-		if(!(this.panel.getJcbPedidos().getSelectedItem() instanceof Pedido)) {
+		if(!(this.panel.getJcbPedidos().getSelectedItem() !=null && this.panel.getJcbPedidos().getSelectedItem() instanceof Pedido)) {
 			throw new DatosObligatoriosException("Pedido", "No hay ningun pedido seleccionado");
 		}
 		else {
 			Pedido ped = (Pedido) this.panel.getJcbPedidos().getSelectedItem();
-			this.panel.setJcbPlantas(new JComboBox<Planta>((Planta[]) this.pedidoService.buscarPlantasParaPedido(ped).toArray(new Planta[0])));
+//			this.panel.setJcbPlantas(new JComboBox<Planta>((Planta[]) this.pedidoService.buscarPlantasParaPedido(ped).toArray(new Planta[0])));
+			this.panel.setJcbPlantas(new JComboBox<Planta>( this.pedidoService.buscarPlantasParaPedido(ped).toArray(new Planta[0])));
 			if(ped.getEstado() == Estado.CANCELADO)
 				this.actualizarPedidos();
 		}
@@ -72,5 +73,7 @@ public class ProcesarPedidoController {
 			this.panel.getTxtPlanta().setText(ped.getPlantaDestino().toString());
 		}
 	}
+	
+	
 	
 }

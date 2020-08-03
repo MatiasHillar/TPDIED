@@ -52,7 +52,7 @@ public class App extends JFrame{
 		
 		this.menuItemProcesarPedido = new JMenuItem("Procesar pedido");
 		this.menuItemProcesarPedido.addActionListener( e -> {
-			this.setContentPane(new PanelProcesarPedido());
+			this.setContentPane(new PanelProcesarPedido(this));
 			//this.pack();
 			this.revalidate();
 			this.repaint();
