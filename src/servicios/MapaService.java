@@ -247,14 +247,21 @@ public class MapaService {
 	*/
 	
 	public MatrizFloyd caminosMenosKm(){
-		return this.todosMenoresCaminos(r-> r.getDistanciaKm());
+		Mapa m = construir();
+		return this.todosMenoresCaminos(r-> r.getDistanciaKm(), m);
 	}
 	public MatrizFloyd caminosMenosTiempo(){
-		return this.todosMenoresCaminos(r-> r.getDuracionMin());
+		Mapa m = construir();
+		return this.todosMenoresCaminos(r-> r.getDuracionMin(), m);
+	}
+	public MatrizFloyd caminosMenosKm(Mapa m){
+		return this.todosMenoresCaminos(r-> r.getDistanciaKm(), m);
+	}
+	public MatrizFloyd caminosMenosTiempo(Mapa m){
+		return this.todosMenoresCaminos(r-> r.getDuracionMin(), m);
 	}
 	
-	private MatrizFloyd todosMenoresCaminos(Function<Ruta,Float> obtenerCosto){
-		Mapa m = construir();
+	private MatrizFloyd todosMenoresCaminos(Function<Ruta,Float> obtenerCosto,Mapa m){
 		List<Planta> lp = m.getListaPlantas();
 		Integer ctidad = lp.size();
 		HashMap<Integer,Integer> idAIndex = new HashMap<Integer, Integer>();
@@ -288,17 +295,16 @@ public class MapaService {
 			}
 		}
 		
-		return new MatrizFloyd(d,indexAPlanta);
+		return new MatrizFloyd(d,indexAPlanta, idAIndex);
 	}
 	
-	public TreeMap<Double, Planta> pageRank() {
-		Mapa m = construir();
+	public HashMap<Planta,Double> pageRank(Mapa m) {
 		List<Planta> lp = m.getListaPlantas();
 		Integer ctidad = lp.size();
 		HashMap<Integer,Integer> idAIndex = new HashMap<Integer, Integer>();
 		HashMap<Integer,Planta> indexAPlanta = new HashMap<Integer,Planta>();
 		Double[] pr = new Double[ctidad];
-		Double var = 0.0002d,
+		Double var = 0.001d,
 				d=0.5d,
 				maxvar=1d,
 				aux,
@@ -311,6 +317,7 @@ public class MapaService {
 		}
 		
 		while(maxvar>var) {
+			maxvar=0d;
 			for(int i = 0 ; i<ctidad ; i++) {
 				anterior= pr[i];
 				pr[i]=(1-d);
@@ -324,13 +331,26 @@ public class MapaService {
 				maxvar = Math.max(maxvar, Math.abs(anterior-pr[i]));
 			}
 		}
-		TreeMap<Double, Planta> resultado = new TreeMap<Double, Planta>((d1,d2)->d2.compareTo(d1));
+//		TreeMap<Planta,Double> resultado = new TreeMap<Planta,Double>((d1,d2)->resultado.get(d2).compareTo(resultado.get(d1)));
+		HashMap<Planta,Double> resultado = new HashMap<Planta,Double>();
 		for(int i = 0 ; i<ctidad ; i++) {
-			resultado.put(pr[i], indexAPlanta.get(i));
+			resultado.put(indexAPlanta.get(i),pr[i]);
 		}
 		return resultado;
 		
 	}
+	
+	
+	public Float maxFlow(Planta origen, Planta destino, Mapa m) {
+		HashSet<Ruta> marcados = new HashSet<Ruta>();
+		Float peso = Float.MAX_VALUE;
+		HashMap<Ruta,Float> pesoRestante = new HashMap<Ruta,Float>();
+		for(Ruta r: m.getListaRutas()) {
+			pesoRestante.put(r, r.getPesoMaximoKg());
+		}
+		return maxFlowAux(origen,destino,marcados,peso,pesoRestante, m);
+	}
+	
 	
 	public Float maxFlow(Planta origen, Planta destino) {
 		Mapa m = construir();
