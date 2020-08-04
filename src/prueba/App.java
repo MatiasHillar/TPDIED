@@ -36,6 +36,7 @@ public class App extends JFrame{
 	private JMenuItem menuItemInsumo;
 	private JMenuItem menuItemPedido;
 	private JMenuItem menuItemProcesarPedido;
+	private JMenuItem menuItemEntregarPedido;
 	
 	
 	private App() {
@@ -49,6 +50,15 @@ public class App extends JFrame{
 		this.menuStock = new JMenu("Stock");
 		this.menuCamiones = new JMenu("Camiones");
 		this.menuPedidos = new JMenu("Pedidos");
+		
+		this.menuItemEntregarPedido = new JMenuItem("Entregar pedido");
+		this.menuItemEntregarPedido.addActionListener( e -> {
+			this.setContentPane(new PanelEntregarPedido());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
+		
 		
 		this.menuItemProcesarPedido = new JMenuItem("Procesar pedido");
 		this.menuItemProcesarPedido.addActionListener( e -> {
@@ -149,7 +159,7 @@ public class App extends JFrame{
 		this.menuCamiones.add(menuItemAltaCamion);
 		this.menuPedidos.add(menuItemPedido);
 		this.menuPedidos.add(menuItemProcesarPedido);
-		
+		this.menuPedidos.add(menuItemEntregarPedido);
 		menuBar.add(menuPlantas);
 		menuBar.add(menuRutas);
 		menuBar.add(menuInsumos);

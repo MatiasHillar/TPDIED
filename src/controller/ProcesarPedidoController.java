@@ -57,12 +57,15 @@ public class ProcesarPedidoController {
 	}
 	
 	public void verDetallePedido() throws DatosObligatoriosException{
-		if(!(this.panel.getJcbPedidos().getSelectedItem() instanceof Pedido)) {
+		if(!(this.panel.getJcbPedidos().getSelectedItem() !=null && this.panel.getJcbPedidos().getSelectedItem() instanceof Pedido)) {
 			throw new DatosObligatoriosException("Pedido", "No hay ningun pedido seleccionado");
 			//this.mostrarError("Ver detalle", "No hay ningun pedido seleccionado");
 		}
 		else {
 			Pedido ped = (Pedido) this.panel.getJcbPedidos().getSelectedItem();
+			this.panel.getModeloTablaItem().getData().clear();
+			this.panel.getModeloTablaItem().getData().addAll(ped.getListaItems());
+			this.panel.getModeloTablaItem().fireTableDataChanged();
 			ZoneId defaultZoneId = ZoneId.systemDefault();
 		    LocalDate localDate = ped.getFechaSolicitud();
 		    Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());

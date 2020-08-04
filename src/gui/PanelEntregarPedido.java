@@ -9,7 +9,6 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,56 +25,50 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import controller.ProcesarPedidoController;
-import dominio.*;
+import controller.EntregarPedidoController;
+import dominio.Camion;
+import dominio.Estado;
+import dominio.ItemPedido;
+import dominio.Pedido;
+import dominio.Planta;
+import dominio.Ruta;
 import gui.util.DatosObligatoriosException;
 import prueba.App;
 
-public class PanelProcesarPedido extends JPanel {
-	
-	private JLabel lblTitulo = new JLabel("Procesar pedido:");
+public class PanelEntregarPedido extends JPanel {
+	private JLabel lblTitulo = new JLabel("Entregar pedido:");
 	private JLabel lblPedidos = new JLabel("Pedidos:");
 	private JLabel lblPlDestino = new JLabel("Planta destino:");
 	private JLabel lblInsumos = new JLabel("Insumos:");
-	private JLabel lblCaminosMenosKm = new JLabel("Caminos con menor Km:");
-	private JLabel lblCaminosMenosT = new JLabel("Caminos con menor tiempo:");
+	private JLabel lblCamino = new JLabel("Camino:");
+	private JLabel lblCosto = new JLabel("Costo del envio:");
+	private JLabel lblCamion = new JLabel("Camion asignado(Patente):");
+	private JFormattedTextField txtCosto = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JComboBox<Pedido> jcbPedidos;
-	private JComboBox<Planta> jcbPlantas;
-//	private JFormattedTextField cantidad = new JFormattedTextField(NumberFormat.getNumberInstance());
-//	private JFormattedTextField precio = new JFormattedTextField(NumberFormat.getNumberInstance());
 	
 	private JButton btnVerDetalle = new JButton("Ver detalle");
-	private JButton btnBuscarPlantas= new JButton("Buscar plantas");
-	private JButton btnBuscarCaminos= new JButton("Buscar caminos");
-	private JButton btnElegirCamino= new JButton("Elegir camino");
-	private JButton btnElegirCamino2= new JButton("Elegir camino");
+	private JButton btnEntregado= new JButton("Marcar como entregado");
 	
 	
 	private JLabel lblFecha = new JLabel("Fecha maxima de entrega:");
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField txtFecha = new JFormattedTextField(df);	
 	private JTextField txtPlanta = new JTextField();
+	private JTextField txtCamion = new JTextField();
+	private JTextField txtCamino = new JTextField();
 	private JLabel lblFechaSolicitud = new JLabel("Fecha de solicitud:");
 	private JFormattedTextField txtFechaS = new JFormattedTextField(df);	
 	
-	/*
-	private DefaultListModel<ItemPedido> listModel = new DefaultListModel<ItemPedido>();
-	private JList<ItemPedido> list = new JList<ItemPedido>(listModel);
-	*/
-	private ProcesarPedidoController controller;
-	
-	
 	private JTable tablaItems;
 	private ItemPedidoTableModel modeloTablaItem; 
-	private App app; 
 	
 	
-	
-	public PanelProcesarPedido(App a) {
+	private EntregarPedidoController controller;
+	  
+	public PanelEntregarPedido() {
 		super();
-		this.controller= new ProcesarPedidoController(this);
+		this.controller= new EntregarPedidoController(this);
 		this.armarPanel();
-		this.app=a;
 	}
 	
 	private void armarPanel() {
@@ -106,8 +99,6 @@ public class PanelProcesarPedido extends JPanel {
 		constraints.gridy = 3;
 //			this.controller.actualizarPedidos();
 		jcbPedidos = new JComboBox<Pedido>();
-
-//		jcbPlantas = new JComboBox<Planta>();
 		this.add(jcbPedidos,constraints);
 		
 		constraints.gridy = 4;
@@ -122,26 +113,18 @@ public class PanelProcesarPedido extends JPanel {
 		});
 		this.add(btnVerDetalle,constraints);
 		
-		constraints.gridx = 1;
-		btnBuscarPlantas.addActionListener(e -> {
-//			try {
-				this.app.setContentPane(new PanelAltaCamiones());
-				this.app.revalidate();
-				this.app.repaint();
-				System.out.println("Acordarse de descomentar esto");
-				//Si no hay plantas avisar por pantalla
-				
-//				this.controller.buscarPlantaParaPedido();
-//			}
-//			catch(DatosObligatoriosException e1) {
-//				this.mostrarError("Error al buscar plantas", e1.getMessage());
-//			}
+		constraints.gridy = 5;
+		btnEntregado.addActionListener( e -> {
+			try {
+				this.controller.entregarPedido();
+			}
+			catch(DatosObligatoriosException e1) {
+				this.mostrarError("Error al marcar entrega", e1.getMessage());
+			}
+			
 		});
+		this.add(btnEntregado,constraints);
 		
-		this.add(btnBuscarPlantas, constraints);
-		
-		
-
 		constraints.gridx = 2;
 		constraints.gridy = 2;
 		this.add(lblInsumos, constraints);
@@ -185,38 +168,65 @@ public class PanelProcesarPedido extends JPanel {
 		
 		constraints.gridx = 5;
 		constraints.gridy = 6;
+		this.txtPlanta=new JTextField(20);
 		this.add(this.lblPlDestino,constraints);
 		constraints.gridx = 5;
 		constraints.gridy = 7;
-		this.txtPlanta=new JTextField(20);
 		this.add(txtPlanta, constraints);
 		constraints.anchor= constraints.CENTER;
-		
-		
 
+		constraints.gridx = 6;
+		constraints.gridy = 2;
+		this.add(lblCamino,constraints);
+		
+		constraints.gridy = 3;
+		this.txtCamino= new JTextField(20);
+		this.add(txtCamino,constraints);
+		
+		constraints.gridy = 4;
+		this.add(lblCosto,constraints);
+		
+		constraints.gridy = 5;
+		this.txtCosto.setColumns(20);
+		this.add(txtCosto,constraints);
+		
+		constraints.gridy = 6;
+		this.add(lblCamion,constraints);
+
+		constraints.anchor= constraints.NORTH;
+		constraints.gridy = 7;
+		this.txtCamion= new JTextField(20);
+		this.add(txtCamion,constraints);
 		this.limpiarFormulario();
+		this.txtCamino.setEditable(false);
+		this.txtCamion.setEditable(false);
+		this.txtCosto.setEditable(false);
 		this.txtPlanta.setEditable(false);
 		this.txtFecha.setEditable(false);
 		this.txtFechaS.setEditable(false);
 	}
-		
 	
-	
-	
-	private void limpiarFormulario() {
-		this.txtFecha.setValue(new Date());
-		this.txtFechaS.setValue(new Date());
-		this.jcbPlantas =  new JComboBox<Planta>();
-	}
-	
-
-	
-		
 	public void mostrarError(String titulo,String detalle) {
 		JFrame padre= (JFrame) SwingUtilities.getWindowAncestor(this);
 		JOptionPane.showMessageDialog(padre,
 			    detalle,titulo,
 			    JOptionPane.ERROR_MESSAGE);
+	}
+	private void limpiarFormulario() {
+		this.txtCosto.setValue(0f);
+		this.txtCamion.setText("");
+		this.txtCamino.setText("");
+		this.txtPlanta.setText("");
+		this.txtFecha.setValue(new Date());
+		this.txtFechaS.setValue(new Date());
+	}
+
+	public JFormattedTextField getTxtCosto() {
+		return txtCosto;
+	}
+
+	public void setTxtCosto(JFormattedTextField txtCosto) {
+		this.txtCosto = txtCosto;
 	}
 
 	public JComboBox<Pedido> getJcbPedidos() {
@@ -227,20 +237,36 @@ public class PanelProcesarPedido extends JPanel {
 		this.jcbPedidos = jcbPedidos;
 	}
 
-	public JComboBox<Planta> getJcbPlantas() {
-		return jcbPlantas;
-	}
-
-	public void setJcbPlantas(JComboBox<Planta> jcbPlantas) {
-		this.jcbPlantas = jcbPlantas;
-	}
-
 	public JFormattedTextField getTxtFecha() {
 		return txtFecha;
 	}
 
 	public void setTxtFecha(JFormattedTextField txtFecha) {
 		this.txtFecha = txtFecha;
+	}
+
+	public JTextField getTxtPlanta() {
+		return txtPlanta;
+	}
+
+	public void setTxtPlanta(JTextField txtPlanta) {
+		this.txtPlanta = txtPlanta;
+	}
+
+	public JTextField getTxtCamion() {
+		return txtCamion;
+	}
+
+	public void setTxtCamion(JTextField txtCamion) {
+		this.txtCamion = txtCamion;
+	}
+
+	public JTextField getTxtCamino() {
+		return txtCamino;
+	}
+
+	public void setTxtCamino(JTextField txtCamino) {
+		this.txtCamino = txtCamino;
 	}
 
 	public JFormattedTextField getTxtFechaS() {
@@ -266,16 +292,5 @@ public class PanelProcesarPedido extends JPanel {
 	public void setModeloTablaItem(ItemPedidoTableModel modeloTablaItem) {
 		this.modeloTablaItem = modeloTablaItem;
 	}
-
-	public JTextField getTxtPlanta() {
-		return txtPlanta;
-	}
-
-	public void setTxtPlanta(JTextField txtPlanta) {
-		this.txtPlanta = txtPlanta;
-	}
-
 	
-	
-
 }

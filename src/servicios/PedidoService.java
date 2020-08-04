@@ -34,12 +34,6 @@ public class PedidoService {
 	
 	public Pedido entregarPedido(Pedido p) {
 		p.setEstado(Estado.ENTREGADO);
-		p.setFechaEntrega(LocalDate.now());
-		return pedidoDao.saveOrUpdate(p);
-	}
-	public Pedido entregarPedido(Pedido p, LocalDate fechaEntrega) {
-		p.setEstado(Estado.ENTREGADO);
-		p.setFechaEntrega(fechaEntrega);
 		return pedidoDao.saveOrUpdate(p);
 	}
 	
