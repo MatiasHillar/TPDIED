@@ -48,8 +48,10 @@ public class PedidoService {
 	
 	public List<Planta> buscarPlantasParaPedido(Pedido p) {
 		List<Planta> resultado= plantaService.buscarPlantasParaPedido(p.getListaItems());
-		if(resultado.isEmpty())
+		if(resultado.isEmpty()) {
 			p.setEstado(Estado.CANCELADO);
+			pedidoDao.saveOrUpdate(p);
+		}
 		return resultado;		
 	}
 	

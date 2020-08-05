@@ -5,6 +5,7 @@ public class Stock {
 	private Insumo insumo;
 	private Float ctidad;
 	private Float puntoRepo;
+	private Planta p;
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -51,6 +52,12 @@ public class Stock {
 	}
 	public void setPuntoRepo(Float puntoRepo) {
 		this.puntoRepo = puntoRepo;
+	}
+	public Planta getP() {
+		return p;
+	}
+	public void setP(Planta p) {
+		this.p = p;
 	}
 
 	

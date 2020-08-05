@@ -5,34 +5,42 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.StockController;
+import dominio.*;
+
 public class PanelStock extends JPanel {
 	
-	private String[] plantas = {"p1", "p2", "p3", "p4", "p5"};
-	private String[] insumos = {"i1", "i2", "i3", "i4", "i5"};
+	
+	
+	//this.panel.setJcbPlantas(new JComboBox<Planta>(this.pedidoService.buscarPlantas().toArray(new Planta[0])));
+	//this.panel.setJcbInsumos(new JComboBox<Insumo>( this.insumoService.buscarInsumos().toArray(new Insumo[0])));
+
 
 	private JLabel lblTitulo = new JLabel("Stocks en Planta:");
 	private JLabel lblPlanta = new JLabel("Seleccionar Planta:");
-	private JComboBox<String> jcbPlantas = new JComboBox(plantas); //CAMBIAR STRING POR PLANTAS
+	private JComboBox<Planta> jcbPlantas = new JComboBox<Planta>(); 
 	private JLabel lblInsumo = new JLabel("Seleccionar Insumo:");
-	private JList<String> jlInsumos = new JList(insumos); //CAMBIAR STRING POR INSUMOS DE LA PLANTA ELEGIDA
+	private JComboBox<Insumo> jcbInsumos = new JComboBox<Insumo>(); 
 	private JLabel lblCantidadInsumo = new JLabel("Cantidad:");
-	private JTextField txtCantidadInsumo;
+	private JFormattedTextField txtCantidadInsumo = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JLabel lblPuntoDePedido = new JLabel("Punto de pedido:");
-	private JTextField txtPuntoDePedido;
+	private JFormattedTextField txtPuntoPedido = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JButton btnGuardar;
-	//private RutasController controller;
+	private StockController controller;
 	
 	public PanelStock(){
 		super();
-		//this.controller= new RutasController(this);
+		this.controller= new StockController(this);
 		this.armarPanel();
 	}
 	
@@ -76,8 +84,69 @@ public class PanelStock extends JPanel {
 		constraints.gridx = 3;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
-		this.add(jlInsumos, constraints);
+		this.add(jcbInsumos, constraints);
 		
+
+		constraints.gridy = 2;
+		constraints.gridx = 0;
+		this.add(lblPuntoDePedido, constraints);
+		
+		constraints.gridx = 1;
+		this.txtPuntoPedido.setColumns(20);
+		this.add(txtPuntoPedido, constraints);
+		
+		constraints.gridx = 2;
+		this.add(this.lblCantidadInsumo, constraints);
+		
+		
+		constraints.gridx = 3;
+		this.txtCantidadInsumo.setColumns(20);
+		this.add(txtCantidadInsumo, constraints);
+		
+
+		constraints.gridy = 3;
+		constraints.gridx = 3;
+		
+		this.limpiarFormulario();
+	}
+	
+	private void limpiarFormulario() {
+		this.txtPuntoPedido.setValue(0f);
+		this.txtCantidadInsumo.setValue(0f);
+		this.controller.setJcbs();
+		
+	}
+
+	public JComboBox<Planta> getJcbPlantas() {
+		return jcbPlantas;
+	}
+
+	public void setJcbPlantas(JComboBox<Planta> jcbPlantas) {
+		this.jcbPlantas = jcbPlantas;
+	}
+
+	public JComboBox<Insumo> getJcbInsumos() {
+		return jcbInsumos;
+	}
+
+	public void setJcbInsumos(JComboBox<Insumo> jcbInsumos) {
+		this.jcbInsumos = jcbInsumos;
+	}
+
+	public JFormattedTextField getTxtCantidadInsumo() {
+		return txtCantidadInsumo;
+	}
+
+	public void setTxtCantidadInsumo(JFormattedTextField txtCantidadInsumo) {
+		this.txtCantidadInsumo = txtCantidadInsumo;
+	}
+
+	public JFormattedTextField getTxtPuntoPedido() {
+		return txtPuntoPedido;
+	}
+
+	public void setTxtPuntoPedido(JFormattedTextField txtPuntoPedido) {
+		this.txtPuntoPedido = txtPuntoPedido;
 	}
 	
 }

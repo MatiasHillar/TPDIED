@@ -4,15 +4,16 @@ import java.util.List;
 
 import dominio.*;
 import dao.PlantaDao;
+import dao.PlantaDaoPostgreSQL;
 
 
 public class PlantaService {
 	private PlantaDao plantaDao;
-	/*
+	
 	public PlantaService() {
 		plantaDao = new PlantaDaoPostgreSQL();
 	}
-*/
+
 	public Planta crearPlanta(Planta p) {
 		// si hay alguna regla de negocio que indque que no se 
 		// puede agregar un camion si no se cumplen determinadas
@@ -25,11 +26,11 @@ public class PlantaService {
 		return plantaDao.buscarTodas();
 	}
 	
-	/*
+	
 	public List<Planta> buscarPlantasParaPedido(List<ItemPedido> items ) {
 		return plantaDao.buscarPlantasParaPedido(items);
 	}
-	*/
+	
 	
 	
 

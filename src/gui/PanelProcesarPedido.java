@@ -37,8 +37,8 @@ public class PanelProcesarPedido extends JPanel {
 	private JLabel lblPedidos = new JLabel("Pedidos:");
 	private JLabel lblPlDestino = new JLabel("Planta destino:");
 	private JLabel lblInsumos = new JLabel("Insumos:");
-	private JLabel lblCaminosMenosKm = new JLabel("Caminos con menor Km:");
-	private JLabel lblCaminosMenosT = new JLabel("Caminos con menor tiempo:");
+//	private JLabel lblCaminosMenosKm = new JLabel("Caminos con menor Km:");
+//	private JLabel lblCaminosMenosT = new JLabel("Caminos con menor tiempo:");
 	private JComboBox<Pedido> jcbPedidos;
 	private JComboBox<Planta> jcbPlantas;
 //	private JFormattedTextField cantidad = new JFormattedTextField(NumberFormat.getNumberInstance());
@@ -46,9 +46,9 @@ public class PanelProcesarPedido extends JPanel {
 	
 	private JButton btnVerDetalle = new JButton("Ver detalle");
 	private JButton btnBuscarPlantas= new JButton("Buscar plantas");
-	private JButton btnBuscarCaminos= new JButton("Buscar caminos");
-	private JButton btnElegirCamino= new JButton("Elegir camino");
-	private JButton btnElegirCamino2= new JButton("Elegir camino");
+//	private JButton btnBuscarCaminos= new JButton("Buscar caminos");
+//	private JButton btnElegirCamino= new JButton("Elegir camino");
+//	private JButton btnElegirCamino2= new JButton("Elegir camino");
 	
 	
 	private JLabel lblFecha = new JLabel("Fecha maxima de entrega:");
@@ -124,18 +124,21 @@ public class PanelProcesarPedido extends JPanel {
 		
 		constraints.gridx = 1;
 		btnBuscarPlantas.addActionListener(e -> {
-//			try {
-				this.app.setContentPane(new PanelAltaCamiones());
-				this.app.revalidate();
-				this.app.repaint();
+			try {
+				List<Planta> ps= this.controller.buscarPlantaParaPedido();
+				if(!ps.isEmpty()) {
+					this.app.setContentPane(new PanelSeleccionarCamino(app, ps, ((Pedido) jcbPedidos.getSelectedItem()).getPlantaDestino(), ((Pedido) jcbPedidos.getSelectedItem())));
+					this.app.revalidate();
+					this.app.repaint();
+				}
 				System.out.println("Acordarse de descomentar esto");
 				//Si no hay plantas avisar por pantalla
 				
 //				this.controller.buscarPlantaParaPedido();
-//			}
-//			catch(DatosObligatoriosException e1) {
-//				this.mostrarError("Error al buscar plantas", e1.getMessage());
-//			}
+			}
+			catch(DatosObligatoriosException e1) {
+				this.mostrarError("Error al buscar plantas", e1.getMessage());
+			}
 		});
 		
 		this.add(btnBuscarPlantas, constraints);
