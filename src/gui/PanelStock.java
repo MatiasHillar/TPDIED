@@ -10,13 +10,19 @@ import java.text.NumberFormat;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import controller.StockController;
 import dominio.*;
+import gui.util.ControllerException;
+import gui.util.DatosObligatoriosException;
+import gui.util.FormatoNumeroException;
 
 public class PanelStock extends JPanel {
 	
@@ -106,6 +112,19 @@ public class PanelStock extends JPanel {
 
 		constraints.gridy = 3;
 		constraints.gridx = 3;
+		this.btnGuardar = new JButton("Guardar");
+		this.btnGuardar.addActionListener( e ->
+		{
+			try {
+				controller.guardar();
+			} catch (DatosObligatoriosException | FormatoNumeroException | ControllerException e1) {
+				this.mostrarError("Error al guardar", e1.getMessage());
+			}
+			this.limpiarFormulario();
+		}
+	);
+	
+	this.add(btnGuardar,constraints);
 		
 		this.limpiarFormulario();
 	}
@@ -147,6 +166,13 @@ public class PanelStock extends JPanel {
 
 	public void setTxtPuntoPedido(JFormattedTextField txtPuntoPedido) {
 		this.txtPuntoPedido = txtPuntoPedido;
+	}
+	
+	public void mostrarError(String titulo,String detalle) {
+		JFrame padre= (JFrame) SwingUtilities.getWindowAncestor(this);
+		JOptionPane.showMessageDialog(padre,
+			    detalle,titulo,
+			    JOptionPane.ERROR_MESSAGE);
 	}
 	
 }

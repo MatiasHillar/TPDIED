@@ -51,6 +51,24 @@ public class App extends JFrame{
 		this.menuCamiones = new JMenu("Camiones");
 		this.menuPedidos = new JMenu("Pedidos");
 		
+		/*
+		 * Tests pedido
+		 * ---------------------
+		 * Paneles algoritmos
+		 * ---------------------
+	Agregar una pantalla que me permita visualizar en una tabla, la información
+	de todas las plantas que tienen algún insumo con stock menor al punto de
+	pedido. Esta tabla debe poder filtrarse por planta, y por producto y debe
+	mostrar la siguiente información:
+		• Nombre de la planta
+		• Nombre del Insumo
+		• Stock del insumo en la planta
+		• Punto de pedido del insumo en la planta
+		• Stock total del producto en toda la empresa
+		------------------------
+		
+		 */
+		
 		this.menuItemEntregarPedido = new JMenuItem("Entregar pedido");
 		this.menuItemEntregarPedido.addActionListener( e -> {
 			this.setContentPane(new PanelEntregarPedido());

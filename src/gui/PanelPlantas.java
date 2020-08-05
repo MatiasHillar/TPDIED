@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import controller.PlantaController;
+import gui.util.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,11 +24,11 @@ public class PanelPlantas extends JPanel{
 	private JTextField txtNombre;
 	private JButton btnGuardar;
 	private JButton btnCancelar;
-	//private PlantaController controller;
+	private PlantaController controller;
 	
 	public PanelPlantas(){
 		super();
-		//this.controller= new CamionController(this);
+		this.controller= new PlantaController(this);
 		this.armarPanel();
 	}
 	
@@ -76,16 +78,16 @@ public class PanelPlantas extends JPanel{
 		constraints.weighty = 1.0;
 		constraints.weightx = 2.0;
 		this.btnGuardar = new JButton("Guardar");
-//		this.btnGuardar.addActionListener( e ->
-//		{
-//			try {
-//				controller.guardar();
-//			} catch (DatosObligatoriosException | ControllerException e1) {
-//				this.mostrarError("Error al guardar", e1.getMessage());
-//			}
-//			this.limpiarFormulario();
-//		}
-//	);
+		this.btnGuardar.addActionListener( e ->
+		{
+			try {
+				controller.guardar();
+			} catch (Exception e1) {
+				this.mostrarError("Error al guardar", e1.getMessage());
+			}
+			this.limpiarFormulario();
+		}
+	);
 		this.add(btnGuardar, constraints);
 		
 		
