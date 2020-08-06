@@ -36,16 +36,19 @@ public class MatrizFloyd {
 	public String toString() {
 		StringBuilder sb= new StringBuilder();
 		String endl = System.getProperty("line.separator"); 
+		sb.append("\t");
 		for(int i=0; i<trad.keySet().size(); i++) {
-			sb.append(trad.get(i).getNombre());
+			sb.append(trad.get(i).getNombre() + "\t");
 		}
-		sb.append(endl);
+		sb.append(endl);		
 		for(int i=0; i<trad.keySet().size(); i++) {
-			sb.append(trad.get(i).getNombre());
+			sb.append(trad.get(i).getNombre() + " |\t");
 			for(int j=0; j<trad.keySet().size(); j++) {
-				sb.append(matriz[i][j]);
+				if(matriz[i][j]!=Float.MAX_VALUE)
+				sb.append(matriz[i][j]  + "\t" );
+				else sb.append("INF\t" );
 			}
-			sb.append(endl);
+			sb.append("|" +endl);
 		}
 		return sb.toString();
 //		return "MatrizFloyd [matriz=" + Arrays.toString(matriz) + ", trad=" + trad + ", tradR=" + tradR + "]";

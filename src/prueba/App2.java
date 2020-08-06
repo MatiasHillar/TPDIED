@@ -84,8 +84,8 @@ public class App2 {
 		
 		MatrizFloyd mfkm = ms.caminosMenosKm(m);
 		
-		Float[]d = {0f,1f,Float.MAX_VALUE,5f,7f};
-		System.out.println(Arrays.toString(d));
-		//System.out.println(mfkm);
+		//Float[]d = {0f,1f,Float.MAX_VALUE,5f,7f};
+		//System.out.println(Arrays.toString(d));
+		System.out.println(mfkm);
 	}
 }

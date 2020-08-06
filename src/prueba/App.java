@@ -29,6 +29,7 @@ public class App extends JFrame{
 	JMenuItem menuItemPlantas;
 	JMenuItem menuItemMaxFlow;
 	JMenuItem menuItemPageRank;
+	JMenuItem menuItemFloyd;
 	JMenuItem menuItemRutas;
 	JMenuItem menuItemInsumosGenerales;
 	JMenuItem menuItemInsumosLiquidos;
@@ -61,6 +62,15 @@ public class App extends JFrame{
 		------------------------
 		
 		 */
+		
+		this.menuItemFloyd = new JMenuItem("Matrices de caminos minimos");
+		this.menuItemFloyd.addActionListener( e -> {
+			this.setContentPane(new PanelFloyd());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
+		
 		this.menuItemPageRank = new JMenuItem("Plantas por PageRank");
 		this.menuItemPageRank.addActionListener( e -> {
 			this.setContentPane(new PanelPageRank());
@@ -187,7 +197,9 @@ public class App extends JFrame{
 		this.menuPlantas.add(menuItemPlantas);
 		this.menuPlantas.add(menuItemMaxFlow);
 		this.menuPlantas.add(menuItemPageRank);
+		this.menuPlantas.add(menuItemFloyd);
 		this.menuRutas.add(menuItemRutas);
+		
 		this.menuInsumos.add(menuItemInsumosGenerales);
 		this.menuInsumos.add(menuItemInsumosLiquidos);
 		this.menuInsumos.add(menuItemInsumo);
