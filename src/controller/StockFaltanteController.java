@@ -36,6 +36,7 @@ public class StockFaltanteController {
 	}
 	
 	public void buscar() {
+		/*		
 		Planta p= null;
 		Insumo ins=null;
 		if(this.panel.getJcbPlantas().getSelectedItem() !=null && this.panel.getJcbPlantas().getSelectedItem() instanceof Planta) {
@@ -44,13 +45,18 @@ public class StockFaltanteController {
 		if(this.panel.getJcbInsumos().getSelectedItem() !=null && this.panel.getJcbInsumos().getSelectedItem() instanceof Insumo) {
 			ins = (Insumo)this.panel.getJcbInsumos().getSelectedItem();
 		}
-		
+		*/
 		List<Stock> stocks= this.stockService.buscarTodos().stream()
-				.filter(s -> (p==null || s.getP().equals(p)) && (ins==null || s.getInsumo().equals(ins)) )
+				.filter(s -> (!(this.panel.getJcbPlantas().getSelectedItem() !=null && this.panel.getJcbPlantas().getSelectedItem() instanceof Planta)
+						|| s.getP().equals((Planta)this.panel.getJcbPlantas().getSelectedItem()))
+						&& 
+						(!(this.panel.getJcbInsumos().getSelectedItem() !=null && this.panel.getJcbInsumos().getSelectedItem() instanceof Insumo) 
+								|| s.getInsumo().equals((Insumo)this.panel.getJcbInsumos().getSelectedItem())) )
 				.collect(Collectors.toList());
 		this.panel.getModeloTablaStock().getData().clear();
 		
 		this.panel.getModeloTablaStock().getData().addAll(stocks);
+		this.panel.getModeloTablaStock().fireTableDataChanged();
 		
 	}
 	

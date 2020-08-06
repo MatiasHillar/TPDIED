@@ -32,5 +32,25 @@ public class MatrizFloyd {
 	public void setTradR(Map<Integer, Integer> tradR) {
 		this.tradR = tradR;
 	}
+	@Override
+	public String toString() {
+		StringBuilder sb= new StringBuilder();
+		String endl = System.getProperty("line.separator"); 
+		for(int i=0; i<trad.keySet().size(); i++) {
+			sb.append(trad.get(i).getNombre());
+		}
+		sb.append(endl);
+		for(int i=0; i<trad.keySet().size(); i++) {
+			sb.append(trad.get(i).getNombre());
+			for(int j=0; j<trad.keySet().size(); j++) {
+				sb.append(matriz[i][j]);
+			}
+			sb.append(endl);
+		}
+		return sb.toString();
+//		return "MatrizFloyd [matriz=" + Arrays.toString(matriz) + ", trad=" + trad + ", tradR=" + tradR + "]";
+	}
+	
+	
 	
 }

@@ -27,10 +27,13 @@ public class App extends JFrame{
 	JMenu menuCamiones;
 	JMenu menuPedidos;
 	JMenuItem menuItemPlantas;
+	JMenuItem menuItemMaxFlow;
+	JMenuItem menuItemPageRank;
 	JMenuItem menuItemRutas;
 	JMenuItem menuItemInsumosGenerales;
 	JMenuItem menuItemInsumosLiquidos;
 	JMenuItem menuItemStock;
+	JMenuItem menuItemStockFaltante;
 	JMenuItem menuItemCamion;
 	JMenuItem menuItemAltaCamion;
 	private JMenuItem menuItemInsumo;
@@ -55,19 +58,32 @@ public class App extends JFrame{
 		 * Tests pedido
 		 * ---------------------
 		 * Paneles algoritmos
-		 * ---------------------
-	Agregar una pantalla que me permita visualizar en una tabla, la información
-	de todas las plantas que tienen algún insumo con stock menor al punto de
-	pedido. Esta tabla debe poder filtrarse por planta, y por producto y debe
-	mostrar la siguiente información:
-		• Nombre de la planta
-		• Nombre del Insumo
-		• Stock del insumo en la planta
-		• Punto de pedido del insumo en la planta
-		• Stock total del producto en toda la empresa
 		------------------------
 		
 		 */
+		this.menuItemPageRank = new JMenuItem("Plantas por PageRank");
+		this.menuItemPageRank.addActionListener( e -> {
+			this.setContentPane(new PanelPageRank());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
+		
+		this.menuItemMaxFlow = new JMenuItem("Maximo flujo entre dos plantas");
+		this.menuItemMaxFlow.addActionListener( e -> {
+			this.setContentPane(new PanelMaxFlow());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
+		
+		this.menuItemStockFaltante = new JMenuItem("Consultar stocks faltantes");
+		this.menuItemStockFaltante.addActionListener( e -> {
+			this.setContentPane(new PanelStockFaltante());
+			//this.pack();
+			this.revalidate();
+			this.repaint();
+		});
 		
 		this.menuItemEntregarPedido = new JMenuItem("Entregar pedido");
 		this.menuItemEntregarPedido.addActionListener( e -> {
@@ -76,6 +92,7 @@ public class App extends JFrame{
 			this.revalidate();
 			this.repaint();
 		});
+		
 		
 		
 		this.menuItemProcesarPedido = new JMenuItem("Procesar pedido");
@@ -168,11 +185,14 @@ public class App extends JFrame{
 		});
 		
 		this.menuPlantas.add(menuItemPlantas);
+		this.menuPlantas.add(menuItemMaxFlow);
+		this.menuPlantas.add(menuItemPageRank);
 		this.menuRutas.add(menuItemRutas);
 		this.menuInsumos.add(menuItemInsumosGenerales);
 		this.menuInsumos.add(menuItemInsumosLiquidos);
 		this.menuInsumos.add(menuItemInsumo);
 		this.menuStock.add(menuItemStock);
+		this.menuStock.add(menuItemStockFaltante);
 		this.menuCamiones.add(menuItemCamion);
 		this.menuCamiones.add(menuItemAltaCamion);
 		this.menuPedidos.add(menuItemPedido);

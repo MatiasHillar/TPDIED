@@ -106,108 +106,34 @@ public class PanelStockFaltante extends JPanel {
 
 		constraints.gridx = 0;
 		constraints.gridy = 5;		
-		this.add(lblPatente,constraints);
+		this.add(lblPlanta,constraints);
 		constraints.insets = new Insets(0, 0, 0, 0);
 		constraints.gridx = 1;
 		constraints.gridy = 5;		
-		this.txtPatente = new JTextField(20);
-		this.txtPatente.setPreferredSize(new Dimension(350,25));
-		this.txtPatente.setMinimumSize(new Dimension(150,25));
-		this.add(txtPatente,constraints);
+		this.add(jcbPlantas,constraints);
 		
 
 		constraints.gridx = 2;
 		constraints.gridy = 5;		
-		this.add(lblModelo,constraints);
+		this.add(lblInsumo,constraints);
 
 		constraints.gridx = 3;
 		constraints.gridy = 5;		
-		this.txtModelo = new JTextField(20);
-		this.txtModelo.setMinimumSize(new Dimension(150,25));
-		this.add(txtModelo,constraints);
-		
-		constraints.gridx = 4;
-		constraints.gridy = 5;		
-		this.add(lblMarca,constraints);
-		constraints.gridx = 5;
-		constraints.gridy = 5;
-		this.txtMarca = new JTextField(20);
-		this.txtMarca.setMinimumSize(new Dimension(150,25));
-		this.add(txtMarca,constraints);
-		
-
+		this.add(jcbInsumos,constraints);
 		
 		
-		constraints.gridx = 6;
-		constraints.gridy = 5;	
-		this.add(lblKmMax,constraints);
-		constraints.gridx = 7;
-		constraints.gridy = 5;
-		this.txtKmMax.setColumns(10);
-		this.add(txtKmMax,constraints);
-		
-		
-		
-		constraints.gridx = 8;
-		constraints.gridy = 5;		
-		this.add(lblKm,constraints);
-		constraints.gridx = 9;
-		constraints.gridy = 5;		
-		
-
-		this.txtKm.setColumns(10);
-		
-		this.add(txtKm,constraints);
-		
-		constraints.insets = new Insets(0, 20, 0, 0);
-		
-		constraints.gridx = 0;
-		constraints.gridy = 6;	
-		this.add(lblCostoHora,constraints);
-		constraints.insets = new Insets(0, 0, 0, 0);
-		
-		constraints.gridx = 1;
-		constraints.gridy = 6;
-		this.costoHora.setColumns(10);
-		this.add(costoHora,constraints);
-		
-		
-		constraints.gridx = 2;
-		constraints.gridy = 6;	
-		this.add(lblCostoHoraMax,constraints);
 		constraints.gridx = 3;
 		constraints.gridy = 6;	
-		this.costoHoraMax.setColumns(10);
-		this.add(costoHoraMax,constraints);
-		
-		
-
-		constraints.gridx = 4;
-		constraints.gridy = 6;	
-		this.add(lblCostoKm,constraints);
-		constraints.gridx = 5;
-		constraints.gridy = 6;	
-		this.costoKm.setColumns(10);
-		this.add(costoKm,constraints);
-		constraints.gridx = 6;
-		constraints.gridy = 6;	
-		this.add(lblCostoKmMax,constraints);
-		constraints.gridx = 7;
-		constraints.gridy = 6;			
-		this.costoKmMax.setColumns(10);
-		this.add(costoKmMax,constraints);
-		
-		constraints.gridx = 8;
-		constraints.gridy = 7;	
 		
 		this.btnGuardar = new JButton("Buscar");
 		
 		this.btnGuardar.addActionListener( e ->
 			{
 				try {
-					modeloTablaStock.setData(controller.buscarPorAtributos());
-					this.limpiarFormulario();
-					modeloTablaStock.fireTableDataChanged();
+					this.controller.buscar();
+//					modeloTablaStock.setData(controller.buscarPorAtributos());
+//					this.limpiarFormulario();
+//					modeloTablaStock.fireTableDataChanged();
 				} catch (Exception e1) {
 					this.mostrarError("Error al guardar", e1.getMessage());
 				}
@@ -215,15 +141,6 @@ public class PanelStockFaltante extends JPanel {
 		);
 		
 		this.add(btnGuardar,constraints);
-		constraints.gridx = 9;
-		constraints.gridy = 7;
-		this.btnCancelar = new JButton("Cancelar");
-		this.btnCancelar.addActionListener( e ->
-		{
-			this.limpiarFormulario();
-		}
-	);
-		this.add(btnCancelar,constraints);
 		constraints.weightx=0;
 		
 		
@@ -236,7 +153,7 @@ public class PanelStockFaltante extends JPanel {
 		tablaStocks = new JTable();
 		tablaStocks.setModel(modeloTablaStock);
 		JScrollPane scrollPane = new JScrollPane(tablaStocks);
-		tablaCamiones.setFillsViewportHeight(true);
+		tablaStocks.setFillsViewportHeight(true);
 		constraints.gridx = 0;
 		constraints.gridy = 8;		
 		constraints.gridwidth = 11;
@@ -249,24 +166,11 @@ public class PanelStockFaltante extends JPanel {
 		
 		
 		
-		this.limpiarFormulario();
+		this.controller.setJcbs();
 		
 	}
 	
-	private void limpiarFormulario() {
 	
-		this.txtPatente.setText("");
-		this.txtModelo.setText("");
-		this.txtMarca.setText("");
-		this.txtKm.setValue(0f);
-		this.costoHora.setValue(0f);
-		this.costoKm.setValue(0f);
-		this.txtKmMax.setValue(340282346638f);
-		this.costoHoraMax.setValue(340282346638f);
-		this.costoKmMax.setValue(340282346638f);
-		
-//		this.txtFechaCompra.setValue(new Date());
-	}
 	
 	public void mostrarError(String titulo,String detalle) {
 		JFrame padre= (JFrame) SwingUtilities.getWindowAncestor(this);

@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
 
+import dao.PlantaDao;
+import dao.PlantaDaoPostgreSQL;
+import dao.RutaDao;
 import dominio.*;
 import dominio.util.MatrizFloyd;
 
@@ -21,21 +24,20 @@ public class MapaService {
 	public List<Planta> buscarTodasPlantas() {
 		return plantaDao.buscarTodos();
 	}
-	*/
 	public MapaService() {
-		/*
-		 * plantaDao = new PlantaDaoMysql();
-		 * rutaDao = new RutaDaoMysql();
-		 */
+		
+		  plantaDao = new PlantaDaoPostgreSQL();
+		  rutaDao = new RutaDaoPostgreSQL();
+		 
 	}
 	
-	
+	*/
 	public Mapa construir() {
 		
 		Mapa m = new Mapa();
 //		m.setListaPlantas(buscarTodasPlantas());
 //		m.setListaRutas(buscarTodasRutas());
-//		
+		
 		return m;
 	}
 	
