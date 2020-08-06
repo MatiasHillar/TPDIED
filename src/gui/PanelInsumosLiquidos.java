@@ -27,7 +27,7 @@ public class PanelInsumosLiquidos extends JPanel{
 //	private String[] unidades = {"M2", "Kg", "Mts"};
 	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
 
-	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
+	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo liquido:");
 	private JLabel lblDescripcion = new JLabel("Descripción:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
 	private JLabel lblCosto = new JLabel("Costo:");
@@ -134,7 +134,7 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
 		txtADescripcion = new JTextArea(10, 20);
-		txtADescripcion.setSize(new Dimension(10, 20));
+//		txtADescripcion.setSize(new Dimension(10, 20));
 		this.add(txtADescripcion, constraints);
 		
 		constraints.anchor = GridBagConstraints.CENTER;
