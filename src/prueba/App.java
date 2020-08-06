@@ -58,8 +58,6 @@ public class App extends JFrame{
 		/*
 		 * Tests pedido
 		 * ---------------------
-		 * Paneles algoritmos
-		------------------------
 		
 		 */
 		

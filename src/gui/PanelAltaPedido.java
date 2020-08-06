@@ -225,7 +225,7 @@ public class PanelAltaPedido extends JPanel {
 		
 		constraints.gridx = 5;
 		constraints.gridy = 6;
-		this.btnAnadir.addActionListener(e -> {
+		this.btnGuardar.addActionListener(e -> {
 			try {
 				this.controller.guardar();
 				this.limpiarFormulario();
@@ -233,7 +233,7 @@ public class PanelAltaPedido extends JPanel {
 				this.mostrarError("Error al añadir", e1.getMessage());
 			}
 		});
-		this.add(btnAnadir, constraints);
+		this.add(btnGuardar, constraints);
 		
 		this.limpiarFormulario();
 		
