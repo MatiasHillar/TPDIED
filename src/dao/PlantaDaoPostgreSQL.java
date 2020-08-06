@@ -22,13 +22,17 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 			+ "WHERE ID = ?";
 
 	private static final String INSERT_PLANTA = 
-			"INSERT INTO PLANTA VALUES(NOMBRE = ?)";
+			"INSERT INTO PLANTA (NOMBRE) VALUES(?)";
 	
 	private static final String DELETE_PLANTA = 
 			"DELETE FROM PLANTA WHERE ID = ?";
 	
 	private static final String SELECT_ALL_PLANTA =
 			"SELECT * FROM PLANTA";
+	
+	private static final String SELECT_PLANTA = 
+			"SELECT * FROM PLANTA"
+			+ "WHERE ID = ?";
 
 	StockDao stockDao = new StockDaoPostgreSQL();
 	
@@ -64,9 +68,23 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 	}
 
 	@Override
-	public Planta buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Planta buscar(Integer id, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Planta p = null;
+		try {
+			pstmt = conn.prepareStatement(SELECT_PLANTA);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			p = new Planta();
+			p.setId(rs.getInt("ID"));
+			p.setNombre(rs.getString("NOMBRE"));
+			p.setListaStock(stockDao.buscarPorPlanta(id, conn));
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return p;
 	}
 
 	@Override

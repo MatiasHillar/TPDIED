@@ -29,7 +29,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 				      + " WHERE C.ID_MODELO = M.MODELO";
 	
 	private static final String SELECT_CAMION =
-			"SELECT * FROM CAMION "
+			"SELECT * FROM CAMION C, MODELO M "
 			+ "WHERE PATENTE = ?";
 	
 	private static final String UPDATE_CAMION =
@@ -159,6 +159,27 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	
+	public Camion buscarPorPatente(String patente, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Camion c = null;
+		try {
+			pstmt = conn.prepareStatement(SELECT_CAMION);
+			pstmt.setString(1, patente);
+			rs = pstmt.executeQuery();
+			c = new Camion();
+			c.setCostoHora(rs.getFloat("COSTOXHS"));
+			c.setCostoKm(rs.getFloat("COSTOXKM"));
+			c.setFechaCompra(rs.getDate("FECHA_COMPRA").toLocalDate());
+			c.setKmRecorridos(rs.getFloat("KM_RECORRIDOS"));
+			c.setModelo(new Modelo(rs.getString("MARCA"), rs.getString("MODELO")));
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return c;
 	}
 
 	@Override

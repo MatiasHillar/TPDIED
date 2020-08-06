@@ -1,6 +1,7 @@
 package dominio;
 
 public class Ruta {
+private Integer id;
 private Planta plantaOrigen;
 private Planta plantaDestino;
 private Float distanciaKm;
@@ -52,6 +53,12 @@ public Float getPesoMaximoKg() {
 }
 public void setPesoMaximoKg(Float pesoMaximoKg) {
 	this.pesoMaximoKg = pesoMaximoKg;
+}
+public Integer getId() {
+	return id;
+}
+public void setId(Integer id) {
+	this.id = id;
 }
 
 

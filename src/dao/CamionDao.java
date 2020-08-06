@@ -12,4 +12,5 @@ public interface CamionDao {
 	public void borrar(Camion c);
 	public List<Camion> buscarTodos();
 	public List<Camion> buscarPorPatributos(Map<String, ?> atributos);
+	public Camion buscarPorPatente(String patente, Connection conn);
 }
