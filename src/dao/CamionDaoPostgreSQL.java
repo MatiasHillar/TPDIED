@@ -161,6 +161,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		return ret;
 	}
 	
+	@Override
 	public Camion buscarPorPatente(String patente, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
