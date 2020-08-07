@@ -8,7 +8,7 @@ public interface RutaDao {
 
 	public Ruta saveOrUpdate(Ruta r);
 	public Ruta buscar(Integer id);
-	public Void borrar(Integer id);
+	public void borrar(Integer id);
 	public List<Ruta> buscarTodas();
 	
 }

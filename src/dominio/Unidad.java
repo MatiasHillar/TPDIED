@@ -4,6 +4,8 @@ public class Unidad {
 	private String nombre;
 	private String simbolo;
 	
+	public Unidad() {};
+	
 	public Unidad(String nombre, String simbolo) {
 		this.nombre = nombre;
 		this.simbolo = simbolo;
