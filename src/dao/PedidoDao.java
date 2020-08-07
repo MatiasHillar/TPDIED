@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import dominio.Pedido;
+import dominio.Planta;
 
 public interface PedidoDao {
 
@@ -13,6 +14,7 @@ public interface PedidoDao {
 	public List<Pedido> filtrarProcesadas();
 	//busca todas las que están en estado CREADA
 	public List<Pedido> filtrarCreadas();
+	public List<Planta> checkPlantas();
 
 	
 }

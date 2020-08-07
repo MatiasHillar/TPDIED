@@ -11,6 +11,7 @@ import java.util.List;
 import dao.utils.DB;
 import dominio.Estado;
 import dominio.Pedido;
+import dominio.Planta;
 import dominio.Ruta;
 
 public class PedidoDaoPostgreSQL implements PedidoDao{
@@ -52,6 +53,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		
 	private CamionDao camiondao = new CamionDaoPostgreSQL();
 	private PlantaDao plantadao = new PlantaDaoPostgreSQL();
+	private ItemPedidoDao itemdao = new ItemPedidoDaoPostgreSQL();
 	
 	@Override
 	public Pedido saveOrUpdate(Pedido p) {
@@ -193,7 +195,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 				p.setNroPedido(rs.getInt("NRO_PEDIDO"));
 				p.setPlantaDestino(plantadao.buscar(rs.getInt("PLANTA_DESTINO"), conn));
 				p.setRuta(selectRutas(rs.getInt("NRO_PEDIDO"), conn));
-				//SETEAR ITEMS
+				p.setListaItems(itemdao.selectItems(rs.getInt("NRO_PEDIDO"), conn));
 				lista.add(p);
 			}
 		}
@@ -232,7 +234,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 				p.setNroPedido(rs.getInt("NRO_PEDIDO"));
 				p.setPlantaDestino(plantadao.buscar(rs.getInt("PLANTA_DESTINO"), conn));
 				p.setRuta(selectRutas(rs.getInt("NRO_PEDIDO"), conn));
-				//SETEAR ITEMS
+				p.setListaItems(itemdao.selectItems(rs.getInt("NRO_PEDIDO"), conn));
 				lista.add(p);
 			}
 		}
@@ -249,5 +251,19 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			}
 		}
 		return lista;
-	}	
+	}
+	
+	@Override
+	public List<Planta> checkPlantas(){
+		List<Planta> lista;
+		Connection conn = DB.getConexion();
+			lista = plantadao.checkInsumos(conn);
+			try {
+				if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		return lista;
+	}
 }

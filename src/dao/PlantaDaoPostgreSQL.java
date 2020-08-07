@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import dominio.ItemPedido;
+import dominio.Pedido;
 import dominio.Planta;
 import dominio.Stock;
 import dao.StockDao;
@@ -33,6 +35,14 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 	private static final String SELECT_PLANTA = 
 			"SELECT * FROM PLANTA"
 			+ "WHERE ID = ?";
+	
+	private static final String SELECT_PLANTAS_STOCK = 
+			"SELECT * FROM PLANTA P"
+			+ "WHERE NOT EXISTS (SELECT * FROM ITEM_PEDIDO I"
+			+ "WHERE NOT EXISTS("
+			+ "SELECT * FROM STOCK S"
+			+ "WHERE P.ID = S.ID_PLANTA"
+			+ "AND S.CANTIDAD >= I.CANTIDAD))";
 
 	StockDao stockDao = new StockDaoPostgreSQL();
 	
@@ -140,6 +150,29 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@Override
+	public List<Planta> checkInsumos(Connection conn){
+		List<Planta> lista = new ArrayList<Planta>(); 
+		PreparedStatement pstmt = null; 
+		ResultSet rs = null;
+		Planta pl = null;
+		try {
+			pstmt = conn.prepareStatement(SELECT_PLANTAS_STOCK);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				pl = new Planta();
+				pl.setId(rs.getInt("ID"));
+				pl.setNombre(rs.getString("NOMBRE"));
+				pl.setListaStock(stockDao.buscarPorPlanta(rs.getInt("ID"), conn));
+				lista.add(pl);
+			}
+	}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
 	}
 
 }

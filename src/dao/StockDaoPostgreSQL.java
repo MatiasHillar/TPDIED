@@ -116,7 +116,6 @@ public class StockDaoPostgreSQL implements StockDao {
 			while(rs.next()) {
 				Stock s = new Stock();
 				s.setId(rs.getInt("ID"));
-				//VERIFICAR INT O FLOAT
 				s.setCtidad(rs.getFloat("CANTIDAD"));
 				s.setPuntoRepo(rs.getFloat("PUNTO_REPOSICION"));
 				s.setInsumo(insumoDao.buscar(rs.getInt("ID_INSUMO"), conn));
