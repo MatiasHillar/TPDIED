@@ -5,9 +5,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,27 +17,30 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import controller.RutaController;
+import dominio.Planta;
+
 
 public class PanelRutas extends JPanel{
-	private String[] letras = {"a", "e", "i", "o", "u"};
+//	private String[] letras = {"a", "e", "i", "o", "u"};
 
 	private JLabel lblTitulo = new JLabel("Añadir Ruta:");
 	private JLabel lblPlantaOrigen = new JLabel("Planta Origen:");
 	private JLabel lblPlantaDestino = new JLabel("Planta Destino:");
-	private JComboBox<String> jcbPlantaOrigen = new JComboBox(letras); //CAMBIAR STRING POR RUTA 
-	private JComboBox<String> jcbPlantaDestino = new JComboBox(letras); //CAMBIAR STRING POR RUTA 
+	private JComboBox<Planta> jcbPlantaOrigen;
+	private JComboBox<Planta> jcbPlantaDestino;
 	private JLabel lblDuracionHs = new JLabel("Duracion (Hs):");
 	private JLabel lblDistanciaKm = new JLabel("Distancia (Km):");
 	private JLabel lblPesoMaximo = new JLabel("Peso maximo (Kg):");
-	private JTextField txtDuracionHs;
-	private JTextField txtDistanciaKm;
-	private JTextField txtPesoMaximo;
+	private JFormattedTextField txtDuracionHs = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField txtDistanciaKm = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField txtPesoMaximo = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JButton btnGuardar;
-	//private RutasController controller;
+	private RutaController controller;
 	
 	public PanelRutas(){
 		super();
-		//this.controller= new RutasController(this);
+		this.controller= new RutaController(this);
 		this.armarPanel();
 	}
 	
@@ -66,6 +71,7 @@ public class PanelRutas extends JPanel{
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
+		jcbPlantaOrigen = new JComboBox<Planta>(controller.listarTodasPlantas().toArray(new Planta[0]));
 		this.add(jcbPlantaOrigen, constraints);
 		
 		
@@ -79,6 +85,7 @@ public class PanelRutas extends JPanel{
 		constraints.gridx = 3;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
+		jcbPlantaDestino = new JComboBox<Planta>(controller.listarTodasPlantas().toArray(new Planta[0]));
 		this.add(jcbPlantaDestino, constraints);
 		
 		constraints.gridx = 0;
@@ -93,7 +100,7 @@ public class PanelRutas extends JPanel{
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
-		this.txtDistanciaKm = new JTextField(20);
+		this.txtDistanciaKm.setColumns(20);
 		this.add(txtDistanciaKm,constraints);
 		
 		constraints.gridx = 2;
@@ -107,7 +114,7 @@ public class PanelRutas extends JPanel{
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
-		this.txtDuracionHs = new JTextField(20);
+		this.txtDuracionHs.setColumns(20);
 		this.add(txtDuracionHs,constraints);
 		
 		constraints.gridx = 4;
@@ -122,7 +129,7 @@ public class PanelRutas extends JPanel{
 //		constraints.weightx = 2.0;
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
-		this.txtPesoMaximo = new JTextField(20);
+		this.txtPesoMaximo.setColumns(20);
 		this.add(txtPesoMaximo,constraints);
 		
 		constraints.gridx = 6;
@@ -132,37 +139,28 @@ public class PanelRutas extends JPanel{
 		constraints.gridwidth = 6;
 		constraints.anchor = GridBagConstraints.SOUTHEAST;
 		this.btnGuardar = new JButton("Guardar");
-//		this.btnGuardar.addActionListener( e ->
-//		{
-//			try {
-//				controller.guardar();
-//			} catch (DatosObligatoriosException | FormatoNumeroException | ControllerException | ElementoDiferenteException e1) {
-//				this.mostrarError("Error al guardar", e1.getMessage());
-//			}
-//			this.limpiarFormulario();
-//		}
-//	);
+		this.btnGuardar.addActionListener( e ->
+		{
+			try {
+				controller.guardar();
+			} catch (Exception e1) {
+				this.mostrarError("Error al guardar", e1.getMessage());
+			}
+			this.limpiarFormulario();
+		}
+	);
 		this.add(btnGuardar, constraints);
 	}
 	
 	private void limpiarFormulario() {
-		this.txtDistanciaKm.setText("");
-		this.txtDuracionHs.setText("");
-		this.txtPesoMaximo.setText("");
+		this.txtDistanciaKm.setValue(0f);
+		this.txtDuracionHs.setValue(0f);
+		this.txtPesoMaximo.setValue(0f);
 	
 	}
 	
 	
 	
-
-	public String[] getLetras() {
-		return letras;
-	}
-
-	public void setLetras(String[] letras) {
-		this.letras = letras;
-	}
-
 	public JLabel getLblTitulo() {
 		return lblTitulo;
 	}
@@ -186,23 +184,6 @@ public class PanelRutas extends JPanel{
 	public void setLblPlantaDestino(JLabel lblPlantaDestino) {
 		this.lblPlantaDestino = lblPlantaDestino;
 	}
-
-	public JComboBox<String> getJcbPlantaOrigen() {
-		return jcbPlantaOrigen;
-	}
-
-	public void setJcbPlantaOrigen(JComboBox<String> jcbPlantaOrigen) {
-		this.jcbPlantaOrigen = jcbPlantaOrigen;
-	}
-
-	public JComboBox<String> getJcbPlantaDestino() {
-		return jcbPlantaDestino;
-	}
-
-	public void setJcbPlantaDestino(JComboBox<String> jcbPlantaDestino) {
-		this.jcbPlantaDestino = jcbPlantaDestino;
-	}
-
 	public JLabel getLblDuracionHs() {
 		return lblDuracionHs;
 	}
@@ -227,30 +208,7 @@ public class PanelRutas extends JPanel{
 		this.lblPesoMaximo = lblPesoMaximo;
 	}
 
-	public JTextField getTxtDuracionHs() {
-		return txtDuracionHs;
-	}
-
-	public void setTxtDuracionHs(JTextField txtDuracionHs) {
-		this.txtDuracionHs = txtDuracionHs;
-	}
-
-	public JTextField getTxtDistanciaKm() {
-		return txtDistanciaKm;
-	}
-
-	public void setTxtDistanciaKm(JTextField txtDistanciaKm) {
-		this.txtDistanciaKm = txtDistanciaKm;
-	}
-
-	public JTextField getTxtPesoMaximo() {
-		return txtPesoMaximo;
-	}
-
-	public void setTxtPesoMaximo(JTextField txtPesoMaximo) {
-		this.txtPesoMaximo = txtPesoMaximo;
-	}
-
+	
 	public JButton getBtnGuardar() {
 		return btnGuardar;
 	}
@@ -262,6 +220,54 @@ public class PanelRutas extends JPanel{
 	
 	
 	
+	public JComboBox<Planta> getJcbPlantaOrigen() {
+		return jcbPlantaOrigen;
+	}
+
+	public void setJcbPlantaOrigen(JComboBox<Planta> jcbPlantaOrigen) {
+		this.jcbPlantaOrigen = jcbPlantaOrigen;
+	}
+
+	public JComboBox<Planta> getJcbPlantaDestino() {
+		return jcbPlantaDestino;
+	}
+
+	public void setJcbPlantaDestino(JComboBox<Planta> jcbPlantaDestino) {
+		this.jcbPlantaDestino = jcbPlantaDestino;
+	}
+
+	public JFormattedTextField getTxtDuracionHs() {
+		return txtDuracionHs;
+	}
+
+	public void setTxtDuracionHs(JFormattedTextField txtDuracionHs) {
+		this.txtDuracionHs = txtDuracionHs;
+	}
+
+	public JFormattedTextField getTxtDistanciaKm() {
+		return txtDistanciaKm;
+	}
+
+	public void setTxtDistanciaKm(JFormattedTextField txtDistanciaKm) {
+		this.txtDistanciaKm = txtDistanciaKm;
+	}
+
+	public JFormattedTextField getTxtPesoMaximo() {
+		return txtPesoMaximo;
+	}
+
+	public void setTxtPesoMaximo(JFormattedTextField txtPesoMaximo) {
+		this.txtPesoMaximo = txtPesoMaximo;
+	}
+
+	public RutaController getController() {
+		return controller;
+	}
+
+	public void setController(RutaController controller) {
+		this.controller = controller;
+	}
+
 	public void mostrarError(String titulo,String detalle) {
 		JFrame padre= (JFrame) SwingUtilities.getWindowAncestor(this);
 		JOptionPane.showMessageDialog(padre,

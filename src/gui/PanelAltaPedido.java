@@ -101,7 +101,8 @@ public class PanelAltaPedido extends JPanel {
 		constraints.gridy = 2;
 		constraints.insets = new Insets(0, 0, 0, 0);
 	//	jcbPlanta = new JComboBox<Planta>((Planta[]) controller.listarTodasPlantas().toArray(new Planta[0]));
-		jcbPlanta = new JComboBox<Planta>();
+//		jcbPlanta = new JComboBox<Planta>();
+		jcbPlanta = new JComboBox<Planta>(controller.listarTodasPlantas().toArray(new Planta[0]));
 		this.add(jcbPlanta,constraints);
 		
 		constraints.gridx = 2;

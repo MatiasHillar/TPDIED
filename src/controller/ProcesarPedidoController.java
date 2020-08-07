@@ -46,7 +46,7 @@ public class ProcesarPedidoController {
 		else {
 			Pedido ped = (Pedido) this.panel.getJcbPedidos().getSelectedItem();
 //			this.panel.setJcbPlantas(new JComboBox<Planta>((Planta[]) this.pedidoService.buscarPlantasParaPedido(ped).toArray(new Planta[0])));
-//			this.panel.setJcbPlantas(new JComboBox<Planta>( this.pedidoService.buscarPlantasParaPedido(ped).toArray(new Planta[0])));
+			this.panel.setJcbPlantas(new JComboBox<Planta>( this.pedidoService.buscarPlantasParaPedido(ped).toArray(new Planta[0])));
 			List<Planta> res = plantas(ped);
 			if(ped.getEstado() == Estado.CANCELADO) {
 				this.actualizarPedidos();

@@ -39,10 +39,10 @@ public class PedidoService {
 	
 	
 	public List<Pedido> buscarTodosCreados() {
-		return pedidoDao.buscarTodosCreados();
+		return pedidoDao.filtrarCreadas();
 	}
 	public List<Pedido> buscarTodosProcesados() {
-		return pedidoDao.buscarTodosProcesados();
+		return pedidoDao.filtrarProcesadas();
 	}
 	
 	
