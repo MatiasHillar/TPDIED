@@ -114,11 +114,12 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Planta p = new Planta();
+//		Planta p = new Planta();
 		try {
 			pstmt = conn.prepareStatement(SELECT_ALL_PLANTA);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
+				Planta p = new Planta();
 				p.setId(rs.getInt("ID"));
 				p.setNombre(rs.getString("NOMBRE"));
 				//podria pasar la conexion como argumento
