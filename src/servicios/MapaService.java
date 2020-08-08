@@ -7,22 +7,23 @@ import java.util.stream.Collectors;
 import dao.PlantaDao;
 import dao.PlantaDaoPostgreSQL;
 import dao.RutaDao;
+import dao.RutaDaoPostgreSQL;
 import dominio.*;
 import dominio.util.MatrizFloyd;
 
 
 
 public class MapaService {
-	/*
+	
 	private PlantaDao plantaDao;
 	private RutaDao rutaDao;
 	
 	
 	public List<Ruta> buscarTodasRutas() {
-		return rutaDao.buscarTodos();
+		return rutaDao.buscarTodas();
 	}
 	public List<Planta> buscarTodasPlantas() {
-		return plantaDao.buscarTodos();
+		return plantaDao.buscarTodas();
 	}
 	public MapaService() {
 		
@@ -31,17 +32,17 @@ public class MapaService {
 		 
 	}
 	
-	*/
-	/*
+	
+	
 	public Mapa construir() {
 		
 		Mapa m = new Mapa();
-//		m.setListaPlantas(buscarTodasPlantas());
-//		m.setListaRutas(buscarTodasRutas());
+		m.setListaPlantas(buscarTodasPlantas());
+		m.setListaRutas(buscarTodasRutas());
 		
 		return m;
 	}
-	
+	/*
 	
 	public Mapa construir() {
 		
@@ -83,7 +84,7 @@ public class MapaService {
 		
 		return m;
 	}
-	*/
+	
 	
 	public Mapa construir() {
 		Mapa m = new Mapa();
@@ -123,6 +124,7 @@ public class MapaService {
 		m.setListaRutas(lr);
 		return m;
 	}
+	*/
 	
 	protected List<Planta> getAdyacentes(Planta p, Mapa m){ 
 		List<Planta> salida = new ArrayList<Planta>();
