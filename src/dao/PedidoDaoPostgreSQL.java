@@ -254,10 +254,10 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 	}
 	
 	@Override
-	public List<Planta> checkPlantas(){
+	public List<Planta> checkPlantas(Integer nro_pedido){
 		List<Planta> lista;
 		Connection conn = DB.getConexion();
-			lista = plantadao.checkInsumos(conn);
+			lista = plantadao.checkInsumos(nro_pedido, conn);
 			try {
 				if(conn!=null) conn.close();
 			}

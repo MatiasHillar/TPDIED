@@ -33,7 +33,11 @@ public class StockDaoPostgreSQL implements StockDao {
 			+ "AND S.ID_INSUMO = I.ID"
 			+ "GROUP BY(I.ID)";
 	
+	private static final String SELECT_ALL_STOCK =
+			"SELECT * FROM INSUMO";
+	
 	InsumoDao insumoDao = new InsumoDaoPostgreSQL();
+	PlantaDao plantadao = new PlantaDaoPostgreSQL();
 	
 	@Override
 	public Stock saveOrUpdate(Stock s) {
@@ -136,6 +140,41 @@ public class StockDaoPostgreSQL implements StockDao {
 		return lista;
 	}
 
+	public List<Stock> buscarTodos(){
+		List<Stock> lista = new ArrayList<Stock>();
+		Connection conn = DB.getConexion();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Stock s = null;
+		try {
+			pstmt = conn.prepareStatement(SELECT_ALL_STOCK);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				s = new Stock();
+				s.setCtidad(rs.getFloat("CANTIDAD"));
+				s.setId(rs.getInt("ID"));
+				s.setInsumo(insumoDao.buscar(rs.getInt("ID_INSUMO"), conn));
+				s.setP(plantadao.buscar(rs.getInt("ID_PLANTA"), conn));
+				s.setPuntoRepo(rs.getFloat("PUNTO_REPOSICION"));
+				lista.add(s);
+			}
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(conn!=null) conn.close();
+				}
+				catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		return lista;
+		}
+	
+	
 	@Override
 	public Void borrar(Integer idprod) {
 		// TODO Auto-generated method stub

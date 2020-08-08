@@ -39,7 +39,8 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 	private static final String SELECT_PLANTAS_STOCK = 
 			"SELECT * FROM PLANTA P"
 			+ "WHERE NOT EXISTS (SELECT * FROM ITEM_PEDIDO I"
-			+ "WHERE NOT EXISTS("
+			+ "WHERE I.NRO_PEDIDO = ?"
+			+ "AND NOT EXISTS("
 			+ "SELECT * FROM STOCK S"
 			+ "WHERE P.ID = S.ID_PLANTA"
 			+ "AND S.CANTIDAD >= I.CANTIDAD))";
@@ -153,13 +154,14 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 	}
 	
 	@Override
-	public List<Planta> checkInsumos(Connection conn){
+	public List<Planta> checkInsumos(Integer nro_pedido, Connection conn){
 		List<Planta> lista = new ArrayList<Planta>(); 
 		PreparedStatement pstmt = null; 
 		ResultSet rs = null;
 		Planta pl = null;
 		try {
 			pstmt = conn.prepareStatement(SELECT_PLANTAS_STOCK);
+			pstmt.setInt(1, nro_pedido);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				pl = new Planta();
