@@ -14,6 +14,7 @@ import dominio.Insumo;
 import dominio.InsumoGral;
 import dominio.InsumoLiquido;
 import dominio.Unidad;
+import excepciones.ExcepcionNoExisteElemento;
 
 public class InsumoDaoPostgreSQL implements InsumoDao {
 
@@ -208,7 +209,8 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 		Insumo i = null;
 		try {
 			pstmt = conn.prepareStatement(SELECT_INSUMO, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
-			pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			if(rs.getString("TIPO").equals("GENERAL")) {
 				i = new InsumoGral();
 				i.setId(rs.getInt("ID"));
@@ -228,7 +230,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
 			}
 		}
-		catch(SQLException e) {
+		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
 		}
 		return i;

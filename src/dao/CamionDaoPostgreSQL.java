@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 
 import dominio.Camion;
 import dominio.Modelo;
+import excepciones.ExcepcionNoExisteElemento;
 
 public class CamionDaoPostgreSQL implements CamionDao{
 
@@ -170,6 +171,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			pstmt = conn.prepareStatement(SELECT_CAMION);
 			pstmt.setString(1, patente);
 			rs = pstmt.executeQuery();
+			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			c = new Camion();
 			c.setCostoHora(rs.getFloat("COSTOXHS"));
 			c.setCostoKm(rs.getFloat("COSTOXKM"));
@@ -177,7 +179,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			c.setKmRecorridos(rs.getFloat("KM_RECORRIDOS"));
 			c.setModelo(new Modelo(rs.getString("MARCA"), rs.getString("MODELO")));
 		}
-		catch(SQLException e) {
+		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
 		}
 		return c;

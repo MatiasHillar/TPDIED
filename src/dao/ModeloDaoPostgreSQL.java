@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import dominio.Modelo;
+import excepciones.ExcepcionNoExisteElemento;
 
 public class ModeloDaoPostgreSQL implements ModeloDao{
 	private static final String UPDATE_MODELO = 
@@ -66,10 +67,11 @@ public class ModeloDaoPostgreSQL implements ModeloDao{
 		try {
 			pstmt = conn.prepareStatement(SELECT_MODELO);
 			rs = pstmt.executeQuery();
+			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			m.setMarca(rs.getString("MARCA"));
 			m.setModelo(rs.getString("MODELO"));
 		}
-		catch(SQLException e) {
+		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
 		}
 		finally {

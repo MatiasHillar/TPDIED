@@ -12,11 +12,6 @@ import dominio.ItemPedido;
 import dominio.Ruta;
 
 public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
-
-	private static final String UPDATE_ITEM_PEDIDO = 
-			"UPDATE ITEM_PEDIDO"
-			+ "SET CANTIDAD = ?"
-			+ "WHERE ID_INSUMO = ? AND NRO_PEDIDO = ?";
 	
 	private static final String INSERT_ITEM_PEDIDO =
 			"INSERT INTO ITEM_PEDIDO VALUES(?, ?, ?)";
@@ -24,6 +19,11 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 	private static final String SELECT_ITEMPEDIDO = 
 			"SELECT * FROM ITEM_PEDIDO"
 			+ "WHERE NRO_PEDIDO = ?";
+	
+	private static final String DELETE_ITEMPEDIDO = 
+			"DELETE FROM ITEM_PEDIDO"
+			+ " WHERE ID_INSUMO = ?"
+			+ " AND NRO_PEDIDO = ?";
 	
 	private InsumoDao insumodao = new InsumoDaoPostgreSQL();
 	//CHEQUEAR CHECKNULL
@@ -96,8 +96,26 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 
 	@Override
 	public void borrar(Integer idInsumo, Integer idPedido) {
-		// TODO Auto-generated method stub
-		
+		Connection conn = DB.getConexion();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(DELETE_ITEMPEDIDO);
+			pstmt.setInt(1, idInsumo);
+			pstmt.setInt(2, idPedido);
+			pstmt.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
