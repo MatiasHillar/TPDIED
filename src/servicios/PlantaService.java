@@ -23,7 +23,6 @@ public class PlantaService {
 	}
 	
 	public List<Planta> buscarTodos() {
-		System.out.println(plantaDao.buscarTodas());
 		return plantaDao.buscarTodas();
 	}
 	
