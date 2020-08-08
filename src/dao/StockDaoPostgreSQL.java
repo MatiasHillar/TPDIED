@@ -15,23 +15,23 @@ import dominio.Stock;
 public class StockDaoPostgreSQL implements StockDao {
 
 	private static final String SELECT_STOCK_PLANTA = 
-			"SELECT S.ID, S.ID_INSUMO, S.ID_PLANTA, S.PUNTO_REPOSICION, S.CANTIDAD"
-			+ "FROM STOCK S, PLANTA P"
-			+ "WHERE S.ID_PLANTA = P.ID";
+			"SELECT S.ID, ID_INSUMO, ID_PLANTA, PUNTO_REPOSICION, CANTIDAD"
+			+ " FROM STOCK S, PLANTA P"
+			+ " WHERE S.ID_PLANTA = P.ID";
 	
 	private static final String UPDATE_STOCK = 
 			"UPDATE INSUMO SET ID_INSUMO = ?, ID_PLANTA = ?, PUNTO_REPOSICION = ?, CANTIDAD = ?"
-			+ "WHERE ID = ?";
+			+ " WHERE ID = ?";
 	
 	private static final String INSERT_STOCK = 
 			"INSERT INTO STOCK(ID_INSUMO, ID_PLANTA, PUNTO_REPOSICION, CANTIDAD) VALUES(?,?,?,?)";
 	
 	private static final String SELECT_STOCK_TOTAL =
 			"SELECT SUM(S.CANTIDAD) AS STOCK_TOTAL"
-			+ "FROM STOCK S, INSUMO I"
-			+ "WHERE I.ID = ?"
-			+ "AND S.ID_INSUMO = I.ID"
-			+ "GROUP BY(I.ID)";
+			+ " FROM STOCK S, INSUMO I"
+			+ " WHERE I.ID = ?"
+			+ " AND S.ID_INSUMO = I.ID"
+			+ " GROUP BY(I.ID)";
 	
 	private static final String SELECT_ALL_STOCK =
 			"SELECT * FROM INSUMO";
@@ -138,19 +138,11 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 				s.setCtidad(rs.getFloat("CANTIDAD"));
 				s.setPuntoRepo(rs.getFloat("PUNTO_REPOSICION"));
 				s.setInsumo(insumoDao.buscar(rs.getInt("ID_INSUMO"), conn));
+				s.setP(plantadao.buscar(rs.getInt("ID_PLANTA"), conn));
 			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-		}
-		finally {
-			try {
-				if(pstmt!=null) pstmt.close();
-				if(conn!=null) conn.close();
-			}
-			catch(SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return lista;
 	}

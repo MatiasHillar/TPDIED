@@ -15,16 +15,17 @@ import dominio.ItemPedido;
 import dominio.Pedido;
 import dominio.Planta;
 import dominio.Stock;
+import excepciones.ExcepcionNoExisteElemento;
 import dao.StockDao;
 
 public class PlantaDaoPostgreSQL implements PlantaDao{
 
 	private static final String UPDATE_PLANTA = 
-			"UPDATE PLANTA SET NOMBRE = ?"
+			"UPDATE PLANTA SET NOMBRE = ? "
 			+ "WHERE ID = ?";
 
 	private static final String INSERT_PLANTA = 
-			"INSERT INTO PLANTA (NOMBRE) VALUES(?)";
+			"INSERT INTO PLANTA(NOMBRE) VALUES(?)";
 	
 	private static final String DELETE_PLANTA = 
 			"DELETE FROM PLANTA WHERE ID = ?";
@@ -34,7 +35,7 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 	
 	private static final String SELECT_PLANTA = 
 			"SELECT * FROM PLANTA"
-			+ "WHERE ID = ?";
+			+ " WHERE ID = ?";
 	
 	private static final String SELECT_PLANTAS_STOCK = 
 			"SELECT * FROM PLANTA P"
@@ -92,15 +93,16 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 		ResultSet rs = null;
 		Planta p = null;
 		try {
-			pstmt = conn.prepareStatement(SELECT_PLANTA);
+			pstmt = conn.prepareStatement(SELECT_PLANTA, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
+			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			p = new Planta();
 			p.setId(rs.getInt("ID"));
 			p.setNombre(rs.getString("NOMBRE"));
 			p.setListaStock(stockDao.buscarPorPlanta(id, conn));
 		}
-		catch(SQLException e) {
+		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
 		}
 		return p;

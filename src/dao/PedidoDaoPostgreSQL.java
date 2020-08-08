@@ -13,6 +13,7 @@ import dominio.Estado;
 import dominio.Pedido;
 import dominio.Planta;
 import dominio.Ruta;
+import excepciones.ExcepcionNoExisteElemento;
 
 public class PedidoDaoPostgreSQL implements PedidoDao{
 	
@@ -156,9 +157,10 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		ResultSet rs = null;
 		Pedido p = null;
 		try {
-			pstmt = conn.prepareStatement(SELECT_PEDIDO);
+			pstmt = conn.prepareStatement(SELECT_PEDIDO,ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setInt(1, nroPedido);
 			rs = pstmt.executeQuery();
+			if(!rs.next()) throw new ExcepcionNoExisteElemento();
 			p = new Pedido();
 			p.setCamion(camiondao.buscarPorPatente(rs.getString("PATENTE_CAMION"), conn));
 			p.setCostoEnvio(rs.getFloat("COSTO_ENVIO"));
@@ -169,7 +171,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			p.setPlantaDestino(plantadao.buscar(rs.getInt("PLANTA_DESTINO"), conn));
 			p.setRuta(selectRutas(rs.getInt("NRO_PEDIDO"), conn));
 		}
-		catch(SQLException e) {
+		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
 		}
 		return p;

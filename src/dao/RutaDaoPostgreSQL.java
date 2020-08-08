@@ -108,7 +108,7 @@ public class RutaDaoPostgreSQL implements RutaDao {
 		ResultSet rs = null;
 		Ruta r = null;
 		try {
-			pstmt = conn.prepareStatement(DELETE_RUTA);
+			pstmt = conn.prepareStatement(SELECT_ALL_RUTA);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				r = new Ruta();
