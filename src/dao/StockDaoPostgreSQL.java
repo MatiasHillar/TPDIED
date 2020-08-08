@@ -36,8 +36,16 @@ public class StockDaoPostgreSQL implements StockDao {
 	private static final String SELECT_ALL_STOCK =
 			"SELECT * FROM INSUMO";
 	
-	InsumoDao insumoDao = new InsumoDaoPostgreSQL();
-	PlantaDao plantadao = new PlantaDaoPostgreSQL();
+	private InsumoDao insumoDao;
+	private PlantaDao plantadao;
+	
+	public StockDaoPostgreSQL() {
+		super();
+		insumoDao = new InsumoDaoPostgreSQL();
+		plantadao = new PlantaDaoPostgreSQL(this);
+	}
+	
+	
 	
 	@Override
 	public Stock saveOrUpdate(Stock s) {
@@ -75,6 +83,13 @@ public class StockDaoPostgreSQL implements StockDao {
 		}
 		return s;
 	}
+public StockDaoPostgreSQL(PlantaDao plantadao) {
+		super();
+		insumoDao = new InsumoDaoPostgreSQL();
+		this.plantadao = plantadao;
+	}
+
+
 
 	@Override
 	public Integer stockTotal(Integer idprod) {

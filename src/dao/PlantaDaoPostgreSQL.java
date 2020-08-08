@@ -45,7 +45,15 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 			+ "WHERE P.ID = S.ID_PLANTA"
 			+ "AND S.CANTIDAD >= I.CANTIDAD))";
 
-	StockDao stockDao = new StockDaoPostgreSQL();
+	private StockDao stockDao;
+	public PlantaDaoPostgreSQL() {
+		super();
+		stockDao = new StockDaoPostgreSQL(this);
+	}
+	public PlantaDaoPostgreSQL(StockDao sD) {
+		super();
+		stockDao = sD;
+	}
 	
 	@Override
 	public Planta saveOrUpdate(Planta p) {
