@@ -25,8 +25,8 @@ import gui.util.*;
 
 public class PanelInsumosLiquidos extends JPanel{
 //	private String[] unidades = {"M2", "Kg", "Mts"};
-	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
-
+//	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
+	private Unidad[] unidades;
 	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo liquido:");
 	private JLabel lblDescripcion = new JLabel("Descripción:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
@@ -36,7 +36,8 @@ public class PanelInsumosLiquidos extends JPanel{
 	private JLabel lblStockTotal = new JLabel("Stock Total:");
 	private JLabel lblStockTotalNumero = new JLabel("Aca va el numero"); //metodo toString del stock o como se calcule
 	private JTextArea txtADescripcion;
-	private JComboBox<Unidad> jcbUnidades = new JComboBox<Unidad>(unidades);
+	private JComboBox<Unidad> jcbUnidades;
+//	private JComboBox<Unidad> jcbUnidades = new JComboBox<Unidad>(unidades);
 //	private JComboBox<String> jcbUnidades = new JComboBox<String>(unidades);
 //	private JTextField txtCosto;
 //	private JTextField txtDensidad;
@@ -150,6 +151,8 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
+		unidades = this.controller.listarTodasUnidades().toArray(new Unidad[0]);
+		jcbUnidades = new JComboBox<Unidad>(unidades);
 		this.add(jcbUnidades, constraints);
 		
 		

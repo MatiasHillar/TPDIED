@@ -5,6 +5,7 @@ import java.util.List;
 import dao.InsumoDao;
 import dao.InsumoDaoPostgreSQL;
 import dao.UnidadDao;
+import dao.UnidadDaoPostgreSQL;
 import dominio.*;
 import servicios.*;
 
@@ -14,6 +15,7 @@ public class InsumoService {
 	private UnidadDao unidadDao;
 	public InsumoService() {
 		insumoDao= new InsumoDaoPostgreSQL();
+		unidadDao = new UnidadDaoPostgreSQL();
 	}
 	
 	public InsumoGral crearInsumoGral(InsumoGral i) {
