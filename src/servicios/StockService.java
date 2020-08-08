@@ -19,7 +19,7 @@ public class StockService {
 	}
 	
 	public List<Stock> buscarTodos() {
-		return stockDao.buscarTodas();
+		return stockDao.buscarTodos();
 	}
 	
 }

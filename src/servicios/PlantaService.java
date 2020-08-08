@@ -26,11 +26,15 @@ public class PlantaService {
 		return plantaDao.buscarTodas();
 	}
 	
-	
+/*	
 	public List<Planta> buscarPlantasParaPedido(List<ItemPedido> items ) {
 		return plantaDao.buscarPlantasParaPedido(items);
 	}
 	
+	public List<Planta> buscarPlantasParaPedido(Pedido p ) {
+		return plantaDao.checkPlantas(p.getNroPedido());
+	}
+	*/
 	
 	
 

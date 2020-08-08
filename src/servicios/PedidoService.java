@@ -47,7 +47,8 @@ public class PedidoService {
 	
 	
 	public List<Planta> buscarPlantasParaPedido(Pedido p) {
-		List<Planta> resultado= plantaService.buscarPlantasParaPedido(p.getListaItems());
+//		List<Planta> resultado= plantaService.buscarPlantasParaPedido(p.getNroPedido());
+		List<Planta> resultado= pedidoDao.checkPlantas(p.getNroPedido());
 		if(resultado.isEmpty()) {
 			p.setEstado(Estado.CANCELADO);
 			pedidoDao.saveOrUpdate(p);
