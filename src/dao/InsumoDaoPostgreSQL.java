@@ -51,7 +51,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, "
 			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+"FROM INSUMO I, STOCK S"
-			+" WHERE S.ID_PRODUCTO = I.ID"
+			+" WHERE S.ID_INSUMO = I.ID"
 			+ " GROUP BY (I.ID)";
 	
 	@Override

@@ -17,7 +17,7 @@ public class StockDaoPostgreSQL implements StockDao {
 	private static final String SELECT_STOCK_PLANTA = 
 			"SELECT S.ID, ID_INSUMO, ID_PLANTA, PUNTO_REPOSICION, CANTIDAD"
 			+ " FROM STOCK S, PLANTA P"
-			+ " WHERE S.ID_PLANTA = P.ID";
+			+ " WHERE S.ID_PLANTA = ?";
 	
 	private static final String UPDATE_STOCK = 
 			"UPDATE INSUMO SET ID_INSUMO = ?, ID_PLANTA = ?, PUNTO_REPOSICION = ?, CANTIDAD = ?"
@@ -128,6 +128,7 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(SELECT_STOCK_PLANTA);
+			pstmt.setInt(1, idPlanta);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Stock s = new Stock();
