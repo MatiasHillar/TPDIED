@@ -16,7 +16,7 @@ public class StockDaoPostgreSQL implements StockDao {
 
 	private static final String SELECT_STOCK_PLANTA = 
 			"SELECT S.ID, ID_INSUMO, ID_PLANTA, PUNTO_REPOSICION, CANTIDAD"
-			+ " FROM STOCK S, PLANTA P"
+			+ " FROM STOCK S"
 			+ " WHERE S.ID_PLANTA = ?";
 	
 	private static final String UPDATE_STOCK = 
