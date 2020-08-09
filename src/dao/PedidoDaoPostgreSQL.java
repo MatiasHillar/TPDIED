@@ -23,9 +23,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			+ "WHERE NRO_PEDIDO = ?";
 	
 	private static final String INSERT_PEDIDO = 
-			"INSERT INTO PEDIDO (PLANTA_DESTINO, FECHA_SOLICITUD, FECHA_ENTREGA, ESTADO,"
-			+ "COSTO_ENVIO, PATENTE_CAMION)"
-			+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO PEDIDO (PLANTA_DESTINO, FECHA_SOLICITUD, FECHA_ENTREGA, ESTADO "
+			+ "VALUES(?, ?, ?, ?, ?)";
 
 	private static final String INSERT_RUTAS = 
 			"INSERT INTO RUTA_PEDIDO VALUES(?, ?, ?)";
@@ -34,6 +33,10 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			"UPDATE RUTA_PEDIO SET NRO_INDICE = ?"
 			+ "WHERE NRO_PEDIDO = ?"
 			+ "AND ID_RUTA = ?";
+	
+	private static final String UPDATE_ESTADO = 
+			"UPDATE PEDIDO SET ESTADO = 'cancelado'"
+			+ " WHERE NRO_PEDIDO = ?";
 	
 	private static final String SELECT_PROCESADAS = 
 			"SELECT * FROM PEDIDO"
@@ -62,6 +65,10 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		PreparedStatement pstmt = null;
 		try {
 			if(p.getNroPedido() != null) {
+				if(p.getEstado().equals(Estado.CANCELADO)) {
+					pstmt = conn.prepareStatement(UPDATE_ESTADO);
+				}
+				else {
 				pstmt = conn.prepareStatement(UPDATE_PEDIDO);
 				pstmt.setInt(1, p.getPlantaDestino().getId());
 				pstmt.setDate(2, Date.valueOf(p.getFechaSolicitud()));
@@ -69,7 +76,9 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 				pstmt.setString(4, p.getEstado().name());
 				pstmt.setFloat(5, p.getCostoEnvio());
 				pstmt.setString(6, p.getCamion().getPatente());
+				pstmt.setInt(7, p.getNroPedido());
 				saveOrUpdateRutas(p, p.getRuta(), conn);
+				}
 			}
 			else {
 				pstmt = conn.prepareStatement(INSERT_PEDIDO);
@@ -79,7 +88,6 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 				pstmt.setString(4, p.getEstado().name());
 //				pstmt.setFloat(5, p.getCostoEnvio());
 //				pstmt.setString(6, p.getCamion().getPatente());
-//				pstmt.setInt(7, p.getNroPedido());
 			}
 			pstmt.executeUpdate();
 		}
