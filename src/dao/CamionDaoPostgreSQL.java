@@ -43,8 +43,8 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			+ "WHERE PATENTE = ?";
 	
 	private static final String INSERT_CAMION =
-			"INSERT INTO CAMION(PATENTE, COSTOXKM, COSTOXHS"
-			+ ", ID_MODELO) VALUES(?, ?, ?, ?)";
+			"INSERT INTO CAMION(PATENTE, KM_RECORRIDOS, COSTOXKM, COSTOXHS,  FECHA_COMPRA"
+			+ ", ID_MODELO) VALUES(?, ?, ?, ?, ?, ?)";
 	
 	@Override
 	public Camion saveOrUpdate(Camion c) {
@@ -65,10 +65,11 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			else {
 				pstmt = conn.prepareStatement(INSERT_CAMION);
 				pstmt.setString(1, c.getPatente());
-				pstmt.setFloat(2, c.getCostoKm());
-				pstmt.setFloat(3, c.getCostoHora());
-				pstmt.setDate(4, Date.valueOf(c.getFechaCompra()));
-				pstmt.setString(5, c.getModelo().getModelo());
+				pstmt.setFloat(2, c.getKmRecorridos());
+				pstmt.setFloat(3, c.getCostoKm());
+				pstmt.setFloat(4, c.getCostoHora());
+				pstmt.setDate(5, Date.valueOf(c.getFechaCompra()));
+				pstmt.setString(6, c.getModelo().getModelo());
 			}
 			pstmt.executeUpdate();
 		}
