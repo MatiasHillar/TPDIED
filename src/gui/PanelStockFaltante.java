@@ -33,13 +33,14 @@ public class PanelStockFaltante extends JPanel {
 	private JLabel lblBuscar = new JLabel("Filtros:");
 	private JLabel lblPlanta = new JLabel("Planta:");
 	private JLabel lblInsumo = new JLabel("Insumo:");
-	private JComboBox<Planta> jcbPlantas = new JComboBox<Planta>(); 
-	private JComboBox<Insumo> jcbInsumos = new JComboBox<Insumo>(); 
-
-	
+//	private JComboBox<Planta> jcbPlantas = new JComboBox<Planta>(); 
+//	private JComboBox<Insumo> jcbInsumos = new JComboBox<Insumo>(); 
+	private JComboBox<Planta> jcbPlantas;
+	private JComboBox<Insumo> jcbInsumos;
 	
 	private JButton btnGuardar;
 	private JButton btnCancelar;
+	private JButton btnBuscarTodo;
 	
 	
 	private JTable tablaStocks;
@@ -62,7 +63,7 @@ public class PanelStockFaltante extends JPanel {
 		this.setLayout(gbl);
 		GridBagConstraints constraints = new GridBagConstraints();
 		
-
+		this.controller.setJcbs();
 		constraints.insets = new Insets(30, 0, 10, 0);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -129,7 +130,26 @@ public class PanelStockFaltante extends JPanel {
 		
 		this.add(btnGuardar,constraints);
 		constraints.weightx=0;
+		/*
+		constraints.gridx = 4;
+		this.btnBuscarTodo = new JButton("Buscar todo");
 		
+		this.btnBuscarTodo.addActionListener( e ->
+			{
+				try {
+					this.controller.buscarTodo();
+//					modeloTablaStock.setData(controller.buscarPorAtributos());
+//					this.limpiarFormulario();
+//					modeloTablaStock.fireTableDataChanged();
+				} catch (Exception e1) {
+					this.mostrarError("Error al guardar", e1.getMessage());
+				}
+			}
+		);
+		
+		this.add(btnBuscarTodo,constraints);
+		constraints.weightx=0;
+		*/
 		
 		constraints.insets = new Insets(10, 50, 10, 50);
 		

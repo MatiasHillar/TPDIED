@@ -59,10 +59,24 @@ public class StockFaltanteController {
 		this.panel.getModeloTablaStock().fireTableDataChanged();
 		
 	}
+	/*
+	public void buscarTodo() {
+		List<Stock> stocks= this.stockService.buscarTodos();
+		this.panel.getModeloTablaStock().getData().clear();
+		
+		this.panel.getModeloTablaStock().getData().addAll(stocks);
+		this.panel.getModeloTablaStock().fireTableDataChanged();
+		
+	}*/
+	
 	
 	public void setJcbs() {
 		this.panel.setJcbPlantas(new JComboBox<Planta>(this.plantaService.buscarTodos().toArray(new Planta[0])));
+		this.panel.getJcbPlantas().addItem(null);
+		this.panel.getJcbPlantas().setSelectedIndex(this.panel.getJcbPlantas().getItemCount()-1);
 		this.panel.setJcbInsumos(new JComboBox<Insumo>( this.insumoService.buscarTodos().toArray(new Insumo[0])));
+		this.panel.getJcbInsumos().addItem(null);
+		this.panel.getJcbInsumos().setSelectedIndex(this.panel.getJcbInsumos().getItemCount()-1);
 	}
 	 
 }
