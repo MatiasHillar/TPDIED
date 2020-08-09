@@ -23,8 +23,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			+ "WHERE NRO_PEDIDO = ?";
 	
 	private static final String INSERT_PEDIDO = 
-			"INSERT INTO PEDIDO (PLANTA_DESTINO, FECHA_SOLICITUD, FECHA_ENTREGA, ESTADO "
-			+ "VALUES(?, ?, ?, ?, ?)";
+			"INSERT INTO PEDIDO (PLANTA_DESTINO, FECHA_SOLICITUD, FECHA_ENTREGA, ESTADO) "
+			+ "VALUES(?, ?, ?, ?)";
 
 	private static final String INSERT_RUTAS = 
 			"INSERT INTO RUTA_PEDIDO VALUES(?, ?, ?)";
@@ -35,12 +35,12 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			+ "AND ID_RUTA = ?";
 	
 	private static final String UPDATE_ESTADO = 
-			"UPDATE PEDIDO SET ESTADO = 'cancelado'"
+			"UPDATE PEDIDO SET ESTADO = 'CANCELADO'"
 			+ " WHERE NRO_PEDIDO = ?";
 	
 	private static final String SELECT_PROCESADAS = 
 			"SELECT * FROM PEDIDO"
-			+ "WHERE ESTADO LIKE PROCESADA";
+			+ "WHERE ESTADO LIKE 'PROCESADO'";
 	
 	private static final String SELECT_PEDIDO = 
 			"SELECT * FROM PEDIDO"
@@ -48,11 +48,11 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 	
 	private static final String SELECT_CREADAS = 
 			"SELECT * FROM PEDIDO "
-			+ "WHERE ESTADO LIKE CREADA";
+			+ "WHERE ESTADO LIKE 'CREADO'";
 	
 	private static final String SELECT_RUTAS = 
-			"SELECT * FROM RUTA_PEDIDO, RUTA"
-			+ "WHERE NRO_PEDIDO = ?"
+			"SELECT * FROM RUTA_PEDIDO, RUTA "
+			+ "WHERE NRO_PEDIDO = ? "
 			+ "ORDER BY (NRO_INDICE) ASC";
 		
 	private CamionDao camiondao = new CamionDaoPostgreSQL();
@@ -260,14 +260,14 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				p = new Pedido();
-				p.setCamion(camiondao.buscarPorPatente(rs.getString("PATENTE_CAMION"), conn));
-				p.setCostoEnvio(rs.getFloat("COSTO_ENVIO"));
+//				p.setCamion(camiondao.buscarPorPatente(rs.getString("PATENTE_CAMION"), conn));
+//				p.setCostoEnvio(rs.getFloat("COSTO_ENVIO"));
 				p.setEstado(Estado.valueOf(rs.getString("ESTADO")));
 				p.setFechaEntrega(rs.getDate("FECHA_ENTREGA").toLocalDate());
 				p.setFechaSolicitud(rs.getDate("FECHA_SOLICITUD").toLocalDate());
 				p.setNroPedido(rs.getInt("NRO_PEDIDO"));
 				p.setPlantaDestino(plantadao.buscar(rs.getInt("PLANTA_DESTINO"), conn));
-				p.setRuta(selectRutas(rs.getInt("NRO_PEDIDO"), conn));
+//				p.setRuta(selectRutas(rs.getInt("NRO_PEDIDO"), conn));
 				p.setListaItems(itemdao.selectItems(rs.getInt("NRO_PEDIDO"), conn));
 				lista.add(p);
 			}

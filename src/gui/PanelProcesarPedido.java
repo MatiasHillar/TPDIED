@@ -104,8 +104,8 @@ public class PanelProcesarPedido extends JPanel {
 		this.add(lblPedidos,constraints);
 		
 		constraints.gridy = 3;
-//			this.controller.actualizarPedidos();
-		jcbPedidos = new JComboBox<Pedido>();
+		this.controller.actualizarPedidos();
+//		jcbPedidos = new JComboBox<Pedido>();
 
 //		jcbPlantas = new JComboBox<Planta>();
 		this.add(jcbPedidos,constraints);

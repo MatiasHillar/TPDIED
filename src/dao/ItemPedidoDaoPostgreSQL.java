@@ -17,7 +17,7 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 			"INSERT INTO ITEM_PEDIDO VALUES(?, ?, ?)";
 	
 	private static final String SELECT_ITEMPEDIDO = 
-			"SELECT * FROM ITEM_PEDIDO"
+			"SELECT * FROM ITEM_PEDIDO "
 			+ "WHERE NRO_PEDIDO = ?";
 	
 	private static final String DELETE_ITEMPEDIDO = 

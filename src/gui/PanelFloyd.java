@@ -56,10 +56,12 @@ public class PanelFloyd extends JPanel {
 		
 
 		
-		constraints.gridx=1;
-		constraints.gridy=2;
+//		constraints.gridx=1;
+//		constraints.gridy=2;
+		constraints.gridy=4;
 		this.add(lblT,constraints);
-		constraints.gridy=3;
+//		constraints.gridy=3;
+		constraints.gridy=5;
 		this.add(new PanelMatriz(ms.caminosMenosTiempo()),constraints);
 		
 		

@@ -177,7 +177,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		ResultSet rs = null;
 		Camion c = null;
 		try {
-			pstmt = conn.prepareStatement(SELECT_CAMION);
+			pstmt = conn.prepareStatement(SELECT_CAMION,ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setString(1, patente);
 			rs = pstmt.executeQuery();
 			if(!rs.first()) throw new ExcepcionNoExisteElemento();
