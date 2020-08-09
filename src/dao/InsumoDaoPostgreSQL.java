@@ -19,35 +19,37 @@ import excepciones.ExcepcionNoExisteElemento;
 public class InsumoDaoPostgreSQL implements InsumoDao {
 
 	private static final String UPDATE_INSUMO_GENERAL =
-			"UPDATE INSUMO SET NOMBRE_UNIDAD_MEDIDA = ?,DESCRIPCION = ?, COSTO = ?, PESO = ?"
+			"UPDATE INSUMO SET NOMBRE_UNIDAD_MEDIDA = ?,DESCRIPCION = ?, COSTO = ?, PESO = ?, "
+			+ "NOMBRE = ? "
 			+ "WHERE ID = ?";
 	
 	private static final String INSERT_INSUMO_GENERAL =
-			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO)"
-			+ " VALUES(?, ?, ?, 'general', ?)";
+			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO, NOMBRE)"
+			+ " VALUES(?, ?, ?, 'general', ?, ?)";
 
 	private static final String UPDATE_INSUMO_LIQUIDO =
 			"UPDATE INSUMO SET NOMBRE_UNIDAD_MEDIDA = ?,DESCRIPCION = ?, COSTO = ?, PESO = ?,"
-			+ " DENSIDAD = ?"
+			+ " DENSIDAD = ?, NOMBRE = ?"
 			+ " WHERE ID = ?";
 
 	private static final String INSERT_INSUMO_LIQUIDO =
-			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO, DENSIDAD)"
-			+ " VALUES(?, ?, ?, 'liquido', ?, ?)";	
+			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO, DENSIDAD, NOMBRE)"
+			+ " VALUES(?, ?, ?, 'liquido', ?, ?, ?)";	
 	
 	private static final String DELETE_INSUMO =
 			"DELETE FROM INSUMO"
 			+ "WHERE ID = ?";
 	
 	private static final String SELECT_ALL_INSUMO =
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, U.NOMBRE,"
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE AS NOMBRE_I, U.NOMBRE,"
 			+ " U.SIMBOLO, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL"
 			+ " FROM INSUMO I LEFT JOIN STOCK S ON S.ID_INSUMO = I.ID"
 			+ " INNER JOIN UNIDAD U ON I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE"
 			+ " GROUP BY(I.ID, U.NOMBRE)";
 	
 	private static final String SELECT_INSUMO = 
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, "
+			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+"FROM INSUMO I, STOCK S"
 			+" WHERE S.ID_PRODUCTO = I.ID"
 			+ " GROUP BY (I.ID)";
@@ -63,7 +65,8 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setString(2, i.getDescripcion());
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.getPeso());
-				pstmt.setInt(5, i.getId());
+				pstmt.setString(5, i.getNombre());
+				pstmt.setInt(6, i.getId());
 			 
 		}
 			else {
@@ -72,6 +75,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setString(2, i.getDescripcion());
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.getPeso());
+				pstmt.setString(5, i.getNombre());
 			}
 		pstmt.executeUpdate();
 		}
@@ -101,7 +105,8 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.pesoPorUnidad());
 				pstmt.setFloat(5, i.getDensidad());
-				pstmt.setInt(6, i.getId());
+				pstmt.setString(6, i.getNombre());
+				pstmt.setInt(7, i.getId());
 			}
 			else {
 				pstmt = conn.prepareStatement(INSERT_INSUMO_LIQUIDO);
@@ -110,6 +115,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.pesoPorUnidad());
 				pstmt.setFloat(5, i.getDensidad());
+				pstmt.setString(6, i.getNombre());
 			}
 		pstmt.executeUpdate();
 		}
@@ -170,6 +176,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 					i.setCosto(rs.getFloat("COSTO"));
 					i.setPeso(rs.getFloat("PESO"));
 					i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
+					i.setNombre(rs.getString("NOMBRE_I"));
 					lista.add(i);
 				}
 				else {
@@ -180,6 +187,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 					i.setCosto(rs.getFloat("COSTO"));
 					i.setPeso(rs.getFloat("PESO"));
 					i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
+					i.setNombre(rs.getString("NOMBRE_I"));
 					lista.add(i);
 				}
 			}
