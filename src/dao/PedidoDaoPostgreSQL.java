@@ -90,6 +90,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 //				pstmt.setString(6, p.getCamion().getPatente());
 			}
 			pstmt.executeUpdate();
+			
+			itemdao.saveOrUpdate(p, p.getListaItems(), conn);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
