@@ -53,11 +53,11 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 //	}
 	
 	@Override
-	public List<ItemPedido> saveOrUpdate(Pedido p, List<ItemPedido> lista, Connection conn) {
+	public List<ItemPedido> saveOrUpdate(Integer nroPedido, List<ItemPedido> lista, Connection conn) {
 		PreparedStatement pstmt = null;
 		try {
 				pstmt = conn.prepareStatement(INSERT_ITEM_PEDIDO);
-				pstmt.setInt(1, p.getNroPedido());
+				pstmt.setInt(1, nroPedido);
 				for(int i = 1; i<=lista.size(); i++) {
 					pstmt.setInt(2, lista.get(i).getInsumo().getId());
 					pstmt.setFloat(3, lista.get(i).getCtidad());

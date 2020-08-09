@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import dao.utils.DB;
 import dominio.Estado;
 import dominio.Pedido;
@@ -45,6 +46,11 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 	private static final String SELECT_PEDIDO = 
 			"SELECT * FROM PEDIDO"
 			+ "WHERE NRO_PEDIDO = ?";
+	
+	private static final String SELECT_PEDIDO_ITEMS =
+			"SELECT NRO_PEDIDO FROM PEDIDO "
+			+ "WHERE NOT EXIST (SELECT * FROM ITEM_PEDIDO"
+			+ " WHERE ITEM_PEDIDO.NRO_PEDIDO = PEDIDO.NRO_PEDIDO)";
 	
 	private static final String SELECT_CREADAS = 
 			"SELECT * FROM PEDIDO "
@@ -90,8 +96,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 //				pstmt.setString(6, p.getCamion().getPatente());
 			}
 			pstmt.executeUpdate();
-			
-			itemdao.saveOrUpdate(p, p.getListaItems(), conn);
+		
+			itemdao.saveOrUpdate(buscarNroPedido(conn, pstmt), p.getListaItems(), conn);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -302,4 +308,19 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			}
 		return lista;
 	}
+	
+	private Integer buscarNroPedido(Connection conn, PreparedStatement pstmt) {
+		ResultSet rs = null;
+		Integer nroPedido = null;
+		try {
+			pstmt = conn.prepareStatement(SELECT_PEDIDO_ITEMS);
+			rs = pstmt.executeQuery();
+			if(!rs.first()) throw new ExcepcionNoExisteElemento();
+			nroPedido = rs.getInt("NRO_PEDIDO");
+		}
+		catch(SQLException | ExcepcionNoExisteElemento e) {
+			e.printStackTrace();
+		}
+		return nroPedido;
+		}
 }
