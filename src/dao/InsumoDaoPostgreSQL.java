@@ -51,7 +51,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, "
 			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+"FROM INSUMO I, STOCK S"
-			+" WHERE S.ID_INSUMO = I.ID"
+			+" WHERE S.ID_INSUMO = ?"
 			+ " GROUP BY (I.ID)";
 	
 	@Override
@@ -220,6 +220,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 		Insumo i = null;
 		try {
 			pstmt = conn.prepareStatement(SELECT_INSUMO, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
+			pstmt.setInt(1, id_insumo);
 			rs = pstmt.executeQuery();
 			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			if(rs.getString("TIPO").equals("GENERAL")) {

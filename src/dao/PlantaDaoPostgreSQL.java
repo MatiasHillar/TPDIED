@@ -100,7 +100,7 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 			p = new Planta();
 			p.setId(rs.getInt("ID"));
 			p.setNombre(rs.getString("NOMBRE"));
-			p.setListaStock(stockDao.buscarPorPlanta(id, conn));
+			p.setListaStock(stockDao.buscarPorPlanta(p, conn));
 		}
 		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
@@ -131,7 +131,7 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 				p.setId(rs.getInt("ID"));
 				p.setNombre(rs.getString("NOMBRE"));
 				//podria pasar la conexion como argumento
-				p.setListaStock(stockDao.buscarPorPlanta(rs.getInt("ID"), conn));
+				p.setListaStock(stockDao.buscarPorPlanta(p, conn));
 				lista.add(p);
 			}
 		}
@@ -186,7 +186,7 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 				pl = new Planta();
 				pl.setId(rs.getInt("ID"));
 				pl.setNombre(rs.getString("NOMBRE"));
-				pl.setListaStock(stockDao.buscarPorPlanta(rs.getInt("ID"), conn));
+				pl.setListaStock(stockDao.buscarPorPlanta(pl, conn));
 				lista.add(pl);
 			}
 	}

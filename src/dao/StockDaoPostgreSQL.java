@@ -122,13 +122,13 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 	}
 
 	@Override
-	public List<Stock> buscarPorPlanta(Integer idPlanta, Connection conn) {
+	public List<Stock> buscarPorPlanta(Planta p, Connection conn) {
 		List<Stock> lista = new ArrayList<Stock>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(SELECT_STOCK_PLANTA);
-			pstmt.setInt(1, idPlanta);
+			pstmt.setInt(1, p.getId());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Stock s = new Stock();
@@ -136,7 +136,8 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 				s.setCtidad(rs.getFloat("CANTIDAD"));
 				s.setPuntoRepo(rs.getFloat("PUNTO_REPOSICION"));
 				s.setInsumo(insumoDao.buscar(rs.getInt("ID_INSUMO"), conn));
-				s.setP(plantadao.buscar(rs.getInt("ID_PLANTA"), conn));
+				s.setP(p);
+				lista.add(s);
 			}
 		}
 		catch(SQLException e) {
