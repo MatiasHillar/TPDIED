@@ -26,7 +26,6 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 			+ " AND NRO_PEDIDO = ?";
 	
 	private InsumoDao insumodao = new InsumoDaoPostgreSQL();
-	//CHEQUEAR CHECKNULL
 	public ItemPedido saveOrUpdate(ItemPedido i) {
 		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
@@ -72,6 +71,14 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return lista;
 	}

@@ -159,6 +159,14 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return ret;
 	}
 	
@@ -181,6 +189,14 @@ public class CamionDaoPostgreSQL implements CamionDao{
 		}
 		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return c;
 	}

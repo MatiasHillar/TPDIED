@@ -123,6 +123,14 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			catch(SQLException e) {
 				e.printStackTrace();	
 		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private List<Ruta> selectRutas(Integer nro_pedido, Connection conn){
@@ -147,6 +155,14 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return lista;
 	}
@@ -173,6 +189,14 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		}
 		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return p;
 	}

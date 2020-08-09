@@ -24,10 +24,12 @@ import dominio.*;
 import gui.util.*;
 
 public class PanelInsumosGenerales extends JPanel{
-//	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
-	private Unidad[] unidades;
-	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo general:");
-	private JLabel lblDescripcion = new JLabel("Descripción:");
+	private Unidad[] unidades = {new Unidad("Kilogramo", "Kg"), new Unidad("Gramo", "G"), new Unidad("Pieza", "Pz"),
+			new Unidad("Metro", "M"), new Unidad("Metro_cuadrado", "M2")};
+
+//	private Unidad[] unidades;
+	private JLabel lblTitulo = new JLabel("Aï¿½adir/modificar insumo general:");
+	private JLabel lblDescripcion = new JLabel("Descripciï¿½n:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
 	private JLabel lblCosto = new JLabel("Costo:");
 	private JLabel lblNombre = new JLabel("Nombre:");
@@ -63,7 +65,7 @@ public class PanelInsumosGenerales extends JPanel{
 		this.setLayout(gbl);
 	
 		GridBagConstraints constraints = new GridBagConstraints();
-		unidades = this.controller.listarTodasUnidades().toArray(new Unidad[0]);
+//		unidades = this.controller.listarTodasUnidades().toArray(new Unidad[0]);
 		jcbUnidades = new JComboBox<Unidad>(unidades);
 		
 		constraints.gridx = 0;

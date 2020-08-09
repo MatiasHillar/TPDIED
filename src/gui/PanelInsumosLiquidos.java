@@ -25,10 +25,10 @@ import gui.util.*;
 
 public class PanelInsumosLiquidos extends JPanel{
 //	private String[] unidades = {"M2", "Kg", "Mts"};
-//	private Unidad[] unidades = {new Unidad("Metro cuadrado", "M2"),new Unidad("Kilogramo", "Kg"),new Unidad("Metros", "Mts")};
-	private Unidad[] unidades;
-	private JLabel lblTitulo = new JLabel("Añadir/modificar insumo liquido:");
-	private JLabel lblDescripcion = new JLabel("Descripción:");
+	private Unidad[] unidades = {new Unidad("Litro", "L"),new Unidad("Metro_cubico", "M3")};
+//	private Unidad[] unidades;
+	private JLabel lblTitulo = new JLabel("Aï¿½adir/modificar insumo liquido:");
+	private JLabel lblDescripcion = new JLabel("Descripciï¿½n:");
 	private JLabel lblUnidad = new JLabel("Unidad:");
 	private JLabel lblCosto = new JLabel("Costo:");
 	private JLabel lblNombre = new JLabel("Nombre:");
@@ -151,7 +151,7 @@ public class PanelInsumosLiquidos extends JPanel{
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
 		constraints.insets = new Insets(0, 20, 0, 0);
-		unidades = this.controller.listarTodasUnidades().toArray(new Unidad[0]);
+//		unidades = this.controller.listarTodasUnidades().toArray(new Unidad[0]);
 		jcbUnidades = new JComboBox<Unidad>(unidades);
 		this.add(jcbUnidades, constraints);
 		

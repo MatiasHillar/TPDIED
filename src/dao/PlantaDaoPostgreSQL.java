@@ -105,6 +105,14 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
 		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return p;
 	}
 
@@ -184,6 +192,14 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 	}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return lista;
 	}

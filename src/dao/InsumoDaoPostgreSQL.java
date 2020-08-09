@@ -27,19 +27,20 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ " VALUES(?, ?, ?, 'general', ?)";
 
 	private static final String UPDATE_INSUMO_LIQUIDO =
-			"UPDATE INSUMO SET NOMBRE_UNIDAD_MEDIDA = ?,DESCRIPCION = ?, COSTO = ?, PESO = ?"
+			"UPDATE INSUMO SET NOMBRE_UNIDAD_MEDIDA = ?,DESCRIPCION = ?, COSTO = ?, PESO = ?,"
+			+ " DENSIDAD = ?"
 			+ "WHERE ID = ?";
 
 	private static final String INSERT_INSUMO_LIQUIDO =
-			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO)"
-			+ " VALUES(?, ?, ?, 'liquido', ?)";	
+			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO, DENSIDAD)"
+			+ " VALUES(?, ?, ?, 'liquido', ?, ?)";	
 	
 	private static final String DELETE_INSUMO =
 			"DELETE FROM INSUMO"
 			+ "WHERE ID = ?";
 	
 	private static final String SELECT_ALL_INSUMO =
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, U.NOMBRE, U.SIMBOLO,"
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, U.NOMBRE, U.SIMBOLO,"
 			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+ "FROM INSUMO I, UNIDAD U, STOCK S "
 			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE "
@@ -47,7 +48,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "GROUP BY(I.ID, U.NOMBRE)";
 	
 	private static final String SELECT_INSUMO = 
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+"FROM INSUMO I, STOCK S"
 			+" WHERE S.ID_PRODUCTO = I.ID"
 			+ "GROUP BY (I.ID)";
@@ -100,6 +101,8 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setString(2, i.getDescripcion());
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.pesoPorUnidad());
+				pstmt.setFloat(5, i.getDensidad());
+				pstmt.setInt(6, i.getId());
 			}
 			else {
 				pstmt = conn.prepareStatement(INSERT_INSUMO_LIQUIDO);
@@ -107,6 +110,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				pstmt.setString(2, i.getDescripcion());
 				pstmt.setFloat(3, i.getCosto());
 				pstmt.setFloat(4, i.pesoPorUnidad());
+				pstmt.setFloat(5, i.getDensidad());
 			}
 		pstmt.executeUpdate();
 		}
@@ -232,6 +236,14 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 		}
 		catch(SQLException | ExcepcionNoExisteElemento e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return i;
 	}

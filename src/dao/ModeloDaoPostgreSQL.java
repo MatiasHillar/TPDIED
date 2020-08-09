@@ -121,7 +121,14 @@ public class ModeloDaoPostgreSQL implements ModeloDao{
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-	
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return ret;
 	}
 }

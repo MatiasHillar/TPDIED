@@ -33,6 +33,9 @@ public class StockDaoPostgreSQL implements StockDao {
 			+ " AND S.ID_INSUMO = I.ID"
 			+ " GROUP BY(I.ID)";
 	
+	private static final String DELETE_STOCK =
+			"DELETE FROM STOCK WHERE ID = ?";
+	
 	private static final String SELECT_ALL_STOCK =
 			"SELECT * FROM INSUMO";
 	
@@ -119,12 +122,6 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 	}
 
 	@Override
-	public List<Planta> filtrar() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-//SEGUIR CON ESTO
-	@Override
 	public List<Stock> buscarPorPlanta(Integer idPlanta, Connection conn) {
 		List<Stock> lista = new ArrayList<Stock>();
 		PreparedStatement pstmt = null;
@@ -143,6 +140,14 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return lista;
 	}
@@ -183,9 +188,26 @@ public StockDaoPostgreSQL(PlantaDao plantadao) {
 	
 	
 	@Override
-	public Void borrar(Integer idprod) {
-		// TODO Auto-generated method stub
-		return null;
+	public void borrar(Integer idprod) {
+		Connection conn = DB.getConexion();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(DELETE_STOCK);
+			pstmt.setInt(1, idprod);
+			pstmt.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
