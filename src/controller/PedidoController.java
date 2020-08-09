@@ -62,6 +62,9 @@ public class PedidoController {
 			item.setPedido(p);
 		}
 		p.setListaItems(ips);
+		if(this.panel.getJcbPlanta().getSelectedItem() !=null && this.panel.getJcbPlanta().getSelectedItem() instanceof Planta)
+			p.setPlantaDestino((Planta)this.panel.getJcbPlanta().getSelectedItem());
+		else throw new DatosObligatoriosException("Planta Destino", "La planta de destino es obligatoria");
 		if(this.panel.getTxtFechaCompra()!=null) p.setFechaEntrega(LocalDate.parse(this.panel.getTxtFechaCompra().getText(),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		else throw new DatosObligatoriosException("Fecha de entrega", "La fecha de entrega es obligatoria");
 	}

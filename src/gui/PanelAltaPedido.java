@@ -172,10 +172,15 @@ public class PanelAltaPedido extends JPanel {
 		constraints.gridx = 5;
 		constraints.gridy = 4;
 		this.btnAnadir.addActionListener(e -> {
-			if((Float)this.cantidad.getValue() > 0f) {
+//			((Number) this.cantidad.getValue()).floatValue()
+//			if((Float)this.cantidad.getValue() > 0f) {
+			this.controller.actualizarItem();
+			if(((Number) this.cantidad.getValue()).floatValue() > 0f) {
 				if(modeloTablaItem.getData().contains(controller.getIp())) {
 					int index = modeloTablaItem.getData().indexOf(controller.getIp());
-					modeloTablaItem.getData().get(index).setCtidad(modeloTablaItem.getData().get(index).getCtidad() + controller.getIp().getCtidad());
+					modeloTablaItem.getData().remove(index);
+					modeloTablaItem.getData().add(controller.getIp());
+//					modeloTablaItem.getData().get(index).setCtidad(modeloTablaItem.getData().get(index).getCtidad() + controller.getIp().getCtidad());
 				}
 				else modeloTablaItem.getData().add(controller.getIp());
 				modeloTablaItem.fireTableDataChanged();
@@ -205,7 +210,8 @@ public class PanelAltaPedido extends JPanel {
 				this.controller.guardar();
 				this.limpiarFormulario();
 			} catch (Exception e1) {
-				this.mostrarError("Error al añadir", e1.getMessage());
+				e1.printStackTrace();
+				this.mostrarError("Error al guardar", e1.getMessage());
 			}
 		});
 		this.add(btnGuardar, constraints);
