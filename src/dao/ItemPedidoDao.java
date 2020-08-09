@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.util.List;
 
 import dominio.ItemPedido;
+import dominio.Pedido;
 
 public interface ItemPedidoDao {
 	
-	public ItemPedido saveOrUpdate(ItemPedido item);
+	public List<ItemPedido> saveOrUpdate(Pedido p, List<ItemPedido> lista, Connection conn);
 	public ItemPedido buscarPorInsumo(Integer idInsumo);
 	public ItemPedido buscarPorPedido(Integer idPedido);
 	public ItemPedido buscarPorInsumoPedido(Integer idInsumo, Integer idPedido);

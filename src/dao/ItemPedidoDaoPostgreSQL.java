@@ -9,6 +9,7 @@ import java.util.List;
 
 import dao.utils.DB;
 import dominio.ItemPedido;
+import dominio.Pedido;
 import dominio.Ruta;
 
 public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
@@ -26,29 +27,55 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 			+ " AND NRO_PEDIDO = ?";
 	
 	private InsumoDao insumodao = new InsumoDaoPostgreSQL();
-	public ItemPedido saveOrUpdate(ItemPedido i) {
-		Connection conn = DB.getConexion();
+//	public ItemPedido saveOrUpdate(ItemPedido i) {
+//		Connection conn = DB.getConexion();
+//		PreparedStatement pstmt = null;
+//		try {
+//			pstmt = conn.prepareStatement(INSERT_ITEM_PEDIDO);
+//			pstmt.setInt(1, i.getPedido().getNroPedido());
+//			pstmt.setInt(2, i.getInsumo().getId());
+//			pstmt.setFloat(3, i.getCtidad());
+//			pstmt.executeUpdate();
+//		}
+//		catch(SQLException e) {
+//			e.printStackTrace();
+//		}
+//		finally {
+//			try {
+//				if(pstmt!=null) pstmt.close();
+//				if(conn!=null) conn.close();
+//			}
+//			catch(SQLException e){
+//				e.printStackTrace();
+//			}
+//		}
+//		return i;
+//	}
+	
+	@Override
+	public List<ItemPedido> saveOrUpdate(Pedido p, List<ItemPedido> lista, Connection conn) {
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement(INSERT_ITEM_PEDIDO);
-			pstmt.setInt(1, i.getPedido().getNroPedido());
-			pstmt.setInt(2, i.getInsumo().getId());
-			pstmt.setFloat(3, i.getCtidad());
-			pstmt.executeUpdate();
+				pstmt = conn.prepareStatement(INSERT_ITEM_PEDIDO);
+				pstmt.setInt(1, p.getNroPedido());
+				for(int i = 1; i<=lista.size(); i++) {
+					pstmt.setInt(2, lista.get(i).getInsumo().getId());
+					pstmt.setFloat(3, lista.get(i).getCtidad());
+					pstmt.executeUpdate();
+				}
 		}
-		catch(SQLException e) {
-			e.printStackTrace();
+			catch(SQLException e) {
+				e.printStackTrace();	
 		}
 		finally {
 			try {
 				if(pstmt!=null) pstmt.close();
-				if(conn!=null) conn.close();
 			}
-			catch(SQLException e){
+			catch(SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return i;
+		return lista;
 	}
 	
 	@Override
