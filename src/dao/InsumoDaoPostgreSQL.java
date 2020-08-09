@@ -29,7 +29,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 	private static final String UPDATE_INSUMO_LIQUIDO =
 			"UPDATE INSUMO SET NOMBRE_UNIDAD_MEDIDA = ?,DESCRIPCION = ?, COSTO = ?, PESO = ?,"
 			+ " DENSIDAD = ?"
-			+ "WHERE ID = ?";
+			+ " WHERE ID = ?";
 
 	private static final String INSERT_INSUMO_LIQUIDO =
 			"INSERT INTO INSUMO(NOMBRE_UNIDAD_MEDIDA, DESCRIPCION, COSTO, TIPO, PESO, DENSIDAD)"
@@ -40,18 +40,17 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ "WHERE ID = ?";
 	
 	private static final String SELECT_ALL_INSUMO =
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, U.NOMBRE, U.SIMBOLO,"
-			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
-			+ "FROM INSUMO I, UNIDAD U, STOCK S "
-			+ "WHERE I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE "
-			+ "AND S.ID_INSUMO = I.ID "
-			+ "GROUP BY(I.ID, U.NOMBRE)";
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, U.NOMBRE,"
+			+ " U.SIMBOLO, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL"
+			+ " FROM INSUMO I LEFT JOIN STOCK S ON S.ID_INSUMO = I.ID"
+			+ " INNER JOIN UNIDAD U ON I.NOMBRE_UNIDAD_MEDIDA = U.NOMBRE"
+			+ " GROUP BY(I.ID, U.NOMBRE)";
 	
 	private static final String SELECT_INSUMO = 
 			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+"FROM INSUMO I, STOCK S"
 			+" WHERE S.ID_PRODUCTO = I.ID"
-			+ "GROUP BY (I.ID)";
+			+ " GROUP BY (I.ID)";
 	
 	@Override
 	public Insumo saveOrUpdate(InsumoGral i) {

@@ -37,7 +37,7 @@ public class StockDaoPostgreSQL implements StockDao {
 			"DELETE FROM STOCK WHERE ID = ?";
 	
 	private static final String SELECT_ALL_STOCK =
-			"SELECT * FROM INSUMO";
+			"SELECT * FROM STOCK";
 	
 	private InsumoDao insumoDao;
 	private PlantaDao plantadao;
