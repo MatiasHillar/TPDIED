@@ -54,10 +54,6 @@ public class PanelAltaPedido extends JPanel {
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField txtFecha = new JFormattedTextField(df);	
 	
-	/*
-	private DefaultListModel<ItemPedido> listModel = new DefaultListModel<ItemPedido>();
-	private JList<ItemPedido> list = new JList<ItemPedido>(listModel);
-	*/
 	private PedidoController controller;
 	
 	
@@ -172,8 +168,6 @@ public class PanelAltaPedido extends JPanel {
 		this.add(scrollPane,constraints);
 		constraints.gridwidth=1;
 		
-//		list = new JList<ItemPedido>(listModel);
-		
 		
 		constraints.gridx = 5;
 		constraints.gridy = 4;
@@ -184,27 +178,11 @@ public class PanelAltaPedido extends JPanel {
 					modeloTablaItem.getData().get(index).setCtidad(modeloTablaItem.getData().get(index).getCtidad() + controller.getIp().getCtidad());
 				}
 				else modeloTablaItem.getData().add(controller.getIp());
-				/*
-				if(listModel.contains(controller.getIp())) {
-					int index = listModel.indexOf(controller.getIp());
-					listModel.get(index).setCtidad(listModel.get(index).getCtidad() + controller.getIp().getCtidad());
-				}
-				else
-				listModel.addElement(controller.getIp());
-				*/
 				modeloTablaItem.fireTableDataChanged();
 			}
 		});
 		this.add(btnAnadir, constraints);
 		
-		/*
-		constraints.gridx = 0;
-		constraints.gridy = 5;
-		constraints.gridwidth=6;
-		JScrollPane scrollPane = new JScrollPane(list);
-		this.add(scrollPane, constraints);
-		*/
-
 		constraints.gridwidth=1;
 		constraints.gridx = 4;
 		constraints.gridy = 6;
@@ -215,11 +193,6 @@ public class PanelAltaPedido extends JPanel {
 			}
 			modeloTablaItem.getData().removeAll(itemss);
 			modeloTablaItem.fireTableDataChanged();
-			/*
-			for(ItemPedido ip: this.list.getSelectedValuesList()) {
-				this.listModel.removeElement(ip);
-			}
-			*/
 		});
 		this.add(btnEliminar, constraints);
 		
@@ -311,24 +284,6 @@ public class PanelAltaPedido extends JPanel {
 	
 	
 
-	/*
-	public DefaultListModel<ItemPedido> getListModel() {
-		return listModel;
-	}
-
-	public void setListModel(DefaultListModel<ItemPedido> listModel) {
-		this.listModel = listModel;
-	}
-
-	public JList<ItemPedido> getList() {
-		return list;
-	}
-
-	public void setList(JList<ItemPedido> list) {
-		this.list = list;
-	}
-	
-	*/
 	
 
 }

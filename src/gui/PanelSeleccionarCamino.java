@@ -123,8 +123,9 @@ public class PanelSeleccionarCamino extends JPanel {
 		constraints.gridy = 5;
 		this.btnElegirCamino.addActionListener(e -> {
 			try {
-				this.controller.caminosKm();
-				this.controller.caminosT();
+				this.controller.seleccionarCamino();
+//				this.controller.caminosKm();
+//				this.controller.caminosT();
 			}
 			catch(Exception e1) {
 				this.mostrarError("Error al elegir camino", e1.getMessage());

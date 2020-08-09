@@ -34,9 +34,11 @@ public class PanelStock extends JPanel {
 
 	private JLabel lblTitulo = new JLabel("Stocks en Planta:");
 	private JLabel lblPlanta = new JLabel("Seleccionar Planta:");
-	private JComboBox<Planta> jcbPlantas = new JComboBox<Planta>(); 
+//	private JComboBox<Planta> jcbPlantas = new JComboBox<Planta>(); 
+	private JComboBox<Planta> jcbPlantas;
 	private JLabel lblInsumo = new JLabel("Seleccionar Insumo:");
-	private JComboBox<Insumo> jcbInsumos = new JComboBox<Insumo>(); 
+//	private JComboBox<Insumo> jcbInsumos = new JComboBox<Insumo>(); 
+	private JComboBox<Insumo> jcbInsumos;
 	private JLabel lblCantidadInsumo = new JLabel("Cantidad:");
 	private JFormattedTextField txtCantidadInsumo = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JLabel lblPuntoDePedido = new JLabel("Punto de pedido:");
@@ -56,7 +58,7 @@ public class PanelStock extends JPanel {
 		this.setLayout(gbl);
 	
 		GridBagConstraints constraints = new GridBagConstraints();
-		
+		this.controller.setJcbs();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 //		constraints.weighty = 2.0;

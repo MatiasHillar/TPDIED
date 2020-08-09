@@ -10,6 +10,10 @@ public abstract class Insumo {
 	protected Float cantidadTotal;
 	
 	
+	@Override
+	public String toString() {
+		return nombre + "(" + unidadMedida + ")";
+	}
 	public Insumo() {
 		super();
 	}

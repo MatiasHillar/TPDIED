@@ -63,18 +63,5 @@ public class ItemPedidoTableModel extends AbstractTableModel {
         return null;
     }
     
-	
-	/*
-	 * private Insumo insumo;
-	private Float ctidad;
-	private Pedido pedido;
-	 
-   
-
-   
-
-    
-    
-	 */
 
 }

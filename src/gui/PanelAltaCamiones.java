@@ -84,18 +84,6 @@ public class PanelAltaCamiones extends JPanel{
 		lblCrear.setForeground(Color.BLUE);
 		this.add(lblCrear,constraints);
 		
-		/*
-		constraints.insets = new Insets(10, 30, 0, 0);
-
-		constraints.gridx = 0;
-		constraints.gridy = 4;
-		constraints.gridwidth = 11;
-		constraints.gridheight=1;
-		constraints.anchor= GridBagConstraints.WEST;
-		lblCrear.setFont(new Font("Calibri", Font.BOLD, 20));
-		lblCrear.setForeground(Color.BLUE);
-		this.add(lblCrear,constraints);
-		*/
 
 		constraints.gridheight=1;
 		constraints.insets = new Insets(0, 20, 0, 0);
@@ -139,9 +127,7 @@ public class PanelAltaCamiones extends JPanel{
 		constraints.gridx = 6;
 		constraints.gridy = 2;		
 		this.add(lblFecha,constraints);
-		//this.txtFechaCompra = new JFormattedTextField(20);
 		this.txtFechaCompra.setColumns(10);
-		//this.txtFechaCompra.setMinimumSize(new Dimension(100,25));
 		constraints.gridx = 7;
 		constraints.gridy = 2;		
 		this.add(txtFechaCompra,constraints);

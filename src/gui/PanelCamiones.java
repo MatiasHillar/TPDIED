@@ -144,15 +144,7 @@ public class PanelCamiones extends JPanel{
 		this.add(txtMarca,constraints);
 		
 
-		/*
-		constraints.gridx = 6;
-		constraints.gridy = 5;		
-		this.add(lblFecha,constraints);
-		this.txtFechaCompra.setColumns(10);
-		constraints.gridx = 7;
-		constraints.gridy = 5;		
-		this.add(txtFechaCompra,constraints);
-		*/
+		
 		
 		constraints.gridx = 6;
 		constraints.gridy = 5;	
@@ -327,7 +319,6 @@ public class PanelCamiones extends JPanel{
 						controller.eliminar(modeloTablaCamion.getData().get(tablaCamiones.getSelectedRow()));
 					modeloTablaCamion.setData(controller.buscarPorAtributos());
 					modeloTablaCamion.fireTableDataChanged();
-//				} catch (FormatoNumeroException | ControllerException e1) {
 				} catch (Exception e1) {
 					this.mostrarError("Error al eliminar", e1.getMessage());
 					e1.printStackTrace();
