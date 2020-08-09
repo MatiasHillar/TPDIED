@@ -69,6 +69,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 				pstmt.setString(4, p.getEstado().name());
 				pstmt.setFloat(5, p.getCostoEnvio());
 				pstmt.setString(6, p.getCamion().getPatente());
+				saveOrUpdateRutas(p, p.getRuta(), conn);
 			}
 			else {
 				pstmt = conn.prepareStatement(INSERT_PEDIDO);
@@ -76,11 +77,10 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 				pstmt.setDate(2, Date.valueOf(p.getFechaSolicitud()));
 				pstmt.setDate(3, Date.valueOf(p.getFechaEntrega()));
 				pstmt.setString(4, p.getEstado().name());
-				pstmt.setFloat(5, p.getCostoEnvio());
-				pstmt.setString(6, p.getCamion().getPatente());
-				pstmt.setInt(7, p.getNroPedido());
+//				pstmt.setFloat(5, p.getCostoEnvio());
+//				pstmt.setString(6, p.getCamion().getPatente());
+//				pstmt.setInt(7, p.getNroPedido());
 			}
-			saveOrUpdateRutas(p, p.getRuta(), conn);
 			pstmt.executeUpdate();
 		}
 		catch(SQLException e) {

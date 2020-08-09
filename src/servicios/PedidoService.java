@@ -65,6 +65,7 @@ public class PedidoService {
 		c.setKmRecorridos(c.getKmRecorridos() + mapaService.getKm(p.getRuta()));
 		p.setCostoEnvio((c.getCostoKm()* mapaService.getKm(p.getRuta())) + (c.getCostoHora() * mapaService.getHs(p.getRuta())) );
 		p.setEstado(Estado.PROCESADO);
+		pedidoDao.saveOrUpdate(p);
 	}
 	
 	
