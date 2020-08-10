@@ -48,9 +48,9 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ " GROUP BY(I.ID, U.NOMBRE)";
 	
 	private static final String SELECT_INSUMO = 
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, "
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, U.NOMBRE, U.SIMBOLO "
 			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
-			+"FROM INSUMO I, STOCK S"
+			+"FROM INSUMO I, STOCK S, UNIDAD U"
 			+" WHERE S.ID_INSUMO = ?"
 			+ " GROUP BY (I.ID)";
 	
@@ -228,6 +228,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				i.setId(rs.getInt("ID"));
 				i.setCosto(rs.getFloat("COSTO"));
 				i.setDescripcion(rs.getString("DESCRIPCION"));
+				i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
 				i.setNombre(rs.getString("NOMBRE"));
 				i.setPeso(rs.getFloat("PESO"));
 				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
@@ -237,6 +238,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				i.setId(rs.getInt("ID"));
 				i.setCosto(rs.getFloat("COSTO"));
 				i.setDescripcion(rs.getString("DESCRIPCION"));
+				i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
 				i.setNombre(rs.getString("NOMBRE"));
 				i.setPeso(rs.getFloat("PESO"));
 				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));

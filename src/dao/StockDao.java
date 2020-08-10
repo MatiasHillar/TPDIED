@@ -14,4 +14,5 @@ public interface StockDao {
 	public List<Stock> buscarPorPlanta(Planta p, Connection conn);
 	public void borrar(Integer idprod);
 	public List<Stock> buscarTodos();
+	
 }
