@@ -14,6 +14,6 @@ public interface StockDao {
 	public List<Stock> buscarPorPlanta(Planta p, Connection conn);
 	public void borrar(Integer idprod);
 	public List<Stock> buscarTodos();
-	public void saveOrUpdate(Integer id_planta, List<Stock> lista, Connection conn);
+	public void saveOrUpdate(Integer id_planta, List<Stock> lista);
 	
 }

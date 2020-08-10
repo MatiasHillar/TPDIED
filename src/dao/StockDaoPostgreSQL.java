@@ -96,7 +96,8 @@ public class StockDaoPostgreSQL implements StockDao {
 	}
 	
 	@Override
-	public void saveOrUpdate(Integer id_planta, List<Stock> lista, Connection conn) {
+	public void saveOrUpdate(Integer id_planta, List<Stock> lista) {
+		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
 		try {
 			for(int i=0; i<lista.size(); i++) {
@@ -124,6 +125,7 @@ public class StockDaoPostgreSQL implements StockDao {
 		finally {
 			try {
 				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
 			}
 			catch(SQLException e) {
 				e.printStackTrace();
