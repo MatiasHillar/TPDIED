@@ -5,21 +5,23 @@ import java.util.List;
 import dominio.*;
 import dao.PlantaDao;
 import dao.PlantaDaoPostgreSQL;
+import dao.StockDao;
+import dao.StockDaoPostgreSQL;
 
 
 public class PlantaService {
 	private PlantaDao plantaDao;
+	private StockDao stockDao;
 	
 	public PlantaService() {
 		plantaDao = new PlantaDaoPostgreSQL();
+		stockDao = new StockDaoPostgreSQL();
 	}
 
 	public Planta crearPlanta(Planta p) {
-		// si hay alguna regla de negocio que indque que no se 
-		// puede agregar un camion si no se cumplen determinadas
-		// condiciones en otras entidades o reglas 
-		// se valida aqu�
-			return this.plantaDao.saveOrUpdate(p);
+		Planta pp =this.plantaDao.saveOrUpdate(p);
+		stockDao.saveOrUpdate(pp.getId(), pp.getListaStock());
+		return pp;
 	}
 	
 	public List<Planta> buscarTodos() {

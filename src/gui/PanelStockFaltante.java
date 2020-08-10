@@ -175,18 +175,7 @@ public class PanelStockFaltante extends JPanel {
 		
 		
 		this.controller.setJcbs();
-		/*
-		jcbPlantas.addActionListener( e->{
-			jcbPlantas.revalidate(); 
-			jcbPlantas.repaint();
-		});
-		jcbInsumos.addActionListener( e->{
-			jcbInsumos.revalidate(); 
-			jcbInsumos.repaint();
-		});
-		*/
-		//jcbPlantas.addActionListener ( e -> () 
-		//});
+		
 		
 	}
 	
