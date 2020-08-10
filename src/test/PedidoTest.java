@@ -4,20 +4,28 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
 import dominio.*;
+import gui.util.NoHayCamionesException;
+import servicios.CamionService;
 import servicios.InsumoService;
+import servicios.MapaService;
 import servicios.PedidoService;
 import servicios.PlantaService;
+import servicios.RutaService;
 import servicios.StockService;
 
 public class PedidoTest {
 
 	@Test
 	public void RegistroOrdenTest() {
+		
+		PedidoService PS = new PedidoService();
 		
 		Planta Planta1 = new Planta();
 		Planta1.setId(1);
@@ -49,14 +57,12 @@ public class PedidoTest {
 		lista.add(ip2);
 		
 		Pedido P = new Pedido();
-		P.setNroPedido(1);
 		P.setListaItems(lista);
 		P.setPlantaDestino(Planta1);
 		P.setFechaEntrega(LocalDate.now().plusDays(7));
 		P.setCamion(C);
 		P.setCostoEnvio(5f);
 		
-		PedidoService PS = new PedidoService();
 		
 		PS.crearPedido(P);
 		Estado esperado = Estado.CREADO;
@@ -97,7 +103,6 @@ public class PedidoTest {
 		lista.add(ip2);
 		
 		Pedido P = new Pedido();
-		P.setNroPedido(1);
 		P.setListaItems(lista);
 		P.setPlantaDestino(Planta1);
 		P.setFechaEntrega(LocalDate.now().plusDays(7));
@@ -107,8 +112,6 @@ public class PedidoTest {
 		PedidoService PS = new PedidoService();
 		
 		PS.crearPedido(P);
-		
-		Planta Planta2 = new Planta();
 		 
 		P.setEstado(Estado.PROCESADO);
 		PS.entregarPedido(P);
@@ -172,10 +175,16 @@ public class PedidoTest {
 		InsumoService IS = new InsumoService();
 		StockService SS = new StockService();
 		PlantaService PS = new PlantaService();
+		MapaService MP = new MapaService();
+		RutaService RS = new RutaService();
+		CamionService CS = new CamionService();
+		PedidoService PEDS = new PedidoService();
 		
 		
 		Planta P1 = new Planta();
-	//lanta P2 = new Planta();
+		Planta P2 = new Planta();
+		Planta P3 = new Planta();
+		Planta PDestino = new Planta();
 		
 		Unidad U1 = new Unidad();
 		U1.setNombre("Kilogramo");
@@ -183,7 +192,6 @@ public class PedidoTest {
 		Unidad U2 = new Unidad();
 		U2.setNombre("Litro");
 		U2.setSimbolo("L");
-		
 		
 		InsumoGral I1 = new InsumoGral();
 		I1.setNombre("Arena");
@@ -201,6 +209,18 @@ public class PedidoTest {
 		I2.setUnidadMedida(U2);
 		IS.crearInsumoLiquido(I2);
 		
+		List<ItemPedido> lista = new ArrayList<ItemPedido>();
+		
+		ItemPedido ip1 = new ItemPedido();
+		ItemPedido ip2 = new ItemPedido();	
+		ip1.setCtidad(1f);
+		ip1.setInsumo(I1);
+		ip2.setCtidad(1f);
+		ip2.setInsumo(I2);
+		lista.add(ip1);
+		lista.add(ip2);
+		
+	
 		Stock S1 = new Stock();
 		S1.setInsumo(I1);
 		S1.setCtidad(50f);
@@ -214,18 +234,124 @@ public class PedidoTest {
 		S1.setPuntoRepo(20f);
 		
 		List<Stock> lista1 = new ArrayList<Stock>();
+		List<Stock> lista2 = new ArrayList<Stock>();
 		lista1.add(S1);
 		lista1.add(S2);
-		P1.setNombre("Planta 1");
+		
+		
+		P1.setNombre("Planta Origen 1");
 		P1.setListaStock(lista1); 
 		PS.crearPlanta(P1);
+		
+		P2.setNombre("Planta Origen 2");
+		P2.setListaStock(lista1);
+		PS.crearPlanta(P2);
+		
+		P3.setNombre("Planta Origen 2");
+		P3.setListaStock(lista2);
+		PS.crearPlanta(P3);
+		
+		PDestino.setNombre("Planta Destino");
+		P1.setListaStock(lista2);
+		PS.crearPlanta(PDestino);
+		
 		SS.crearStock(S1);
 		SS.crearStock(S2);
 		
+		Camion C1 = new Camion();
+		C1.setPatente("ABC-123");
+		C1.setCostoHora(50f);
+		C1.setCostoKm(5f);
+		C1.setFechaCompra(LocalDate.now().minusYears(10));
+		Modelo Modelo = new Modelo();
+		Modelo.setMarca("Audi");
+		Modelo.setModelo("Audi Truck");
+		C1.setModelo(Modelo);
+		C1.setKmRecorridos(1000f);
+		
+		Camion C2 = new Camion();
+		C2.setPatente("ABC-456");
+		C2.setCostoHora(50f);
+		C2.setCostoKm(5f);
+		C2.setFechaCompra(LocalDate.now().minusYears(8));
+		Modelo Modelo2 = new Modelo();
+		Modelo.setMarca("Mercedes");
+		Modelo.setModelo("Mercedes Truck");
+		C2.setModelo(Modelo2);
+		C2.setKmRecorridos(800f);
+		
+		CS.crearCamion(C1);
+		CS.crearCamion(C2);
 		
 		
+		Pedido P = new Pedido();
+		P.setListaItems(lista);
+		P.setPlantaDestino(PDestino);
+		P.setFechaEntrega(LocalDate.now().plusDays(7));
+		P.setCostoEnvio(5f);
+		PEDS.crearPedido(P);
 		
 		
+		Ruta R1 = new Ruta();
+		R1.setPlantaOrigen(P1);
+		R1.setPlantaDestino(P3);
+		R1.setDistanciaKm(100f);
+		R1.setDuracionMin(65f);
+		R1.setPesoMaximoKg(1000f);
+		RS.crearRuta(R1);
+		
+		
+		Ruta R2 = new Ruta();
+		R2.setPlantaOrigen(P3);
+		R2.setPlantaDestino(PDestino);
+		R2.setDistanciaKm(50f);
+		R2.setDuracionMin(60f);
+		R2.setPesoMaximoKg(1000f);
+		RS.crearRuta(R2);
+		
+		Ruta R3 = new Ruta();
+		R3.setPlantaOrigen(P1);
+		R3.setPlantaDestino(P2);
+		R3.setDuracionMin(40f);
+		R3.setDistanciaKm(150f);
+		R3.setPesoMaximoKg(1000f);
+		RS.crearRuta(R3);
+		
+		Ruta R4 = new Ruta();
+		R4.setPlantaOrigen(P2);
+		R4.setPlantaDestino(PDestino);
+		R4.setDuracionMin(60f);
+		R4.setDistanciaKm(50f);
+		R4.setPesoMaximoKg(1000f);
+		RS.crearRuta(R4);
+		
+		//CAMINO R1-R2 TOMA: 150 KM Y 125 MIN ----> MENOR EN KM
+		//CAMINO R3-R4 TOMA: 200 KM Y 100 MIN ----> MENOR EN MIN
+		
+		
+		List<Ruta> listaEsperado = new ArrayList<Ruta>();
+		listaEsperado.add(R1);
+		listaEsperado.add(R2);
+		Set<List<Ruta>> esperado = new HashSet<List<Ruta>>();
+		esperado.add(listaEsperado);
+		assertEquals(esperado, MP.menosTiempo(P1, PDestino));
+		
+		List<Ruta> listaEsperado2 = new ArrayList<Ruta>();
+		listaEsperado2.add(R3);
+		listaEsperado2.add(R4);
+		Set<List<Ruta>> esperado2 = new HashSet<List<Ruta>>();
+		esperado2.add(listaEsperado2);
+		assertEquals(esperado2, MP.menosKm(P1, PDestino));
+		
+		
+		try {
+			PEDS.asignarCamion(P);
+			Estado EstadoEsperado = Estado.PROCESADO;
+			assertEquals("ABC-456", C2.getPatente());
+			assertEquals(EstadoEsperado, P.getEstado());
+		} catch (NoHayCamionesException e) {
+			fail();
+		}
 	}
 	
 	
@@ -239,4 +365,3 @@ public class PedidoTest {
 	
 	
 }
-
