@@ -15,6 +15,7 @@ public interface PedidoDao {
 	//busca todas las que están en estado CREADA
 	public List<Pedido> filtrarCreadas();
 	public List<Planta> checkPlantas(Integer nro_pedido);
+	public void borrar(Integer nro_pedido);
 
 	
 }

@@ -15,9 +15,9 @@ import dominio.Stock;
 public class StockDaoPostgreSQL implements StockDao {
 
 	private static final String SELECT_STOCK_PLANTA = 
-			"SELECT S.ID, ID_INSUMO, ID_PLANTA, PUNTO_REPOSICION, CANTIDAD"
-			+ " FROM STOCK S"
-			+ " WHERE S.ID_PLANTA = ?";
+			"SELECT *"
+			+ " FROM STOCK "
+			+ " WHERE ID_PLANTA = ?";
 	
 	private static final String UPDATE_STOCK = 
 			"UPDATE INSUMO SET PUNTO_REPOSICION = ?, CANTIDAD = ?"
@@ -95,6 +95,7 @@ public class StockDaoPostgreSQL implements StockDao {
 		return s;
 	}
 	
+	@Override
 	public void saveOrUpdate(Integer id_planta, List<Stock> lista, Connection conn) {
 		PreparedStatement pstmt = null;
 		try {
@@ -168,7 +169,6 @@ public class StockDaoPostgreSQL implements StockDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Stock s = new Stock();
-				s.setId(rs.getInt("ID"));
 				s.setCtidad(rs.getFloat("CANTIDAD"));
 				s.setPuntoRepo(rs.getFloat("PUNTO_REPOSICION"));
 				s.setInsumo(insumoDao.buscar(rs.getInt("ID_INSUMO"), conn));
@@ -202,7 +202,6 @@ public class StockDaoPostgreSQL implements StockDao {
 			while(rs.next()) {
 				s = new Stock();
 				s.setCtidad(rs.getFloat("CANTIDAD"));
-				s.setId(rs.getInt("ID"));
 				s.setInsumo(insumoDao.buscar(rs.getInt("ID_INSUMO"), conn));
 				s.setP(plantadao.buscar(rs.getInt("ID_PLANTA"), conn));
 				s.setPuntoRepo(rs.getFloat("PUNTO_REPOSICION"));

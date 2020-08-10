@@ -60,6 +60,9 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			"SELECT * FROM RUTA_PEDIDO, RUTA "
 			+ "WHERE NRO_PEDIDO = ? "
 			+ "ORDER BY (NRO_INDICE) ASC";
+	
+	private static final String DELETE_PEDIDO =
+			"DELETE FROM PEDIDO WHERE NRO_PEDIDO = ?";
 		
 	private CamionDao camiondao = new CamionDaoPostgreSQL();
 	private PlantaDao plantadao = new PlantaDaoPostgreSQL();
@@ -327,5 +330,27 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		return nroPedido;
 		}
 	
+	@Override
+	public void borrar(Integer nro_pedido) {
+		Connection conn = DB.getConexion();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(DELETE_PEDIDO);
+			pstmt.setInt(1, nro_pedido);
+			pstmt.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
