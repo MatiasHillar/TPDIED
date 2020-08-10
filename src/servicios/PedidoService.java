@@ -2,6 +2,7 @@ package servicios;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import dao.PedidoDao;
 import dao.PedidoDaoPostgreSQL;
@@ -13,6 +14,7 @@ public class PedidoService {
 	private PlantaService plantaService;
 	private CamionService camionService;
 	private MapaService mapaService;
+//	private StockService stockService;
 	
 	public PedidoService(){
 		pedidoDao = new PedidoDaoPostgreSQL();
@@ -34,6 +36,13 @@ public class PedidoService {
 	
 	public Pedido entregarPedido(Pedido p) {
 		p.setEstado(Estado.ENTREGADO);
+		for(ItemPedido ipp: p.getListaItems()) {
+			List<Stock> s = p.getPlantaDestino().getListaStock().stream().filter(ss-> ss.getInsumo().equals(ipp.getInsumo())).collect(Collectors.toList());
+			if(s.isEmpty())
+				p.getPlantaDestino().getListaStock().add(new Stock(ipp.getInsumo(), ipp.getCtidad(),ipp.getCtidad() , p.getPlantaDestino()));
+			else s.get(0).setCtidad(s.get(0).getCtidad() + ipp.getCtidad());
+		}
+//		p.getPlantaDestino().getListaStock().stream().filter(ss-> ss.getInsumo().equals(ipp.getInsumo())).forEach(ss-> ss.setCtidad(ss.getCtidad()-ipp.getCtidad()));
 		return pedidoDao.saveOrUpdate(p);
 	}
 	
@@ -69,7 +78,7 @@ public class PedidoService {
 		Planta origen=p.getRuta().get(0).getPlantaOrigen();
 		for(ItemPedido ipp: p.getListaItems()) {
 			origen.getListaStock().stream().filter(ss-> ss.getInsumo().equals(ipp.getInsumo())).forEach(ss-> ss.setCtidad(ss.getCtidad()-ipp.getCtidad()));
-		}
+					}
 		plantaService.crearPlanta(origen);
 	}
 	
