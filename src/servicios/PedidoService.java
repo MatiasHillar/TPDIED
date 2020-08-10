@@ -66,6 +66,10 @@ public class PedidoService {
 		p.setCostoEnvio((c.getCostoKm()* mapaService.getKm(p.getRuta())) + (c.getCostoHora() * mapaService.getHs(p.getRuta())) );
 		p.setEstado(Estado.PROCESADO);
 		pedidoDao.saveOrUpdate(p);
+		Planta origen=p.getRuta().get(0).getPlantaOrigen();
+		for(ItemPedido ipp: p.getListaItems()) {
+			origen.getListaStock().stream().filter(ss-> ss.getInsumo().equals(ipp.getInsumo())).forEach(ss-> ss.setCtidad(ss.getCtidad()-ipp.getCtidad()));
+		}
 	}
 	
 	

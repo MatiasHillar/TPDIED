@@ -147,6 +147,7 @@ public class MapaService {
 	}
 	
 	public Float getKm(List<Ruta> lr) {
+		System.out.println(lr);
 		return (float) lr.stream().mapToDouble(r-> r.getDistanciaKm())
 				.sum();
 	}

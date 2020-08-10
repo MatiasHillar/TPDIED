@@ -182,6 +182,7 @@ public class CamionDaoPostgreSQL implements CamionDao{
 			rs = pstmt.executeQuery();
 			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			c = new Camion();
+			c.setPatente(patente);
 			c.setCostoHora(rs.getFloat("COSTOXHS"));
 			c.setCostoKm(rs.getFloat("COSTOXKM"));
 			c.setFechaCompra(rs.getDate("FECHA_COMPRA").toLocalDate());

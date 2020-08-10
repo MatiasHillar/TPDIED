@@ -129,6 +129,7 @@ public class PanelSeleccionarCamino extends JPanel {
 			}
 			catch(Exception e1) {
 				this.mostrarError("Error al elegir camino", e1.getMessage());
+				e1.printStackTrace();
 			}
 		});
 		this.add(btnElegirCamino,constraints);

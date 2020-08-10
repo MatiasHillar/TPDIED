@@ -98,7 +98,7 @@ public class PanelEntregarPedido extends JPanel {
 		
 		constraints.gridy = 3;
 		this.controller.actualizarPedidos();
-		jcbPedidos = new JComboBox<Pedido>();
+//		jcbPedidos = new JComboBox<Pedido>();
 		this.add(jcbPedidos,constraints);
 		
 		constraints.gridy = 4;

@@ -90,7 +90,7 @@ public class SeleccionarCaminoController {
 			else if(this.panel.getListKm().getSelectedValuesList().size() + this.panel.getListT().getSelectedValuesList().size() > 1)
 				throw new ControllerException("Debe seleccionar solo un camino");
 			else {
-				if(this.panel.getListKm().getSelectedValuesList().size()>1) {
+				if(this.panel.getListKm().getSelectedValuesList().size()==1) {
 					p.setRuta(this.panel.getListKm().getSelectedValue());
 				}
 				else {
@@ -98,7 +98,7 @@ public class SeleccionarCaminoController {
 				}
 				this.pedidoService.asignarCamion(p);
 				//ACA FALTA CARTEL PARA AVISAR EXITO
-
+				
 				this.a.setContentPane(new PanelProcesarPedido(a));
 				//this.pack();
 				this.a.revalidate();

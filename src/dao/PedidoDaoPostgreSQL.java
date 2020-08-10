@@ -31,7 +31,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			"INSERT INTO RUTA_PEDIDO VALUES(?, ?, ?)";
 	
 	private static final String UPDATE_RUTAS = 
-			"UPDATE RUTA_PEDIO SET NRO_INDICE = ?"
+			"UPDATE RUTA_PEDIDO SET NRO_INDICE = ?"
 			+ "WHERE NRO_PEDIDO = ?"
 			+ "AND ID_RUTA = ?";
 	
@@ -40,7 +40,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			+ " WHERE NRO_PEDIDO = ?";
 	
 	private static final String SELECT_PROCESADAS = 
-			"SELECT * FROM PEDIDO"
+			"SELECT * FROM PEDIDO "
 			+ "WHERE ESTADO LIKE 'PROCESADO'";
 	
 	private static final String SELECT_PEDIDO = 
@@ -121,7 +121,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			if(p.getNroPedido() != null) {
 				pstmt = conn.prepareStatement(UPDATE_RUTAS);
 				pstmt.setInt(2, p.getNroPedido());
-				for(int i = 1; i<=lista.size(); i++) {
+//				for(int i = 1; i<=lista.size(); i++) {
+				for(int i = 0; i<lista.size(); i++) {
 					pstmt.setInt(1, i);
 					pstmt.setInt(3, lista.get(i).getId());
 					pstmt.executeUpdate();
@@ -130,7 +131,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			else {
 				pstmt = conn.prepareStatement(INSERT_RUTAS);
 				pstmt.setInt(1, p.getNroPedido());
-				for(int i = 1; i<=lista.size(); i++) {
+//				for(int i = 1; i<=lista.size(); i++) {
+				for(int i = 0; i<lista.size(); i++) {
 					pstmt.setInt(2, lista.get(i).getId());
 					pstmt.setInt(3, i);
 					pstmt.executeUpdate();
