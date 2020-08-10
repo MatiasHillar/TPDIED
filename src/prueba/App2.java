@@ -43,7 +43,7 @@ public class App2 {
 			System.out.println(i);
 		}
 		
-	*/
+	
 		Mapa m = new Mapa();
 		List<Planta> lp= new ArrayList<Planta>();
 		Planta p1 = new Planta("p1", 1, new ArrayList<Stock>());
@@ -87,5 +87,12 @@ public class App2 {
 		//Float[]d = {0f,1f,Float.MAX_VALUE,5f,7f};
 		//System.out.println(Arrays.toString(d));
 		System.out.println(mfkm);
+		*/
+		
+		
+		
+		
 	}
+	
+	
 }
