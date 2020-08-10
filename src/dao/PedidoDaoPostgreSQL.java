@@ -48,8 +48,8 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			+ "WHERE NRO_PEDIDO = ?";
 	
 	private static final String SELECT_PEDIDO_ITEMS =
-			"SELECT NRO_PEDIDO FROM PEDIDO "
-			+ "WHERE NOT EXIST (SELECT * FROM ITEM_PEDIDO"
+			"SELECT PEDIDO.NRO_PEDIDO FROM PEDIDO "
+			+ "WHERE NOT EXISTS (SELECT * FROM ITEM_PEDIDO"
 			+ " WHERE ITEM_PEDIDO.NRO_PEDIDO = PEDIDO.NRO_PEDIDO)";
 	
 	private static final String SELECT_CREADAS = 
@@ -73,6 +73,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 			if(p.getNroPedido() != null) {
 				if(p.getEstado().equals(Estado.CANCELADO)) {
 					pstmt = conn.prepareStatement(UPDATE_ESTADO);
+					pstmt.setInt(1, p.getNroPedido());
 				}
 				else {
 				pstmt = conn.prepareStatement(UPDATE_PEDIDO);
@@ -96,7 +97,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 //				pstmt.setString(6, p.getCamion().getPatente());
 			}
 			pstmt.executeUpdate();
-		
+			if(p.getEstado().equals(Estado.CREADO))
 			itemdao.saveOrUpdate(buscarNroPedido(conn, pstmt), p.getListaItems(), conn);
 		}
 		catch(SQLException e) {
@@ -313,7 +314,7 @@ public class PedidoDaoPostgreSQL implements PedidoDao{
 		ResultSet rs = null;
 		Integer nroPedido = null;
 		try {
-			pstmt = conn.prepareStatement(SELECT_PEDIDO_ITEMS);
+			pstmt = conn.prepareStatement(SELECT_PEDIDO_ITEMS,ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			rs = pstmt.executeQuery();
 			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			nroPedido = rs.getInt("NRO_PEDIDO");

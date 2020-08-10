@@ -131,13 +131,15 @@ public class PanelProcesarPedido extends JPanel {
 					this.app.revalidate();
 					this.app.repaint();
 				}
+				
 				System.out.println("Acordarse de descomentar esto");
 				//Si no hay plantas avisar por pantalla
 				
 //				this.controller.buscarPlantaParaPedido();
 			}
-			catch(DatosObligatoriosException e1) {
+			catch(Exception e1) {
 				this.mostrarError("Error al buscar plantas", e1.getMessage());
+				this.controller.actualizarPedidos();
 			}
 		});
 		

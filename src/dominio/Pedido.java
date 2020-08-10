@@ -93,7 +93,7 @@ public class Pedido {
 	}
 	@Override
 	public String toString() {
-		return "Pedido " + nroPedido + ". Destino: " + plantaDestino + " (" + this.listaItems==null? "0" : this.listaItems.size() + " insumos)";
+		return "Pedido " + nroPedido + ". Destino: " + plantaDestino + " (" + (this.listaItems==null? "0" : this.listaItems.size()) + " insumos)";
 	}
 	
 }

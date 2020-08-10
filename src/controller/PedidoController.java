@@ -49,15 +49,17 @@ public class PedidoController {
 		return this.insumoService.buscarTodos();
 	}
 	 
-	public void actualizarItem() {
+	public void actualizarItem(){
 		ip.setCtidad(this.obtenerValor(this.panel.getCantidad()));
 		ip.setInsumo((Insumo) this.panel.getJcbInsumo().getSelectedItem());
 		if(ip.getInsumo()!=null && ip.getCtidad()!=null)this.panel.getPrecio().setValue(ip.getPrecio());
-		
 	}
 	
 	public void actualizarPedido()  throws DatosObligatoriosException{
 		List<ItemPedido> ips = this.panel.getModeloTablaItem().getData();
+		if (ips.size()==0) 
+			throw new DatosObligatoriosException("Lista de insumos", "El pedido no tiene insumos");
+			
 		for(ItemPedido item : ips) {
 			item.setPedido(p);
 		}

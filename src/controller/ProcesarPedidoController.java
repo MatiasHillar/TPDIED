@@ -39,7 +39,7 @@ public class ProcesarPedidoController {
 		return this.pedidoService.buscarTodosCreados();
 	}
 	
-	public List<Planta> buscarPlantaParaPedido() throws DatosObligatoriosException{
+	public List<Planta> buscarPlantaParaPedido() throws DatosObligatoriosException, ControllerException{
 		if(!(this.panel.getJcbPedidos().getSelectedItem() !=null && this.panel.getJcbPedidos().getSelectedItem() instanceof Pedido)) {
 			throw new DatosObligatoriosException("Pedido", "No hay ningun pedido seleccionado");
 		}
@@ -50,7 +50,8 @@ public class ProcesarPedidoController {
 			List<Planta> res = plantas(ped);
 			if(ped.getEstado() == Estado.CANCELADO) {
 				this.actualizarPedidos();
-				return new ArrayList<Planta>();
+				throw new ControllerException("No hay plantas que puedan satisfacer el pedido");
+//				return new ArrayList<Planta>();
 			}
 			return res;
 		}
@@ -61,7 +62,9 @@ public class ProcesarPedidoController {
 	}
 	
 	public void actualizarPedidos() {
+		this.panel.setJcbPedidos(null);
 		this.panel.setJcbPedidos(new JComboBox<Pedido>(this.listarPedidosCreados().toArray(new Pedido[0])));
+		this.panel.getJcbPedidos().repaint();
 	}
 	
 	public void verDetallePedido() throws DatosObligatoriosException{

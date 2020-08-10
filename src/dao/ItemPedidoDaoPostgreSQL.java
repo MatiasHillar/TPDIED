@@ -58,7 +58,8 @@ public class ItemPedidoDaoPostgreSQL implements ItemPedidoDao{
 		try {
 				pstmt = conn.prepareStatement(INSERT_ITEM_PEDIDO);
 				pstmt.setInt(1, nroPedido);
-				for(int i = 1; i<=lista.size(); i++) {
+//				for(int i = 1; i<=lista.size(); i++) {
+				for(int i = 0; i<lista.size(); i++) {
 					pstmt.setInt(2, lista.get(i).getInsumo().getId());
 					pstmt.setFloat(3, lista.get(i).getCtidad());
 					pstmt.executeUpdate();

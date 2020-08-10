@@ -38,12 +38,12 @@ public class PlantaDaoPostgreSQL implements PlantaDao{
 			+ " WHERE ID = ?";
 	
 	private static final String SELECT_PLANTAS_STOCK = 
-			"SELECT * FROM PLANTA P"
-			+ "WHERE NOT EXISTS (SELECT * FROM ITEM_PEDIDO I"
-			+ "WHERE I.NRO_PEDIDO = ?"
-			+ "AND NOT EXISTS("
-			+ "SELECT * FROM STOCK S"
-			+ "WHERE P.ID = S.ID_PLANTA"
+			"SELECT * FROM PLANTA P "
+			+ "WHERE NOT EXISTS (SELECT * FROM ITEM_PEDIDO I "
+			+ "WHERE I.NRO_PEDIDO = ? "
+			+ "AND NOT EXISTS( "
+			+ "SELECT * FROM STOCK S "
+			+ "WHERE P.ID = S.ID_PLANTA "
 			+ "AND S.CANTIDAD >= I.CANTIDAD))";
 
 	private StockDao stockDao;
