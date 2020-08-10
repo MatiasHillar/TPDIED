@@ -122,6 +122,7 @@ public class PanelStockFaltante extends JPanel {
 //					modeloTablaStock.setData(controller.buscarPorAtributos());
 //					this.limpiarFormulario();
 //					modeloTablaStock.fireTableDataChanged();
+					this.controller.setJcbs();
 				} catch (Exception e1) {
 					this.mostrarError("Error al guardar", e1.getMessage());
 				}
@@ -174,6 +175,18 @@ public class PanelStockFaltante extends JPanel {
 		
 		
 		this.controller.setJcbs();
+		/*
+		jcbPlantas.addActionListener( e->{
+			jcbPlantas.revalidate(); 
+			jcbPlantas.repaint();
+		});
+		jcbInsumos.addActionListener( e->{
+			jcbInsumos.revalidate(); 
+			jcbInsumos.repaint();
+		});
+		*/
+		//jcbPlantas.addActionListener ( e -> () 
+		//});
 		
 	}
 	

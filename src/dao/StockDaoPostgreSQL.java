@@ -20,7 +20,7 @@ public class StockDaoPostgreSQL implements StockDao {
 			+ " WHERE ID_PLANTA = ?";
 	
 	private static final String UPDATE_STOCK = 
-			"UPDATE INSUMO SET PUNTO_REPOSICION = ?, CANTIDAD = ?"
+			"UPDATE STOCK SET PUNTO_REPOSICION = ?, CANTIDAD = ?"
 			+ " WHERE ID_INSUMO = ? "
 			+ "AND ID_PLANTA = ?";
 	
@@ -255,7 +255,7 @@ public class StockDaoPostgreSQL implements StockDao {
 		try {
 			pstmt = conn.prepareStatement(SELECT_STOCK, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setInt(1, id_insumo);
-			pstmt.setInt(1, id_planta);
+			pstmt.setInt(2, id_planta);
 			rs = pstmt.executeQuery();
 			ret = rs.first();
 		}

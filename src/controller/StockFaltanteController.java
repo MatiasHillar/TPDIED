@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
@@ -46,6 +47,8 @@ public class StockFaltanteController {
 			ins = (Insumo)this.panel.getJcbInsumos().getSelectedItem();
 		}
 		*/
+		
+		/*
 		List<Stock> stocks= this.stockService.buscarTodos().stream()
 				.filter(s -> (!(this.panel.getJcbPlantas().getSelectedItem() !=null && this.panel.getJcbPlantas().getSelectedItem() instanceof Planta)
 						|| s.getP().equals((Planta)this.panel.getJcbPlantas().getSelectedItem()))
@@ -53,6 +56,22 @@ public class StockFaltanteController {
 						(!(this.panel.getJcbInsumos().getSelectedItem() !=null && this.panel.getJcbInsumos().getSelectedItem() instanceof Insumo) 
 								|| s.getInsumo().equals((Insumo)this.panel.getJcbInsumos().getSelectedItem())) )
 				.collect(Collectors.toList());
+				
+				*/
+		if(this.panel.getJcbPlantas().getSelectedItem() != null)
+			System.out.println((Planta)this.panel.getJcbPlantas().getSelectedItem());
+		else System.out.println("F");
+		if(this.panel.getJcbInsumos().getSelectedItem() != null)
+			System.out.println((Insumo)this.panel.getJcbInsumos().getSelectedItem());
+		else System.out.println("F");
+		
+		List<Stock> stocks= this.stockService.buscarTodos().stream()
+				.filter(s -> (this.panel.getJcbPlantas().getSelectedItem() ==null || s.getP().equals((Planta)this.panel.getJcbPlantas().getSelectedItem()))
+						&& 
+						(this.panel.getJcbInsumos().getSelectedItem() ==null || s.getInsumo().equals((Insumo)this.panel.getJcbInsumos().getSelectedItem())) )
+				.collect(Collectors.toList());
+		
+		
 		this.panel.getModeloTablaStock().getData().clear();
 		
 		this.panel.getModeloTablaStock().getData().addAll(stocks);
@@ -71,12 +90,39 @@ public class StockFaltanteController {
 	
 	
 	public void setJcbs() {
-		this.panel.setJcbPlantas(new JComboBox<Planta>(this.plantaService.buscarTodos().toArray(new Planta[0])));
-		this.panel.getJcbPlantas().addItem(null);
-		this.panel.getJcbPlantas().setSelectedIndex(this.panel.getJcbPlantas().getItemCount()-1);
-		this.panel.setJcbInsumos(new JComboBox<Insumo>( this.insumoService.buscarTodos().toArray(new Insumo[0])));
-		this.panel.getJcbInsumos().addItem(null);
-		this.panel.getJcbInsumos().setSelectedIndex(this.panel.getJcbInsumos().getItemCount()-1);
+		DefaultComboBoxModel<Planta> model = new DefaultComboBoxModel<>(this.plantaService.buscarTodos().toArray(new Planta[0]));
+        this.panel.setJcbPlantas(new JComboBox<Planta>(model));
+//		this.panel.setJcbPlantas(new JComboBox<Planta>(this.plantaService.buscarTodos().toArray(new Planta[0])));
+		this.panel.getJcbPlantas().addActionListener( e->{
+			this.panel.getJcbPlantas().revalidate(); 
+			this.panel.getJcbPlantas().repaint();
+			if(this.panel.getJcbPlantas().getSelectedItem() != null)
+				System.out.println((Planta)this.panel.getJcbPlantas().getSelectedItem());
+			else System.out.println("F");
+		});
+		
+//		this.panel.getJcbPlantas().addItem(null);
+//		this.panel.getJcbPlantas().setSelectedIndex(this.panel.getJcbPlantas().getItemCount()-1);
+		this.panel.getJcbPlantas().setEnabled(true);
+//		this.panel.setJcbInsumos(new JComboBox<Insumo>( this.insumoService.buscarTodos().toArray(new Insumo[0])));
+		DefaultComboBoxModel<Insumo> model2 = new DefaultComboBoxModel<>(this.insumoService.buscarTodos().toArray(new Insumo[0]));
+		this.panel.setJcbInsumos(new JComboBox<Insumo>(model2));
+		
+		this.panel.getJcbInsumos().addActionListener( e->{
+			this.panel.getJcbInsumos().revalidate(); 
+			this.panel.getJcbInsumos().repaint();
+			if(this.panel.getJcbInsumos().getSelectedItem() != null)
+				System.out.println((Insumo)this.panel.getJcbInsumos().getSelectedItem());
+			else System.out.println("F");
+		});
+		
+
+//		this.panel.getJcbInsumos().addItem(null);
+//		this.panel.getJcbInsumos().setSelectedIndex(this.panel.getJcbInsumos().getItemCount()-1);
+		this.panel.getJcbPlantas().setEnabled(true);
+		
+		
+		
 	}
 	 
 }

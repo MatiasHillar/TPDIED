@@ -48,11 +48,11 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			+ " GROUP BY(I.ID, U.NOMBRE)";
 	
 	private static final String SELECT_INSUMO = 
-			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, U.NOMBRE, U.SIMBOLO "
+			"SELECT I.ID, I.DESCRIPCION, I.COSTO, I.TIPO, I.PESO, I.DENSIDAD, I.NOMBRE, U.NOMBRE, U.SIMBOLO, "
 			+ "SUM(S.CANTIDAD) AS CANTIDAD_TOTAL "
 			+"FROM INSUMO I, STOCK S, UNIDAD U"
 			+" WHERE S.ID_INSUMO = ?"
-			+ " GROUP BY (I.ID)";
+			+ " GROUP BY (I.ID, U.NOMBRE)";
 	
 	@Override
 	public Insumo saveOrUpdate(InsumoGral i) {
