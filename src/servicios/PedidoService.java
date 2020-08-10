@@ -70,6 +70,7 @@ public class PedidoService {
 		for(ItemPedido ipp: p.getListaItems()) {
 			origen.getListaStock().stream().filter(ss-> ss.getInsumo().equals(ipp.getInsumo())).forEach(ss-> ss.setCtidad(ss.getCtidad()-ipp.getCtidad()));
 		}
+		plantaService.crearPlanta(origen);
 	}
 	
 	
