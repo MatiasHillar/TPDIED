@@ -169,7 +169,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getString("TIPO").equals("GENERAL")) {
-					Insumo i = new InsumoGral();
+					InsumoGral i = new InsumoGral();
 					i.setId(rs.getInt("ID"));
 					i.setDescripcion(rs.getString("DESCRIPCION"));
 					i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
@@ -180,12 +180,13 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 					lista.add(i);
 				}
 				else {
-					Insumo i = new InsumoLiquido();
+					InsumoLiquido i = new InsumoLiquido();
 					i.setId(rs.getInt("ID"));
 					i.setDescripcion(rs.getString("DESCRIPCION"));
 					i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
 					i.setCosto(rs.getFloat("COSTO"));
 					i.setPeso(rs.getFloat("PESO"));
+					i.setDensidad(rs.getFloat("DENSIDAD"));
 					i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
 					i.setNombre(rs.getString("NOMBRE_I"));
 					lista.add(i);
@@ -217,14 +218,14 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 	public Insumo buscar(Integer id_insumo, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Insumo i = null;
+		Insumo ret = null;
 		try {
 			pstmt = conn.prepareStatement(SELECT_INSUMO, ResultSet.TYPE_SCROLL_INSENSITIVE,	ResultSet.CONCUR_UPDATABLE);
 			pstmt.setInt(1, id_insumo);
 			rs = pstmt.executeQuery();
 			if(!rs.first()) throw new ExcepcionNoExisteElemento();
 			if(rs.getString("TIPO").equals("GENERAL")) {
-				i = new InsumoGral();
+				InsumoGral i = new InsumoGral();
 				i.setId(rs.getInt("ID"));
 				i.setCosto(rs.getFloat("COSTO"));
 				i.setDescripcion(rs.getString("DESCRIPCION"));
@@ -232,16 +233,19 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				i.setNombre(rs.getString("NOMBRE"));
 				i.setPeso(rs.getFloat("PESO"));
 				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
+				ret = i;
 			}
 			else {
-				i = new InsumoLiquido();
+				InsumoLiquido i = new InsumoLiquido();
 				i.setId(rs.getInt("ID"));
 				i.setCosto(rs.getFloat("COSTO"));
 				i.setDescripcion(rs.getString("DESCRIPCION"));
 				i.setUnidadMedida(new Unidad(rs.getString("NOMBRE"), rs.getString("SIMBOLO")));
 				i.setNombre(rs.getString("NOMBRE"));
+				i.setDensidad(rs.getFloat("DENSIDAD"));
 				i.setPeso(rs.getFloat("PESO"));
 				i.setCantidadTotal(rs.getFloat("CANTIDAD_TOTAL"));
+				ret = i;
 			}
 		}
 		catch(SQLException | ExcepcionNoExisteElemento e) {
@@ -255,7 +259,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 				e.printStackTrace();
 			}
 		}
-		return i;
+		return ret;
 	}
 
 }
