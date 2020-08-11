@@ -29,8 +29,8 @@ public class PanelMaxFlow extends JPanel {
 	private JLabel lblBuscar = new JLabel("Filtros:");
 	private JLabel lblPlantaOrigen = new JLabel("Planta origen:");
 	private JLabel lblPlantaDestino = new JLabel("Planta destino:");
-	private JComboBox<Planta> jcbPlantasOrigen = new JComboBox<Planta>(); 
-	private JComboBox<Planta> jcbPlantasDestino = new JComboBox<Planta>(); 
+	private JComboBox<Planta> jcbPlantasOrigen; 
+	private JComboBox<Planta> jcbPlantasDestino; 
 	private JFormattedTextField txtFlujo = new JFormattedTextField(NumberFormat.getNumberInstance());
 	
 	
@@ -51,6 +51,7 @@ public class PanelMaxFlow extends JPanel {
 	}
 	
 	private void armarPanel() {
+		this.controller.setJcbs();
 		this.setBackground(Color.GRAY);
 		GridBagLayout gbl = new GridBagLayout();
 		this.setLayout(gbl);
@@ -100,12 +101,12 @@ public class PanelMaxFlow extends JPanel {
 
 		constraints.gridx = 3;
 		constraints.gridy = 5;		
-		constraints.anchor= constraints.WEST;
+//		constraints.anchor= constraints.WEST;
 		this.add(jcbPlantasDestino,constraints);
 		constraints.anchor= GridBagConstraints.CENTER;
 		
 		
-		constraints.gridx = 3;
+		constraints.gridx = 4;
 		constraints.gridy = 5;	
 		
 		this.btnGuardar = new JButton("Calcular");
@@ -131,7 +132,6 @@ public class PanelMaxFlow extends JPanel {
 		this.txtFlujo.setEditable(false);
 		this.txtFlujo.setColumns(20);
 		this.add(txtFlujo,constraints);
-		this.controller.setJcbs();
 		this.txtFlujo.setValue(0f);
 		
 

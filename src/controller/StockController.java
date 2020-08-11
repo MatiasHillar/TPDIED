@@ -68,8 +68,6 @@ public class StockController {
 		this.panel.setJcbPlantas(new JComboBox<Planta>(this.plantaService.buscarTodos().toArray(new Planta[0])));
 		System.out.println("Hola");
 		this.panel.setJcbInsumos(new JComboBox<Insumo>( this.insumoService.buscarTodos().toArray(new Insumo[0])));
-//		System.out.println(this.plantaService.buscarTodos());
-//		System.out.println(this.insumoService.buscarTodos());
 	}
 	
 	 

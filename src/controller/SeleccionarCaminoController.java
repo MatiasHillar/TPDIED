@@ -97,7 +97,7 @@ public class SeleccionarCaminoController {
 					p.setRuta(this.panel.getListT().getSelectedValue());
 				}
 				this.pedidoService.asignarCamion(p);
-				//ACA FALTA CARTEL PARA AVISAR EXITO
+				
 				
 				this.a.setContentPane(new PanelProcesarPedido(a));
 				//this.pack();
