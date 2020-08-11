@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.junit.Test;
@@ -372,6 +373,21 @@ public class PedidoTest {
 			C2.setModelo(Modelo2);
 			C2.setKmRecorridos(800f);
 			
+			
+			Pedido P = new Pedido();
+			P.setPlantaDestino(PDestino);
+			P.setFechaEntrega(LocalDate.now().plusDays(7));
+			P.setCostoEnvio(5f);
+			
+			PriorityQueue<Camion> pq = new PriorityQueue<Camion>((c1,c2)-> c1.getKmRecorridos().compareTo(c2.getKmRecorridos()));
+			pq.add(C1);
+			pq.add(C2);
+			Camion c = pq.poll();
+			P.setCamion(c);
+			P.setEstado(Estado.PROCESADO);
+			Estado estadoEsperado = Estado.PROCESADO;
+			assertEquals(P.getEstado(), estadoEsperado);
+			assertEquals(P.getCamion(), C2);
 		}
 	
 	
