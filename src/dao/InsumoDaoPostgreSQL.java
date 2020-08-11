@@ -168,7 +168,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			pstmt = conn.prepareStatement(SELECT_ALL_INSUMO);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				if(rs.getString("TIPO").equals("GENERAL")) {
+				if(rs.getString("TIPO").equals("general")) {
 					InsumoGral i = new InsumoGral();
 					i.setId(rs.getInt("ID"));
 					i.setDescripcion(rs.getString("DESCRIPCION"));
@@ -224,7 +224,7 @@ public class InsumoDaoPostgreSQL implements InsumoDao {
 			pstmt.setInt(1, id_insumo);
 			rs = pstmt.executeQuery();
 			if(!rs.first()) throw new ExcepcionNoExisteElemento();
-			if(rs.getString("TIPO").equals("GENERAL")) {
+			if(rs.getString("TIPO").equals("general")) {
 				InsumoGral i = new InsumoGral();
 				i.setId(rs.getInt("ID"));
 				i.setCosto(rs.getFloat("COSTO"));
