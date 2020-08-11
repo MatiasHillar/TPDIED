@@ -150,6 +150,7 @@ public class PanelRutas extends JPanel{
 		}
 	);
 		this.add(btnGuardar, constraints);
+		this.limpiarFormulario();
 	}
 	
 	private void limpiarFormulario() {

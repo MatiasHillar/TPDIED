@@ -39,20 +39,20 @@ public class MapaServiceTest {
 		lp.add(p7);
 		
 		List<Ruta> lr= new ArrayList<Ruta>();
-		Ruta r1 = new Ruta(p1,p2, 10f, 10f, 5f);
-		Ruta r2 = new Ruta(p1,p3, 10f, 60f, 6f);
-		Ruta r3 = new Ruta(p1,p4, 30f, 50f, 5f);
-		Ruta r4 = new Ruta(p2,p5, 50f, 20f, 3f);
-		Ruta r5 = new Ruta(p2,p3, 60f, 10f, 2f);
-		Ruta r6 = new Ruta(p3,p2, 80f, 90f, 2f);
-		Ruta r7 = new Ruta(p3,p5, 20f, 80f, 3f);
-		Ruta r8 = new Ruta(p3,p6, 30f, 20f, 7f);
-		Ruta r9 = new Ruta(p3,p4, 10f, 50f, 3f);
-		Ruta r10 = new Ruta(p4,p6, 50f, 20f, 5f);
-		Ruta r11 = new Ruta(p5,p6, 60f, 10f, 1f);
-		Ruta r12 = new Ruta(p5,p7, 80f, 90f, 8f);
-		Ruta r13 = new Ruta(p6,p5, 20f, 80f, 1f);
-		Ruta r14 = new Ruta(p6,p7, 30f, 20f, 7f);
+		Ruta r1 = new Ruta(1,p1,p2, 10f, 10f, 5f);
+		Ruta r2 = new Ruta(2,p1,p3, 10f, 60f, 6f);
+		Ruta r3 = new Ruta(3,p1,p4, 30f, 50f, 5f);
+		Ruta r4 = new Ruta(4,p2,p5, 50f, 20f, 3f);
+		Ruta r5 = new Ruta(5,p2,p3, 60f, 10f, 2f);
+		Ruta r6 = new Ruta(6,p3,p2, 80f, 90f, 2f);
+		Ruta r7 = new Ruta(7,p3,p5, 20f, 80f, 3f);
+		Ruta r8 = new Ruta(8,p3,p6, 30f, 20f, 7f);
+		Ruta r9 = new Ruta(9,p3,p4, 10f, 50f, 3f);
+		Ruta r10 = new Ruta(10,p4,p6, 50f, 20f, 5f);
+		Ruta r11 = new Ruta(11,p5,p6, 60f, 10f, 1f);
+		Ruta r12 = new Ruta(12,p5,p7, 80f, 90f, 8f);
+		Ruta r13 = new Ruta(13,p6,p5, 20f, 80f, 1f);
+		Ruta r14 = new Ruta(14,p6,p7, 30f, 20f, 7f);
 		lr.add(r1);
 		lr.add(r2);
 		lr.add(r3);
@@ -72,7 +72,6 @@ public class MapaServiceTest {
 		m.setListaRutas(lr);
 		
 		MapaService ms = new MapaService();
-		
 		assertTrue(ms.maxFlow(p1, p7, m).equals(13f));
 	}
 	

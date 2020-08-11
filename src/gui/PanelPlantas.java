@@ -83,6 +83,7 @@ public class PanelPlantas extends JPanel{
 			try {
 				controller.guardar();
 			} catch (Exception e1) {
+				e1.printStackTrace();
 				this.mostrarError("Error al guardar", e1.getMessage());
 			}
 			this.limpiarFormulario();

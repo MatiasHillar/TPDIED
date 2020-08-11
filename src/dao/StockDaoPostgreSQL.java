@@ -100,6 +100,7 @@ public class StockDaoPostgreSQL implements StockDao {
 		Connection conn = DB.getConexion();
 		PreparedStatement pstmt = null;
 		try {
+			if(lista!=null)
 			for(int i=0; i<lista.size(); i++) {
 				Integer id_insumo = lista.get(i).getInsumo().getId();
 				if(checkNull(id_insumo, id_planta, conn)) {

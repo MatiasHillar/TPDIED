@@ -22,6 +22,16 @@ public Ruta(Planta plantaOrigen, Planta plantaDestino, Float distanciaKm, Float 
 	this.pesoMaximoKg = pesoMaximoKg;
 }
 
+public Ruta(Integer id, Planta plantaOrigen, Planta plantaDestino, Float distanciaKm, Float duracionMin, Float pesoMaximoKg) {
+	super();
+	this.id=id;
+	this.plantaOrigen = plantaOrigen;
+	this.plantaDestino = plantaDestino;
+	this.distanciaKm = distanciaKm;
+	this.duracionMin = duracionMin;
+	this.pesoMaximoKg = pesoMaximoKg;
+}
+
 
 
 

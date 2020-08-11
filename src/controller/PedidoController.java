@@ -50,6 +50,7 @@ public class PedidoController {
 	}
 	 
 	public void actualizarItem(){
+		ip = new ItemPedido();
 		ip.setCtidad(this.obtenerValor(this.panel.getCantidad()));
 		ip.setInsumo((Insumo) this.panel.getJcbInsumo().getSelectedItem());
 		if(ip.getInsumo()!=null && ip.getCtidad()!=null)this.panel.getPrecio().setValue(ip.getPrecio());
